@@ -1,0 +1,35 @@
+
+
+.calendar-tile {}
+
+.calendar-tile .title
+{
+    -fx-font-size : 14px;
+
+}
+
+.calendar-tile .calendar-cell:selected,
+.calendar-tile .calendar-cell:selected .text
+{
+    -fx-background-color : #4285f4;
+    -fx-fill : white;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,.2) , 18, 0 , 0 , 10 );
+}
+
+.calendar-pane .text
+{
+    -fx-fill : #656D78;
+}
+
+.calendar-pane
+{
+    -fx-background-color : transparent;
+}
+
+.calendar-pane .calendar-cell
+{
+    -fx-background-color : transparent;
+    -fx-background-radius : 5px;
+}
+
+

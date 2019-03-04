@@ -1,0 +1,134 @@
+
+.root {
+    -primary    : #AA66CC;
+    -secondary : #00BCD4;
+    -text-color : #656D78;
+}
+
+.styled-calendar
+{
+    -fx-background-color : transparent;
+}
+
+
+.styled-calendar .side
+{
+    -fx-background-color : -primary;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,.2) , 18, 0 , 0 , 10 );
+}
+
+.styled-calendar .side .year
+{
+    -fx-background-radius : 0px;
+    -fx-text-fill : white;
+    -fx-background-color : transparent;
+    -fx-font-size : 14px;
+    -fx-font-weight : bold;
+}
+
+.styled-calendar .side .toggle-button
+{
+    -fx-cursor : hand;
+    -fx-background-radius : 0px;
+    -fx-text-fill : white;
+    -fx-background-color : transparent;
+}
+
+.styled-calendar .side .toggle-button:hover
+{
+    -fx-text-fill : white;
+    -fx-background-color : derive(-primary, 40%);
+}
+
+.styled-calendar .side .toggle-button:pressed
+{
+    -fx-translate-x : 5;
+}
+
+.styled-calendar .side .left-button,
+.styled-calendar .side .right-button,
+.styled-calendar .side .left-button .icon,
+.styled-calendar .side .right-button .icon
+{
+    -fx-cursor : hand;
+    -fx-text-fill : white;
+    -fx-background-color : transparent;
+    -fx-border-width : 1px;
+    -fx-border-radius : 100px;
+    -fx-border-color : transparent;
+    -fx-fill : white;
+}
+
+.styled-calendar .side .left-button:hover,
+.styled-calendar .side .right-button:hover
+{
+    -fx-border-color : white;
+}
+
+.styled-calendar .side .left-button:pressed,
+.styled-calendar .side .right-button:pressed,
+.styled-calendar .side .right-button:pressed .icon,
+.styled-calendar .side .left-button:pressed .icon
+{
+    -fx-background-radius : 100px;
+    -fx-background-color : white;
+    -fx-fill : -primary;
+}
+
+.styled-calendar .side .toggle-button:selected
+{
+    -fx-text-fill : white;
+    -fx-background-color : derive(-primary, -40%);
+}
+
+.styled-calendar .panel .month
+{
+    -fx-font-size : 18px;
+    -fx-text-fill : -text-color;
+}
+
+.styled-calendar .panel .calendar-pane .calendar-cell
+{
+    -fx-background-radius : 100px;
+}
+
+.styled-calendar .panel .calendar-pane .calendar-cell:selected,
+.styled-calendar .panel .calendar-pane .calendar-cell:selected .text
+{
+    -fx-background-color : -secondary;
+    -fx-fill : white;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.calendar-tile .title
+{
+    -fx-font-size : 14px;
+
+}
+
+.calendar-tile .calendar-cell:selected,
+.calendar-tile .calendar-cell:selected .text
+{
+    -fx-background-color : red;
+    -fx-fill : white;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,.2) , 18, 0 , 0 , 10 );
+}
+
+.calendar-pane .text
+{
+    -fx-fill : #656D78;
+}
+
+.calendar-pane
+{
+    -fx-background-color : transparent;
+}
+
+.calendar-pane .calendar-cell
+{
+    -fx-background-color : transparent;
+    -fx-background-radius : 5px;
+}
+
+

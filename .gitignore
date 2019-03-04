@@ -1,0 +1,4 @@
+.idea/**
+/out/**
+GNCalendar.iml
+scenicView.properties
