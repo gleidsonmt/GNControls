@@ -62,10 +62,12 @@ public class CalendarSkin extends SkinBase<CalendarPane> {
                         String.valueOf(LocalDate.parse(val[i][j]).getDayOfMonth())
                 );
 
-
+                // disable week buttons
                 if(LocalDate.parse(val[i][j]).getMonthValue()  != skeleton.getDate().getMonthValue()){
                     cell.setDisable(true);
                 }
+
+                // select actual date
                 if(LocalDate.parse(val[i][j]).equals(LocalDate.now())){
                     cell.setSelected(true);
                 }
@@ -74,7 +76,6 @@ public class CalendarSkin extends SkinBase<CalendarPane> {
 
 
             }
-
         }
     }
 

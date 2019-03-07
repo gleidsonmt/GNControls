@@ -16,24 +16,17 @@
  */
 package com.gn.lab;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Locale;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -189,6 +182,6 @@ public class GNStyledCalendar extends Region {
 
     @Override
     public String getUserAgentStylesheet() {
-        return GNCalendarTile.class.getResource("/com/gn/styledCalendar.css").toExternalForm();
+        return GNDatePicker.class.getResource("/com/gn/styledCalendar.css").toExternalForm();
     }
 }

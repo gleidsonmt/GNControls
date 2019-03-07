@@ -126,7 +126,7 @@ public class CalendarSkeleton {
         TemporalField fieldUS = WeekFields.of(locale).dayOfWeek();
         firstDayCalendar = (date.with(fieldUS, 1).getDayOfMonth() - 1);
 
-        System.out.println(date);
+//        System.out.println(date);
 
         if(date.getMonthValue() == 1 && date.getDayOfMonth() == 1 && firstDayCalendar == 0){
             date = LocalDate.of(date.minusYears(1).getYear(), date.getMonthValue(), 1);
@@ -174,8 +174,6 @@ public class CalendarSkeleton {
             }
 //            System.out.println(); // break lines
         }
-
-
         return days;
     }
 
