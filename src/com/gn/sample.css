@@ -1,0 +1,10 @@
+
+
+.toggle-button {
+    -fx-text-fill : white;
+    -fx-background-color : transparent;
+}
+
+.foreground {
+    -fx-background-color: linear-gradient(to bottom, #00c6ff, #0072ff);
+}
