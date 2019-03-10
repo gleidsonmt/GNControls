@@ -19,15 +19,21 @@ package com.gn.test;
 import com.sun.javafx.scene.control.skin.Utils;
 import com.sun.javafx.scene.control.skin.resources.ControlResources;
 import com.sun.javafx.scene.traversal.Direction;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WeakChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -36,6 +42,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Font;
+import javafx.util.Duration;
 import javafx.util.converter.LocalDateStringConverter;
 
 import java.time.DateTimeException;
@@ -108,6 +116,7 @@ public class GNDatePickerContent extends VBox {
         return ControlResources.getString("DatePicker."+key);
     }
 
+
     GNDatePickerContent(final GNDatePicker datePicker) {
         this.datePicker = datePicker;
 
@@ -159,13 +168,17 @@ public class GNDatePickerContent extends VBox {
 
 
 
+        gridPane.setMinHeight(179);
+        gridPane.setPrefHeight(179);
+        gridPane.setMaxHeight(179);
+
         // Add a focus owner listener to Scene when it becomes available.
         final WeakChangeListener<Node> weakFocusOwnerListener =
                 new WeakChangeListener<Node>((ov2, oldFocusOwner, newFocusOwner) -> {
                     if (newFocusOwner == gridPane) {
                         if (oldFocusOwner instanceof DateCell) {
                             // Backwards traversal, skip gridPane.
-                            gridPane.impl_traverse(Direction.PREVIOUS);
+//                            gridPane.impl_traverse(Direction.PREVIOUS);
                         } else {
                             // Forwards traversal, pass focus to day cell.
                             if (lastFocusedDayCell != null) {
@@ -287,89 +300,23 @@ public class GNDatePickerContent extends VBox {
     }
 
     VBox createViewActions(){
-        Button ok = new Button("Ok");
-        Button cancel = new Button("Cancel");
-
-        cancel.setOnMouseClicked(event ->  {
-            datePicker.setValue(null);
-            datePicker.hide();
-
-        });
-
-        ok.setOnMouseClicked(event -> {
-            datePicker.hide();
-//            if (event.getButton() != MouseButton.PRIMARY) {
-//                return;
-//            }
-//            DateCell dayCell = (DateCell)event.getSource();
-//            selectDayCell(dayCell);
-//
-//            datePicker.valueProperty().
-//
-//            lastFocusedDayCell = dayCell;
-        });
-
-        HBox buttons = new HBox();
-        buttons.setPadding(
-                new Insets(10)
-        );
-        buttons.setAlignment(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(cancel, ok);
-        buttons.setSpacing(10);
-
-        GridPane viewActions = new GridPane();
 
         VBox content = new VBox();
 
-        info.setText(LocalDate.now().getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()) + " " + LocalDate.now().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + ", " + LocalDate.now().getDayOfMonth());
-        LocalDate date = LocalDate.now();
-        Chronology chrono = getPrimaryChronology();
-
-//        Label info = new Label("Março Seg, 28");
-
-
-        info.setPadding(
-                new Insets(10)
-        );
-        viewActions.add(info,0,0);
-
-        info.setPrefWidth(200);
-        info.getStyleClass().add("info");
-
-        VBox.clearConstraints(viewActions);
-
-        ColumnConstraints columnConstraints = new ColumnConstraints(100);
-        ColumnConstraints columnConstraints2 = new ColumnConstraints(100);
-
-        viewActions.getColumnConstraints().add(columnConstraints);
-        viewActions.getColumnConstraints().add(columnConstraints2);
-
-        columnConstraints.setHalignment(HPos.RIGHT);
-
-        viewActions.add(buttons,1,0);
-
-        viewActions.getStyleClass().add("view-actions");
-
-        viewActions.setPrefWidth(200);
-
-        viewActions.setPrefWidth(200);
-
         Button today = new Button("Today");
+        today.setDefaultButton(true);
         today.getStyleClass().add("today");
 
         today.setOnMouseClicked(event -> {
-
+            datePicker.setValue(LocalDate.now());
+            datePicker.hide();
         });
 
         content.getChildren().add(today);
         content.setAlignment(Pos.CENTER);
         content.getStyleClass().add("today-content");
-
-        GridPane.setHalignment(ok, HPos.RIGHT);
-        GridPane.setHalignment(info, HPos.LEFT);
         return content;
     }
-
 
     private ObjectProperty<YearMonth> displayedYearMonth =
             new SimpleObjectProperty<YearMonth>(this, "displayedYearMonth");
@@ -542,16 +489,65 @@ public class GNDatePickerContent extends VBox {
         forwardYearButton.setGraphic(rightYearArrow);
 
         backYearButton.setOnAction(t -> {
-            forward(-1, YEARS, false);
+            forward(-10, YEARS, false);
         });
 
         yearLabel = new Label();
         yearLabel.getStyleClass().add("year-label");
+        yearLabel.setCursor(Cursor.HAND);
+        monthLabel.setFont(Font.font(20));
 
-        forwardYearButton.setOnAction(t -> {
-            forward(1, YEARS, false);
+        yearLabel.setOnMouseClicked(event -> {
+            header.getChildren().clear();
+            yearLabel.setFont(Font.font(20));
+            monthLabel.setFont(Font.font(12));
+            yearLabel.setCursor(Cursor.DEFAULT);
+            monthLabel.setCursor(Cursor.HAND);
+            header.getChildren().addAll(monthLabel, yearLabel);
+            gridPane.getChildren().clear();
+            actions.getChildren().clear();
+
+            actions.getChildren().add(yearSpinner);
+
+            SVGPath yearLeftArrow = new SVGPath();
+            yearLeftArrow.getStyleClass().add("left-arrow");
+            yearLeftArrow.setContent("M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z");
+
+            SVGPath yearRightArrow = new SVGPath();
+            yearRightArrow.getStyleClass().add("right-arrow");
+            yearRightArrow.setContent("M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z");
+
+            forwardYearButton.setGraphic(yearRightArrow);
+            backYearButton.setGraphic(yearLeftArrow);
+
+//            if(!yearLabel.getText().equals(String.valueOf(LocalDate.now().getYear())))
+                composeAltLayout();
+
         });
 
+        monthLabel.setOnMouseClicked(event -> {
+            header.getChildren().clear();
+            monthLabel.setFont(Font.font(22));
+            yearLabel.setFont(Font.font(12));
+            yearLabel.setCursor(Cursor.HAND);
+            monthLabel.setCursor(Cursor.DEFAULT);
+            header.getChildren().addAll(yearLabel, monthLabel);
+
+            gridPane.getChildren().clear();
+            actions.getChildren().clear();
+
+            actions.getChildren().add(monthSpinner);
+            forwardMonthButton.setGraphic(rightArrow);
+            backMonthButton.setGraphic(leftArrow);
+
+            updateGrid();
+        });
+
+        forwardYearButton.setOnAction(t -> {
+            forward(10, YEARS, false);
+        });
+
+        yearSpinner.getStyleClass().add("spinner");
         yearSpinner.getChildren().addAll(backYearButton, yearLabel, forwardYearButton);
         yearSpinner.setFillHeight(false);
 
@@ -568,10 +564,89 @@ public class GNDatePickerContent extends VBox {
         monthYearPane.add(header, 0,0);
         monthYearPane.add(actions, 1, 0);
 
+
+
 //        monthYearPane.setGridLinesVisible(true);
+
+        monthYearPane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        monthYearPane.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         header.setPrefWidth(180);
+        header.setMinHeight(40);
+        header.setMaxHeight(40);
 
         return monthYearPane;
+    }
+
+    private void composeAltLayout(){
+
+        gridPane.getChildren().clear();
+
+        LocalDate date = LocalDate.of(Integer.valueOf(yearLabel.getText()) - 10, 1,1);
+
+            for (int row = 0; row < 6; row++) {
+                for (int col = 0; col < daysPerWeek; col++) {
+                    date = date.plusYears(1);
+                    Label year = new Label(String.valueOf(date.getYear()));
+                    year.getStyleClass().add("years");
+                    year.setPadding(new Insets(8, 5, 6, 5));
+
+                    year.setOnMouseClicked(event ->{
+                        if(event.getSource() instanceof Label){
+                            yearLabel.setText( ((Label) event.getSource()).getText());
+                        }
+                    });
+
+                    year.setPrefHeight(24);
+                    gridPane.add(year, col, row);
+            }
+        }
+    }
+
+    private void switchAction(){
+        Timeline timeline = new Timeline();
+
+        timeline.getKeyFrames().addAll(
+
+        new KeyFrame(Duration.ZERO,
+            new KeyValue(yearLabel.translateYProperty(), 0)),
+
+        new KeyFrame(Duration.ZERO,
+            new KeyValue(yearLabel.scaleXProperty(), yearLabel.getScaleX())),
+
+        new KeyFrame(Duration.ZERO,
+                new KeyValue(yearLabel.scaleYProperty(), yearLabel.getScaleY())),
+
+        new KeyFrame(Duration.ZERO,
+                new KeyValue(monthLabel.scaleXProperty(), monthLabel.getScaleX())),
+
+        new KeyFrame(Duration.ZERO,
+                new KeyValue(monthLabel.scaleYProperty(), monthLabel.getScaleY())),
+
+        new KeyFrame(Duration.ZERO,
+            new KeyValue(monthLabel.translateYProperty(), monthLabel.getTranslateY())),
+
+        new KeyFrame(Duration.millis(1000),
+                new KeyValue(yearLabel.translateYProperty(), 35)),
+
+        new KeyFrame(Duration.millis(1000),
+                new KeyValue(monthLabel.translateYProperty(), -20)),
+
+        new KeyFrame(Duration.millis(100),
+                new KeyValue(yearLabel.scaleYProperty(), 1.5)),
+
+        new KeyFrame(Duration.millis(100),
+                new KeyValue(yearLabel.scaleXProperty(), 1.5)),
+
+        new KeyFrame(Duration.millis(100),
+                new KeyValue(monthLabel.scaleYProperty(), 0.8)),
+
+        new KeyFrame(Duration.millis(100),
+                new KeyValue(monthLabel.scaleXProperty(), 0.8))
+
+        );
+
+
+        timeline.play();
     }
 
     void refresh() {
@@ -645,6 +720,15 @@ public class GNDatePickerContent extends VBox {
 
         str = formatYear(yearMonth);
         yearLabel.setText(str);
+
+        yearLabel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue != null){
+                    composeAltLayout();
+                }
+            }
+        });
 //        double width = Utils.computeTextWidth(yearLabel.getFont(), str, 0);
 //        if (width > yearLabel.getMinWidth()) {
 //            yearLabel.setMinWidth(width);
@@ -772,7 +856,7 @@ public class GNDatePickerContent extends VBox {
     // public for behavior class
     public void selectDayCell(DateCell dateCell) {
         datePicker.setValue(dayCellDate(dateCell));
-//        datePicker.hide();
+        datePicker.hide();
     }
 
     private DateCell findDayCellForDate(LocalDate date) {

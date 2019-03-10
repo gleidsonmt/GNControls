@@ -119,6 +119,10 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
         return dayCellFactory;
     }
 
+    private ObjectProperty<LocalDate> today =
+            new SimpleObjectProperty<LocalDate>(this, "chronology",
+                    null);
+
     public final ObjectProperty<Chronology> chronologyProperty() {
         return chronology;
     }

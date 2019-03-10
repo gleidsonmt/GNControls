@@ -20,10 +20,15 @@ import com.sun.javafx.scene.control.behavior.ComboBoxBaseBehavior;
 import com.sun.javafx.scene.control.behavior.KeyBinding;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.control.DatePicker;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javafx.scene.input.KeyCode.ENTER;
+import static javafx.scene.input.KeyEvent.KEY_RELEASED;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -52,6 +57,9 @@ public class GNDatePickerBehavior extends ComboBoxBaseBehavior<LocalDate> {
 
     protected static final List<KeyBinding> DATE_PICKER_BINDINGS = new ArrayList<KeyBinding>();
     static {
+
+        DATE_PICKER_BINDINGS.add(new KeyBinding(KeyCode.ENTER, "today"));
+
         DATE_PICKER_BINDINGS.addAll(COMBO_BOX_BASE_BINDINGS);
     }
 
@@ -65,5 +73,4 @@ public class GNDatePickerBehavior extends ComboBoxBaseBehavior<LocalDate> {
         // to keep its show/hide state in sync.
         if (!datePicker.isShowing()) super.onAutoHide();
     }
-
 }

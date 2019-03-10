@@ -67,14 +67,23 @@
     -fx-text-fill : white;
 }
 
-.month-year-pane .month-label {
-    -fx-font-size : 20px;
-}
+
 
 .calendar-grid .day-name-cell,
 .calendar-grid .day-cell
 {
     -fx-text-fill : white;
+}
+
+.calendar-grid .years
+{
+ -fx-text-fill : white;
+}
+
+.calendar-grid .years:hover
+{
+    -fx-background-color : white;
+     -fx-text-fill : #656D78;
 }
 
 .calendar-grid .day-cell {

@@ -17,14 +17,15 @@
 package com.gn.test;
 
 import com.sun.javafx.scene.control.skin.ComboBoxPopupControl;
-import com.sun.javafx.scene.control.skin.DatePickerContent;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
@@ -50,7 +51,9 @@ public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
         arrow.paddingProperty().addListener(new InvalidationListener() {
             // This boolean protects against unwanted recursion.
             private boolean rounding = false;
-            @Override public void invalidated(Observable observable) {
+
+            @Override
+            public void invalidated(Observable observable) {
                 if (!rounding) {
                     Insets padding = arrow.getPadding();
                     Insets rounded = new Insets(Math.round(padding.getTop()), Math.round(padding.getRight()),
@@ -69,6 +72,13 @@ public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
         registerChangeListener(datePicker.dayCellFactoryProperty(), "DAY_CELL_FACTORY");
         registerChangeListener(datePicker.showWeekNumbersProperty(), "SHOW_WEEK_NUMBERS");
         registerChangeListener(datePicker.valueProperty(), "VALUE");
+
+        getPopup().getScene().addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                today(event);
+            }
+        });
     }
 
     @Override protected void handleControlPropertyChanged(String p) {
@@ -115,6 +125,15 @@ public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
         }
     }
 
+    public void today(KeyEvent event){
+        if (getPopup().isShowing()) {
+            if (event.getCode() == KeyCode.ENTER) {
+                datePicker.setValue(LocalDate.now());
+                datePicker.hide();
+            }
+        }
+    }
+
     @Override
     protected Node getPopupContent() {
         if (datePickerContent == null) {
@@ -153,6 +172,8 @@ public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
     }
 
     public void syncWithAutoUpdate() {
+
+//
         if (!getPopup().isShowing() && datePicker.isShowing()) {
             // Popup was dismissed. Maybe user clicked outside or typed ESCAPE.
             // Make sure DatePicker button is in sync.
