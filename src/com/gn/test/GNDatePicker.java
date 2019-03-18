@@ -196,13 +196,15 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
             new LocalDateStringConverter(FormatStyle.SHORT, null, getChronology());
 
     private ReadOnlyObjectWrapper<TextField> editor;
+
     public final TextField getEditor() {
         return editorProperty().get();
     }
+
     public final ReadOnlyObjectProperty<TextField> editorProperty() {
         if (editor == null) {
             editor = new ReadOnlyObjectWrapper<TextField>(this, "editor");
-            editor.set(new ComboBoxListViewSkin.FakeFocusTextField());
+            editor.set(new GNDatePickerSkin.DatePickerEditor());
         }
         return editor.getReadOnlyProperty();
     }
@@ -274,8 +276,8 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
         return new GNDatePickerSkin(this);
     }
 
-    @Override
-    public String getUserAgentStylesheet() {
-        return GNDatePicker.class.getResource("/com/gn/test/datePicker.css").toExternalForm();
-    }
+//    @Override
+//    public String getUserAgentStylesheet() {
+//        return GNDatePicker.class.getResource("/com/gn/test/datePicker.css").toExternalForm();
+//    }
 }

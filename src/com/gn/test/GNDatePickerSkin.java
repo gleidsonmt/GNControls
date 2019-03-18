@@ -16,26 +16,36 @@
  */
 package com.gn.test;
 
+import com.sun.javafx.binding.ExpressionHelper;
 import com.sun.javafx.scene.control.skin.ComboBoxPopupControl;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.AccessibleAttribute;
 import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
+import javafx.util.converter.LocalDateStringConverter;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.FormatStyle;
+import java.util.function.UnaryOperator;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  06/03/2019
  */
-public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
+public class GNDatePickerSkin extends ComboBoxPopupControl {
 
     private GNDatePicker datePicker;
     private TextField displayNode;
@@ -43,6 +53,63 @@ public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
 
     public GNDatePickerSkin(final GNDatePicker datePicker) {
         super(datePicker, new GNDatePickerBehavior(datePicker));
+
+        try {
+            Field helper = datePicker.focusedProperty().getClass().getSuperclass().getDeclaredField("helper");
+            helper.setAccessible(true);
+            ExpressionHelper value = (ExpressionHelper)helper.get(datePicker.focusedProperty());
+            Field changeListenersField = value.getClass().getDeclaredField("changeListeners");
+            changeListenersField.setAccessible(true);
+            ChangeListener[] changeListeners = (ChangeListener[])((ChangeListener[])changeListenersField.get(value));
+
+            for(int i = changeListeners.length - 1; i > 0; --i) {
+                if (changeListeners[i] != null && changeListeners[i].getClass().getName().contains("ComboBoxPopupControl")) {
+                    datePicker.focusedProperty().removeListener(changeListeners[i]);
+                    break;
+                }
+            }
+        } catch (IllegalAccessException var7) {
+            var7.printStackTrace();
+        } catch (NoSuchFieldException var8) {
+            var8.printStackTrace();
+        }
+
+
+        TextField textField = datePicker.getEditor();
+
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.isEmpty() && newValue.length() < 11){
+                    System.out.println(new LocalDateStringConverter().toString(LocalDate.now()));
+
+                    String value = textField.getText();
+                    value = value.replaceAll("[^0-9]", "");  // Troque tudo que não for numero por ""
+                    value = value.replaceFirst("(\\d{2})(\\d)", "$1/$2"); // \\d ocorrencia de um digito
+                    value = value.replaceFirst("(\\d{2})\\/(\\d{2})(\\d)", "$1/$2/$3");
+                    textField.setText(value);
+//                    positionCaret(textField);
+
+                }
+            }
+        });
+
+        textField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue == null || newValue.length() > 10) {
+                textField.setText(oldValue);
+            }
+        });
+
+
+        datePicker.focusedProperty().addListener((ov, t, hasFocus) -> {
+            if (getEditor() != null) {
+                ((DatePickerEditor)datePicker.getEditor()).setFakeFocus(hasFocus);
+
+                if (!hasFocus) {
+                    setTextFromTextFieldIntoComboBoxValue();
+                }
+            }
+        });
 
         this.datePicker = datePicker;
 
@@ -143,8 +210,6 @@ public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
                 datePickerContent = new GNDatePickerContent(datePicker);
 //            }
         }
-//
-//        return datePickerContent;
         return datePickerContent;
     }
 
@@ -173,11 +238,51 @@ public class GNDatePickerSkin extends ComboBoxPopupControl<LocalDate> {
 
     public void syncWithAutoUpdate() {
 
-//
         if (!getPopup().isShowing() && datePicker.isShowing()) {
             // Popup was dismissed. Maybe user clicked outside or typed ESCAPE.
             // Make sure DatePicker button is in sync.
             datePicker.hide();
+        }
+    }
+
+    public static final class DatePickerEditor extends TextField {
+
+
+        @Override
+        public String getText(int start, int end) {
+            if (start > end) {
+                return getContent().get(start - 1, end);
+            }
+
+            if (start < 0
+                    || end > getLength()) {
+                throw new IndexOutOfBoundsException();
+            }
+
+            return getContent().get(start, end);
+        }
+
+        @Override public void requestFocus() {
+            if (getParent() != null) {
+                getParent().requestFocus();
+            }
+        }
+
+        public void setFakeFocus(boolean b) {
+            setFocused(b);
+        }
+
+        @Override
+        public Object queryAccessibleAttribute(AccessibleAttribute attribute, Object... parameters) {
+            switch (attribute) {
+                case FOCUS_ITEM:
+                    /* Internally comboBox reassign its focus the text field.
+                     * For the accessibility perspective it is more meaningful
+                     * if the focus stays with the comboBox control.
+                     */
+                    return getParent();
+                default: return super.queryAccessibleAttribute(attribute, parameters);
+            }
         }
     }
 }

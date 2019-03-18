@@ -126,6 +126,8 @@ public class GNDatePickerContent extends VBox {
 
         daysPerWeek = getDaysPerWeek();
 
+
+
         {
             LocalDate date = datePicker.getValue();
             displayedYearMonth.set((date != null) ? YearMonth.from(date) : YearMonth.now());
@@ -769,6 +771,7 @@ public class GNDatePickerContent extends VBox {
         Chronology chrono = getPrimaryChronology();
         try {
             DateTimeFormatter formatter = yearFormatter;
+
             ChronoLocalDate cDate = chrono.date(yearMonth.atDay(1));
             int era = cDate.getEra().getValue();
             int nEras = chrono.eras().size();
