@@ -32,6 +32,8 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
+import sun.util.locale.LocaleUtils;
+import sun.util.resources.LocaleData;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -69,6 +71,8 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
                 setValue(lastValidDate);
             }
         });
+
+        System.out.println(Chronology.ofLocale(Locale.CHINESE).getCalendarType());
 
         chronologyProperty().addListener(observable -> {
             LocalDate date = getValue();
@@ -118,10 +122,6 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
         }
         return dayCellFactory;
     }
-
-    private ObjectProperty<LocalDate> today =
-            new SimpleObjectProperty<LocalDate>(this, "chronology",
-                    null);
 
     public final ObjectProperty<Chronology> chronologyProperty() {
         return chronology;

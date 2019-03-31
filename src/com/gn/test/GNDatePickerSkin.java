@@ -38,7 +38,9 @@ import javafx.util.converter.LocalDateStringConverter;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.chrono.HijrahChronology;
 import java.time.format.FormatStyle;
+import java.util.Locale;
 import java.util.function.UnaryOperator;
 
 /**
@@ -68,12 +70,9 @@ public class GNDatePickerSkin extends ComboBoxPopupControl {
                     break;
                 }
             }
-        } catch (IllegalAccessException var7) {
+        } catch (IllegalAccessException | NoSuchFieldException var7) {
             var7.printStackTrace();
-        } catch (NoSuchFieldException var8) {
-            var8.printStackTrace();
         }
-
 
         TextField textField = datePicker.getEditor();
 
@@ -81,15 +80,15 @@ public class GNDatePickerSkin extends ComboBoxPopupControl {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(!newValue.isEmpty() && newValue.length() < 11){
-                    System.out.println(new LocalDateStringConverter().toString(LocalDate.now()));
 
                     String value = textField.getText();
-                    value = value.replaceAll("[^0-9]", "");  // Troque tudo que não for numero por ""
-                    value = value.replaceFirst("(\\d{2})(\\d)", "$1/$2"); // \\d ocorrencia de um digito
-                    value = value.replaceFirst("(\\d{2})\\/(\\d{2})(\\d)", "$1/$2/$3");
-                    textField.setText(value);
-//                    positionCaret(textField);
 
+                    if(Locale.getDefault().toString().equals("pt_BR")){
+                        value = value.replaceAll("[^0-9]", "");  // Troque tudo que não for numero por ""
+                        value = value.replaceFirst("(\\d{2})(\\d)", "$1/$2"); // \\d ocorrencia de um digito
+                        value = value.replaceFirst("(\\d{2})\\/(\\d{2})(\\d)", "$1/$2/$3");
+                        textField.setText(value);
+                    }
                 }
             }
         });
@@ -204,9 +203,9 @@ public class GNDatePickerSkin extends ComboBoxPopupControl {
     @Override
     protected Node getPopupContent() {
         if (datePickerContent == null) {
-////            if (datePicker.getChronology() instanceof HijrahChronology) {
-////                datePickerContent = new DatePickerHijrahContent(datePicker);
-////            } else {
+//            if (datePicker.getChronology() instanceof HijrahChronology) {
+//                datePickerContent = new DatePickerH(datePicker);
+//            } else {
                 datePickerContent = new GNDatePickerContent(datePicker);
 //            }
         }

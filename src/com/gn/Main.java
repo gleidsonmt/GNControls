@@ -6,6 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,29 +19,28 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+//        Locale.setDefault(Locale.TAIWAN);
+
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
 
 //        Locale.setDefault(Locale.US);
 
         GNDatePicker days = new GNDatePicker();
+
+
         days.setPrefWidth(200);
 
-        new DatePicker();
-        root.getChildren().add(days);
+        root.getChildren().addAll(days, new Button("ok"));
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
-        days.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                System.out.println(newValue);
-            }
-        });
-
         ScenicView.show(primaryStage.getScene());
+
+        new DatePicker();
 
     }
 
