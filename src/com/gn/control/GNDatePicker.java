@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gn.test;
+package com.gn.control;
 
+import com.gn.skin.GNDatePickerSkin;
 import com.sun.javafx.css.converters.BooleanConverter;
-import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
-import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import com.sun.javafx.scene.control.skin.resources.ControlResources;
 import javafx.beans.property.*;
 import javafx.beans.value.WritableValue;
@@ -32,8 +31,6 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
-import sun.util.locale.LocaleUtils;
-import sun.util.resources.LocaleData;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -72,8 +69,6 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
             }
         });
 
-        System.out.println(Chronology.ofLocale(Locale.CHINESE).getCalendarType());
-
         chronologyProperty().addListener(observable -> {
             LocalDate date = getValue();
             Chronology chrono = getChronology();
@@ -89,6 +84,9 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
     }
 
     public GNDatePicker(LocalDate localDate) {
+
+        this.getStylesheets().add(GNDatePicker.class.getResource("/com/gn/css/simple.css").toExternalForm());
+
         setValue(localDate);
         getStyleClass().add(DEFAULT_STYLE_CLASS);
         setAccessibleRole(AccessibleRole.DATE_PICKER);
@@ -276,8 +274,9 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
         return new GNDatePickerSkin(this);
     }
 
-//    @Override
-//    public String getUserAgentStylesheet() {
-//        return GNDatePicker.class.getResource("/com/gn/test/datePicker.css").toExternalForm();
-//    }
+    @Override
+    public String getUserAgentStylesheet() {
+//        return GNDatePicker.class.getResource("/com/gn/css/datePicker.css").toExternalForm();
+        return GNDatePicker.class.getResource("/com/gn/css/simple.css").toExternalForm();
+    }
 }
