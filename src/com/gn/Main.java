@@ -1,9 +1,7 @@
 package com.gn;
 
-import com.gn.test.GNDatePicker;
+import com.gn.control.GNDatePicker;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,9 +9,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.scenicview.ScenicView;
-
-import java.time.LocalDate;
-import java.util.Locale;
 
 public class Main extends Application {
 
