@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gn.test;
+package com.gn.skin;
 
+import com.gn.behavior.GNDatePickerBehavior;
+import com.gn.control.GNDatePicker;
 import com.sun.javafx.binding.ExpressionHelper;
 import com.sun.javafx.scene.control.skin.ComboBoxPopupControl;
 import javafx.beans.InvalidationListener;
@@ -27,21 +29,15 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.AccessibleAttribute;
 import javafx.scene.Node;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
-import javafx.util.converter.LocalDateStringConverter;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.chrono.HijrahChronology;
-import java.time.format.FormatStyle;
 import java.util.Locale;
-import java.util.function.UnaryOperator;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -246,6 +242,9 @@ public class GNDatePickerSkin extends ComboBoxPopupControl {
 
     public static final class DatePickerEditor extends TextField {
 
+//        public DatePickerEditor(){
+//            this.getStylesheets().add(GNDatePicker.class.getResource("/com/gn/css/simple.css").toExternalForm());
+//        }
 
         @Override
         public String getText(int start, int end) {

@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gn.test;
+package com.gn.skin;
 
+import com.gn.control.GNDatePicker;
 import com.sun.javafx.scene.control.skin.resources.ControlResources;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -26,23 +27,18 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WeakChangeListener;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.time.DateTimeException;
@@ -128,7 +124,7 @@ public class GNDatePickerContent extends VBox {
 
         getStyleClass().add("date-picker-popup");
 
-        this.getStylesheets().add(GNDatePickerContent.class.getResource("/com/gn/test/datePopup.css").toExternalForm());
+        this.getStylesheets().add(GNDatePickerContent.class.getResource("/com/gn/css/datePopup.css").toExternalForm());
 
         daysPerWeek = getDaysPerWeek();
 
@@ -499,8 +495,8 @@ public class GNDatePickerContent extends VBox {
 
         yearLabel.setOnMouseClicked(event -> {
 
-            yearLabel.setStyle("-fx-font-size : 12px;");
-            monthLabel.setStyle("-fx-font-size : 22px;");
+            yearLabel.setStyle("-fx-font-size : 22px;");
+            monthLabel.setStyle("-fx-font-size : 12px;");
 
             yearLabel.setCursor(Cursor.DEFAULT);
             monthLabel.setCursor(Cursor.HAND);
@@ -576,8 +572,8 @@ public class GNDatePickerContent extends VBox {
 
 
     private void altLayoutMonth(){
-        monthLabel.setStyle("-fx-font-size : 12px;");
-        yearLabel.setStyle("-fx-font-size : 22px;");
+        monthLabel.setStyle("-fx-font-size : 22px;");
+        yearLabel.setStyle("-fx-font-size : 12px;");
 
         yearLabel.setCursor(Cursor.HAND);
         monthLabel.setCursor(Cursor.DEFAULT);
@@ -673,7 +669,7 @@ public class GNDatePickerContent extends VBox {
         timeline.play();
     }
 
-    void refresh() {
+    protected void refresh() {
         updateMonthLabelWidth();
         updateDayNameCells();
         updateValues();
