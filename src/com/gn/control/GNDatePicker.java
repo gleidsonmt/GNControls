@@ -207,8 +207,6 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
         return editor.getReadOnlyProperty();
     }
 
-
-
     private static class StyleableProperties {
 
         private static final String country =
@@ -274,9 +272,9 @@ public class GNDatePicker extends ComboBoxBase<LocalDate> {
         return new GNDatePickerSkin(this);
     }
 
-    @Override
-    public String getUserAgentStylesheet() {
-//        return GNDatePicker.class.getResource("/com/gn/css/datePicker.css").toExternalForm();
-        return GNDatePicker.class.getResource("/com/gn/css/simple.css").toExternalForm();
-    }
+//    @Override
+//    public String getUserAgentStylesheet() {
+////        return GNDatePicker.class.getResource("/com/gn/css/datePicker.css").toExternalForm();
+//        return GNDatePicker.class.getResource("/com/gn/css/simple.css").toExternalForm();
+//    }
 }
