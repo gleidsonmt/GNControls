@@ -86,5 +86,9 @@ public class MinutesSpinner extends VBox {
         return this.editor;
     }
 
+    Label getTitle(){
+        return this.title;
+    }
+
 }
 

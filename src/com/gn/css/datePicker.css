@@ -1,21 +1,153 @@
+Skip to content
 
-.gn-date-picker>*.arrow-button>*.arrow
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+
+@Gleidson28
+0
+0 0 Gleidson28/GNControls
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+GNControls/src/com/gn/css/datePopup.css
+@Gleidson28 Gleidson28 update theme
+20bdfe2 10 days ago
+134 lines (104 sloc)  2.25 KB
+
+.popup {
+    -fx-background-color : transparent;
+}
+
+.date-picker-popup {
+    -fx-padding : 10px;
+}
+
+.month-year-pane {
+    -fx-background-color : transparent;
+}
+
+.month-year-pane .spinner .button:focused, {
+.month-year-pane .spinner .button:pressed {
+    -fx-border-color : white;
+    -fx-border-width : 1px;
+}
+
+.month-year-pane .spinner, .month-year-pane .spinner .button {
+    -fx-background-color : transparent;
+    -fx-padding : 10px;
+}
+
+.month-year-pane .spinner .button:hover {
+    -fx-border-color : white;
+    -fx-padding : 9px;
+}
+
+.month-year-pane .spinner .button:pressed {
+    -fx-border-color : white;
+    -fx-background-color : #00BCD4;
+    -fx-padding : 9px;
+}
+
+.month-year-pane .spinner .left-button,
+.month-year-pane .spinner .right-button
+ {
+    -fx-cursor : hand;
+}
+
+.month-year-pane .spinner .left-arrow,
+.month-year-pane .spinner .right-arrow
+ {
+    -fx-fill : white;
+}
+
+.calendar-grid, .calendar-grid .day-cell {
+   -fx-background-color : transparent;
+}
+
+.calendar-grid .day-cell:hover {
+   -fx-background-color : white;
+   -fx-text-fill : #656D78;
+}
+
+
+
+.today-content {
+    -fx-background-color : white;
+}
+
+.today-content .today {
+   -fx-background-color : transparent;
+   -fx-text-fill : #00BCD4;
+   -fx-min-height : 40px;
+   -fx-pref-width : 250px;
+   -fx-cursor : hand;
+}
+
+.date-picker-popup {
+      -fx-background-color: linear-gradient(to bottom, #00c6ff, #0072ff);
+}
+
+.month-year-pane .month-label,
+.month-year-pane .year-label
 {
-  -fx-shape : "M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z";
-  /* -fx-shape : "M 550 400 L 350 400 L 400 350 L 350 300 L 550 300 L 600 350 L 550 400"; */
-   -fx-scale-x : 1.5;
-   -fx-scale-y : 3.0;
-}
-.left-button .left-arrow {
-    -fx-shape : "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z";
+    -fx-text-fill : white;
 }
 
-.right-button .right-arrow {
-    -fx-shape : "MM10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
+.calendar-grid .day-name-cell,
+.calendar-grid .day-cell
+{
+    -fx-text-fill : white;
 }
 
-.date-picker-popup .month-year-pane{
-    -fx-background-color : red;
+
+.calendar-grid .years
+{
+ -fx-text-fill : white;
 }
 
+.calendar-grid .years:hover
+{
+    -fx-background-color : white;
+     -fx-text-fill : #656D78;
+}
+
+.calendar-grid .day-cell {
+    -fx-border-color : transparent;
+}
+
+
+.calendar-grid .next-month {
+    -fx-opacity : 0.3;
+}
+
+.calendar-grid .previous-month {
+    -fx-opacity : 0.3;
+}
+
+.calendar-grid .day-name-cell {
+    -fx-font-weight : bold;
+}
+
+.view-actions {
+    -fx-background-color : white;
+    -fx-pref-height : 40px;
+}
+
+
+.view-actions .button {
+    -fx-background-color : white;
+    -fx-pref-height : 40px;
+    -fx-text-fill : #656D78;
+    -fx-cursor : hand;
+}
+
+.view-actions .button:hover {
+    -fx-text-fill : #00BCD4;
+}
+
+.view-actions .info {
+    -fx-text-fill : #656D78;
+}
 

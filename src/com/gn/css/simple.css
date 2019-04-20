@@ -11,7 +11,7 @@
 }
 
 .gn-date-picker .date-picker-display-node,
-.gn-time-picker .date-picker-display-node {
+.gn-time-picker .time-picker-display-node {
     -fx-background-color : transparent;
 }
 
@@ -24,7 +24,8 @@
     -fx-background-color : transparent;
 }
 
-.gn-date-picker:focused {
+.gn-date-picker:focused,
+.gn-time-picker:focused {
     -fx-border-width : 0px 0px 2px 0px;
     -fx-border-color : #33B5E5;
 }
@@ -71,12 +72,17 @@
     -fx-scale-y : 1.8;
 }
 
-.gn-time-picker .text-field {
-     -fx-font-size : 18px;
+.gn-time-picker .timer-picker-display-node:readonly{
      -fx-background-color : white;
      -fx-background-radius : 0px;
+     -fx-border-color : transparent;
      -fx-pref-height : 30px;
      -fx-max-width : 50px;
+}
+
+.gn-time-picker  .text-field{
+    -fx-background-color : white;
+    -fx-border-color : white;
 }
 
 .hour-label {

@@ -26,6 +26,8 @@ import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -41,6 +43,11 @@ public class TimerContent extends VBox {
 
 
     public TimerContent(final GNTimePicker timePicker){
+
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("com.gn.bundles.Lang_" + Locale.getDefault());
+        hourSpinner.getTitle().setText(resourceBundle.getString("time.hour"));
+        minutesSpinner.getTitle().setText(resourceBundle.getString("time.minutes"));
+        secondSpinner.getTitle().setText(resourceBundle.getString("time.second"));
 
         getStyleClass().add("time-picker-popup");
         confirm.getStyleClass().add("confirm");

@@ -202,7 +202,7 @@ public class GNDatePickerSkin extends ComboBoxPopupControl {
 //            if (datePicker.getChronology() instanceof HijrahChronology) {
 //                datePickerContent = new DatePickerH(datePicker);
 //            } else {
-                datePickerContent = new GNDatePickerContent(datePicker);
+            datePickerContent = new GNDatePickerContent(datePicker);
 //            }
         }
         return datePickerContent;

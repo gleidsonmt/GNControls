@@ -40,12 +40,16 @@ public class GNNumericField extends TextField {
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                     Number num = null;
                     try {
-                        num = NumberFormat.getInstance().parse(newValue);
-                        setValue(num);
+                        if(newValue != null && !newValue.isEmpty()) {
+                            num = NumberFormat.getInstance().parse(newValue);
+                            setValue(num);
+                        } else {
+                            clear();
+                            setValue(0);
+                        }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(num);
                 }
             });
     }

@@ -85,4 +85,8 @@ public class HourSpinner extends VBox {
     TextField getEditor(){
         return this.editor;
     }
+
+    Label getTitle(){
+        return this.title;
+    }
 }
