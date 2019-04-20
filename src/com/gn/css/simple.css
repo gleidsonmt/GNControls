@@ -1,5 +1,6 @@
 
 .gn-date-picker,
+.gn-time-picker,
 .gn-monetary-field {
     -fx-background-radius : 0px;
     -fx-background-color :  transparent;
@@ -9,11 +10,13 @@
     -fx-border-color : #E6E9ED;
 }
 
-.gn-date-picker .date-picker-display-node {
+.gn-date-picker .date-picker-display-node,
+.gn-time-picker .date-picker-display-node {
     -fx-background-color : transparent;
 }
 
-.gn-date-picker .arrow-button .arrow {
+.gn-date-picker .arrow-button .arrow,
+.gn-time-picker .arrow-button .arrow {
     -fx-cursor : hand;
 }
 
@@ -28,15 +31,60 @@
 
 .gn-date-picker>*.arrow-button>*.arrow
 {
-  -fx-shape : "M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z";
+  -fx-shape : "M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z";
   /* -fx-shape : "M 550 400 L 350 400 L 400 350 L 350 300 L 550 300 L 600 350 L 550 400"; */
    -fx-scale-x : 2.0;
    -fx-scale-y : 4.0;
 }
+
+.gn-time-picker>*.arrow-button>*.arrow
+{
+  -fx-shape : "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7z";
+  /* -fx-shape : "M 550 400 L 350 400 L 400 350 L 350 300 L 550 300 L 600 350 L 550 400"; */
+   -fx-scale-x : 2.0;
+   -fx-scale-y : 4.0;
+}
+
 .left-button .left-arrow {
     -fx-shape : "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z";
 }
 
 .right-button .right-arrow {
     -fx-shape : "MM10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
+}
+
+.button {
+    -fx-cursor: hand;
+    -fx-background-color : transparent;
+    -fx-font-size : 12pt;
+}
+
+.button .up-arrow {
+    -fx-fill : white;
+     -fx-scale-x : 1.8;
+    -fx-scale-y : 1.8;
+}
+
+.button .bottom-arrow {
+    -fx-fill : white;
+    -fx-scale-x : 1.8;
+    -fx-scale-y : 1.8;
+}
+
+.gn-time-picker .text-field {
+     -fx-font-size : 18px;
+     -fx-background-color : white;
+     -fx-background-radius : 0px;
+     -fx-pref-height : 30px;
+     -fx-max-width : 50px;
+}
+
+.hour-label {
+     -fx-font-size : 18px;
+     -fx-text-fill : white;
+}
+
+.confirm {
+    -fx-text-fill : #33B5E5;
+    -fx-background-color : white;
 }
