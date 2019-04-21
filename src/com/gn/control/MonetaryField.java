@@ -56,15 +56,13 @@ public class MonetaryField extends TextField {
         this.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(newValue.length() > 2) {
-                    String z = newValue;
+                if(newValue.length() > 1) {
 
-                    String value = z;
+                    String value = newValue;
                     value = value.replaceAll("[^0-9]", "");
 
                     String cent = value.substring(value.length() - 2, value.length());
                     String middle = value.substring(0, value.length() - 2);
-                    // reparttir o cent
 
                     StringBuilder build = new StringBuilder(middle);
                     for (int i = middle.length(); i > 3; i -= 3) {
@@ -72,7 +70,7 @@ public class MonetaryField extends TextField {
                     }
                     String all;
 
-                    if(build.toString().length() > 1) all = build.toString() + "," + cent;
+                    if(build.toString().length() > 0) all = build.toString() + "," + cent;
                     else all = build.toString() + cent;
 
                     MonetaryField.super.setText(all);
@@ -81,8 +79,8 @@ public class MonetaryField extends TextField {
                 } else {
                     if(!newValue.isEmpty())
                         setValue(new BigDecimal(newValue));
+                    else setValue(new BigDecimal(0));
                 }
-
             }
         });
 
