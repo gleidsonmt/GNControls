@@ -43,6 +43,7 @@ import javafx.util.Duration;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.YearMonth;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.Chronology;
@@ -414,14 +415,10 @@ public class GNDatePickerContent extends VBox {
     protected GridPane createMonthYearPane() {
         GridPane monthYearPane = new GridPane();
 
-
-
         // create header
         monthYearPane.getStyleClass().add("month-year-pane");
 
         // Month spinner
-
-
         monthSpinner.getStyleClass().add("spinner");
 
         backMonthButton = new Button();
@@ -438,7 +435,6 @@ public class GNDatePickerContent extends VBox {
         backMonthButton.setGraphic(leftMonthArrow);
         backMonthButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
-
         leftArrow.getStyleClass().add("left-arrow");
         leftArrow.setContent("M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z");
         backMonthButton.setGraphic(leftArrow);
@@ -446,7 +442,6 @@ public class GNDatePickerContent extends VBox {
         StackPane rightMonthArrow = new StackPane();
 
         rightMonthArrow.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
-
 
         rightArrow.getStyleClass().add("right-arrow");
         rightArrow.setContent("M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z");
@@ -571,7 +566,7 @@ public class GNDatePickerContent extends VBox {
     }
 
 
-    private void altLayoutMonth(){
+    void altLayoutMonth(){
         monthLabel.setStyle("-fx-font-size : 22px;");
         yearLabel.setStyle("-fx-font-size : 12px;");
 
@@ -610,6 +605,11 @@ public class GNDatePickerContent extends VBox {
                     year.setOnMouseClicked(event ->{
                         if(event.getSource() instanceof Label){
                             yearLabel.setText( ((Label) event.getSource()).getText());
+
+                            goYear(
+                                    Integer.valueOf(yearLabel.getText()),
+                                    false
+                            );
                             altLayoutMonth();
                         }
                     });
@@ -745,6 +745,11 @@ public class GNDatePickerContent extends VBox {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(newValue != null){
+//                    displayedYearMonth.setValue(
+//                            YearMonth.of(Integer.valueOf(yearLabel.getText()),
+//                                    displayedYearMonth.get()
+//                            )
+//                    );
                     composeAltLayout();
                 }
             }
@@ -848,6 +853,19 @@ public class GNDatePickerContent extends VBox {
     protected LocalDate dayCellDate(DateCell dateCell) {
         assert (dayCellDates != null);
         return dayCellDates[dayCells.indexOf(dateCell)];
+    }
+
+    public void goToYear(DateCell dateCell, int offset, boolean focusDayCell) {
+        goToDate(dayCellDate(dateCell).withYear(offset), focusDayCell);
+    }
+
+    protected void goYear(int offset, boolean focusDayCell) {
+        YearMonth yearMonth = displayedYearMonth.get();
+        DateCell dateCell = lastFocusedDayCell;
+        if (dateCell == null || !dayCellDate(dateCell).getMonth().equals(yearMonth.getMonth())) {
+            dateCell = findDayCellForDate(yearMonth.atDay(1));
+        }
+        goToYear(dateCell, offset, focusDayCell);
     }
 
     // public for behavior class
