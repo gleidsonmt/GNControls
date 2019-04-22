@@ -18,16 +18,12 @@ package com.gn.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.math.BigDecimal;
-import java.util.function.UnaryOperator;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -35,7 +31,7 @@ import java.util.function.UnaryOperator;
  */
 public class MonetaryField extends TextField {
 
-    private ObjectProperty<BigDecimal> value = new SimpleObjectProperty<BigDecimal>(this, "value");
+    private ObjectProperty<BigDecimal> value = new SimpleObjectProperty<>(this, "value");
 
     public MonetaryField(){
 
@@ -43,19 +39,14 @@ public class MonetaryField extends TextField {
 
         this.getStylesheets().add(MonetaryField.class.getResource("/com/gn/css/simple.css").toExternalForm());
 
-        this.setTextFormatter(new TextFormatter<Object>(new UnaryOperator<TextFormatter.Change>() {
-            @Override
-            public TextFormatter.Change apply(TextFormatter.Change change) {
-                if(change.getText().matches("[^0-9.,]") ){
-                    return null;
-                } else
-                    return change;
-            }
+        this.setTextFormatter(new TextFormatter<>(change -> {
+            if(change.getText().matches("[^0-9.,]") ){
+                return null;
+            } else
+                return change;
         }));
 
-        this.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        this.textProperty().addListener((observable, oldValue, newValue) -> {
 
 //                System.out.println("newValue = " + newValue.length());
 //                System.out.println("oldValue = " + oldValue.length());
@@ -63,37 +54,36 @@ public class MonetaryField extends TextField {
 
 
 
-                if(newValue.length() > 2) {
-                    String value = newValue;
-                    value = value.replaceAll("[^0-9]", "");
+            if(newValue.length() > 2) {
+                String value = newValue;
+                value = value.replaceAll("[^0-9]", "");
 
-                    String cent = value.substring(value.length() - 2);
-                    String middle = value.substring(0, value.length() - 2);
+                String cent = value.substring(value.length() - 2);
+                String middle = value.substring(0, value.length() - 2);
 
-                    StringBuilder build = new StringBuilder(middle);
-                    for (int i = middle.length(); i > 3; i -= 3) {
-                        build.insert(i - 3, ".");
-                    }
-                    String all;
+                StringBuilder build = new StringBuilder(middle);
+                for (int i = middle.length(); i > 3; i -= 3) {
+                    build.insert(i - 3, ".");
+                }
+                String all;
 
-                    if(build.toString().length() > 0) all = build.toString() + "," + cent;
-                    else all = build.toString() + cent;
+                if(build.toString().length() > 0) all = build.toString() + "," + cent;
+                else all = build.toString() + cent;
 
-                    MonetaryField.super.setText(all);
+                MonetaryField.super.setText(all);
 
-                    if(MonetaryField.super.getLength() > 2) {
-                        setValue(new BigDecimal(build.toString().replaceAll("[^0-9]", "") + "." + cent));
-                    } else {
-                        setValue(new BigDecimal(value.replaceAll("[^0-9]", "") ));
-                    }
+                if(MonetaryField.super.getLength() > 2) {
+                    setValue(new BigDecimal(build.toString().replaceAll("[^0-9]", "") + "." + cent));
                 } else {
-                    String value = newValue.replaceAll("[^0-9]", "");
-                    MonetaryField.super.setText(value);
-                    if(newValue.isEmpty())  {
-                        setValue(new BigDecimal(0));
-                    } else {
-                        setValue(new BigDecimal(value));
-                    }
+                    setValue(new BigDecimal(value.replaceAll("[^0-9]", "") ));
+                }
+            } else {
+                String value = newValue.replaceAll("[^0-9]", "");
+                MonetaryField.super.setText(value);
+                if(newValue.isEmpty())  {
+                    setValue(new BigDecimal(0));
+                } else {
+                    setValue(new BigDecimal(value));
                 }
             }
         });
