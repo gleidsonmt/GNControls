@@ -44,7 +44,14 @@ public class TimerContent extends VBox {
 
     public TimerContent(final GNTimePicker timePicker){
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("com.gn.bundles.Lang_" + Locale.getDefault());
+        ResourceBundle resourceBundle;
+
+        if (Locale.getDefault().getISO3Country().equals("BRA")){
+            resourceBundle = ResourceBundle.getBundle("com.gn.i18n.Lang_" + Locale.getDefault());
+        } else {
+            resourceBundle = ResourceBundle.getBundle("com.gn.i18n.Lang_" + Locale.ENGLISH);
+        }
+
         hourSpinner.getTitle().setText(resourceBundle.getString("time.hour"));
         minutesSpinner.getTitle().setText(resourceBundle.getString("time.minutes"));
         secondSpinner.getTitle().setText(resourceBundle.getString("time.second"));
