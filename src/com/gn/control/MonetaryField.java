@@ -56,8 +56,12 @@ public class MonetaryField extends TextField {
         this.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(newValue.length() > 1) {
 
+//                System.out.println("newValue = " + newValue.length());
+//                System.out.println("oldValue = " + oldValue.length());
+//                System.out.println("-------------------------------");
+
+                if(newValue.length() > 2 && newValue.length() > oldValue.length() ) {
                     String value = newValue;
                     value = value.replaceAll("[^0-9]", "");
 
@@ -77,9 +81,14 @@ public class MonetaryField extends TextField {
                     setValue(new BigDecimal(build.toString().replaceAll("[^0-9]","") + "." + cent));
 
                 } else {
-                    if(!newValue.isEmpty())
-                        setValue(new BigDecimal(newValue));
-                    else setValue(new BigDecimal(0));
+
+                    String value = newValue.replaceAll("[^0-9]", "");
+                    MonetaryField.super.setText(value);
+                    if(!newValue.isEmpty()) {
+                        setValue(new BigDecimal(value));
+                    } else{
+                        setValue(new BigDecimal(0));
+                    }
                 }
             }
         });
@@ -96,6 +105,7 @@ public class MonetaryField extends TextField {
                             MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
                         } else if (MonetaryField.super.getText().substring(MonetaryField.super.getCaretPosition() - 1,
                                 MonetaryField.super.getCaretPosition()).equals(",")) {
+                            System.out.println("Aki");
                             MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
                         }
                     }
