@@ -61,11 +61,13 @@ public class MonetaryField extends TextField {
 //                System.out.println("oldValue = " + oldValue.length());
 //                System.out.println("-------------------------------");
 
-                if(newValue.length() > 2 && newValue.length() > oldValue.length() ) {
+
+
+                if(newValue.length() > 2) {
                     String value = newValue;
                     value = value.replaceAll("[^0-9]", "");
 
-                    String cent = value.substring(value.length() - 2, value.length());
+                    String cent = value.substring(value.length() - 2);
                     String middle = value.substring(0, value.length() - 2);
 
                     StringBuilder build = new StringBuilder(middle);
@@ -78,36 +80,37 @@ public class MonetaryField extends TextField {
                     else all = build.toString() + cent;
 
                     MonetaryField.super.setText(all);
-                    setValue(new BigDecimal(build.toString().replaceAll("[^0-9]","") + "." + cent));
 
+                    if(MonetaryField.super.getLength() > 2) {
+                        setValue(new BigDecimal(build.toString().replaceAll("[^0-9]", "") + "." + cent));
+                    } else {
+                        setValue(new BigDecimal(value.replaceAll("[^0-9]", "") ));
+                    }
                 } else {
-
                     String value = newValue.replaceAll("[^0-9]", "");
                     MonetaryField.super.setText(value);
-                    if(!newValue.isEmpty()) {
-                        setValue(new BigDecimal(value));
-                    } else{
+                    if(newValue.isEmpty())  {
                         setValue(new BigDecimal(0));
+                    } else {
+                        setValue(new BigDecimal(value));
                     }
                 }
             }
         });
 
-        this.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if(event.getCode() == KeyCode.BACK_SPACE){
-                    if(MonetaryField.super.getCaretPosition() > 0) {
 
-                        if (MonetaryField.super.getText().
-                                substring(MonetaryField.super.getCaretPosition() - 1,
-                                        MonetaryField.super.getCaretPosition()).equals(".")) {
-                            MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
-                        } else if (MonetaryField.super.getText().substring(MonetaryField.super.getCaretPosition() - 1,
-                                MonetaryField.super.getCaretPosition()).equals(",")) {
-                            System.out.println("Aki");
-                            MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
-                        }
+        this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if(event.getCode() == KeyCode.BACK_SPACE){
+                if(MonetaryField.super.getCaretPosition() > 0) {
+
+                    if (MonetaryField.super.getText().
+                            substring(MonetaryField.super.getCaretPosition() - 1,
+                                    MonetaryField.super.getCaretPosition()).equals(".")) {
+                        MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
+                    } else if (MonetaryField.super.getText().substring(MonetaryField.super.getCaretPosition() - 1,
+                            MonetaryField.super.getCaretPosition()).equals(",")) {
+                        System.out.println("Aki");
+                        MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
                     }
                 }
             }
