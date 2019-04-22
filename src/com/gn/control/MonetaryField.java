@@ -24,6 +24,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -52,7 +56,10 @@ public class MonetaryField extends TextField {
 //                System.out.println("oldValue = " + oldValue.length());
 //                System.out.println("-------------------------------");
 
+            DecimalFormat s = (DecimalFormat) DecimalFormat.getInstance();
 
+            char group = s.getDecimalFormatSymbols().getGroupingSeparator();
+            char decimal = s.getDecimalFormatSymbols().getMonetaryDecimalSeparator();
 
             if(newValue.length() > 2) {
                 String value = newValue;
@@ -63,11 +70,11 @@ public class MonetaryField extends TextField {
 
                 StringBuilder build = new StringBuilder(middle);
                 for (int i = middle.length(); i > 3; i -= 3) {
-                    build.insert(i - 3, ".");
+                    build.insert(i - 3, group);
                 }
                 String all;
 
-                if(build.toString().length() > 0) all = build.toString() + "," + cent;
+                if(build.toString().length() > 0) all = build.toString() + decimal + cent;
                 else all = build.toString() + cent;
 
                 MonetaryField.super.setText(all);
@@ -87,7 +94,6 @@ public class MonetaryField extends TextField {
                 }
             }
         });
-
 
         this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.BACK_SPACE){
