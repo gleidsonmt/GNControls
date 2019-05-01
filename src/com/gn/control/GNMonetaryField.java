@@ -25,23 +25,20 @@ import javafx.scene.input.KeyEvent;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.Locale;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  25/02/2019
  */
-public class MonetaryField extends TextField {
+public class GNMonetaryField extends TextField {
 
     private ObjectProperty<BigDecimal> value = new SimpleObjectProperty<>(this, "value");
 
-    public MonetaryField(){
+    public GNMonetaryField(){
 
         this.getStyleClass().add("gn-monetary-field");
 
-        this.getStylesheets().add(MonetaryField.class.getResource("/com/gn/css/simple.css").toExternalForm());
+        this.getStylesheets().add(GNMonetaryField.class.getResource("/com/gn/css/simple.css").toExternalForm());
 
         this.setTextFormatter(new TextFormatter<>(change -> {
             if(change.getText().matches("[^0-9.,]") ){
@@ -77,16 +74,16 @@ public class MonetaryField extends TextField {
                 if(build.toString().length() > 0) all = build.toString() + decimal + cent;
                 else all = build.toString() + cent;
 
-                MonetaryField.super.setText(all);
+                GNMonetaryField.super.setText(all);
 
-                if(MonetaryField.super.getLength() > 2) {
+                if(GNMonetaryField.super.getLength() > 2) {
                     setValue(new BigDecimal(build.toString().replaceAll("[^0-9]", "") + "." + cent));
                 } else {
                     setValue(new BigDecimal(value.replaceAll("[^0-9]", "") ));
                 }
             } else {
                 String value = newValue.replaceAll("[^0-9]", "");
-                MonetaryField.super.setText(value);
+                GNMonetaryField.super.setText(value);
                 if(newValue.isEmpty())  {
                     setValue(new BigDecimal(0));
                 } else {
@@ -97,16 +94,16 @@ public class MonetaryField extends TextField {
 
         this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.BACK_SPACE){
-                if(MonetaryField.super.getCaretPosition() > 0) {
+                if(GNMonetaryField.super.getCaretPosition() > 0) {
 
-                    if (MonetaryField.super.getText().
-                            substring(MonetaryField.super.getCaretPosition() - 1,
-                                    MonetaryField.super.getCaretPosition()).equals(".")) {
-                        MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
-                    } else if (MonetaryField.super.getText().substring(MonetaryField.super.getCaretPosition() - 1,
-                            MonetaryField.super.getCaretPosition()).equals(",")) {
+                    if (GNMonetaryField.super.getText().
+                            substring(GNMonetaryField.super.getCaretPosition() - 1,
+                                    GNMonetaryField.super.getCaretPosition()).equals(".")) {
+                        GNMonetaryField.super.deleteText(GNMonetaryField.super.getCaretPosition() - 2, GNMonetaryField.super.getCaretPosition());
+                    } else if (GNMonetaryField.super.getText().substring(GNMonetaryField.super.getCaretPosition() - 1,
+                            GNMonetaryField.super.getCaretPosition()).equals(",")) {
                         System.out.println("Aki");
-                        MonetaryField.super.deleteText(MonetaryField.super.getCaretPosition() - 2, MonetaryField.super.getCaretPosition());
+                        GNMonetaryField.super.deleteText(GNMonetaryField.super.getCaretPosition() - 2, GNMonetaryField.super.getCaretPosition());
                     }
                 }
             }

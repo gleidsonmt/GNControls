@@ -22,9 +22,9 @@ import javafx.scene.control.TextField;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  09/04/2019
  */
-public class PhoneField extends TextField {
+public class GNPhoneField extends TextField {
 
-    public PhoneField() {
+    public GNPhoneField() {
         textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.isEmpty()) {
                 String value = getText();
