@@ -14,21 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gn.test;
+package com.gn.behavior;
 
+import com.gn.control.GNDatePicker;
+import com.gn.skin.GNDatePickerSkin;
 import com.sun.javafx.scene.control.behavior.ComboBoxBaseBehavior;
 import com.sun.javafx.scene.control.behavior.KeyBinding;
-import com.sun.javafx.scene.control.skin.DatePickerSkin;
-import javafx.scene.control.DatePicker;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import static javafx.scene.input.KeyCode.ENTER;
-import static javafx.scene.input.KeyEvent.KEY_RELEASED;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
