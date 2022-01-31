@@ -19,6 +19,8 @@ package com.gn.skin;
 import com.gn.control.GNTimePicker;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -51,6 +53,18 @@ public class TimerContent extends VBox {
         } else {
             resourceBundle = ResourceBundle.getBundle("com.gn.i18n.Lang_" + Locale.ENGLISH);
         }
+
+        timePicker.getEditor().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue != null){
+                    System.out.println(newValue);
+//                    hourSpinner.getEditor().setText(String.valueOf(newValue.getHour()));
+//                    minutesSpinner.getEditor().setText(String.valueOf(newValue.getMinute()));
+//                    secondSpinner.getEditor().setText(String.valueOf(newValue.getSecond()));
+                }
+            }
+        });
 
         hourSpinner.getTitle().setText(resourceBundle.getString("time.hour"));
         minutesSpinner.getTitle().setText(resourceBundle.getString("time.minutes"));

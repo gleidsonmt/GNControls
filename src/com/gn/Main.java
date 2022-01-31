@@ -1,57 +1,73 @@
 package com.gn;
 
-import com.gn.control.*;
-import com.gn.skin.HourSpinner;
-import com.gn.skin.TimerContent;
+import com.gn.control.GNComboFilter;
+import com.gn.lab.GNStyledCalendar;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.scenicview.ScenicView;
 
-import java.time.LocalTime;
-
+/**
+ * A simple init with autocomplete combo box
+ */
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-
-//        Locale.setDefault(Locale.TAIWAN);
 
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
 
-//        Locale.setDefault(Locale.US);
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setEditable(true);
 
-        GNTimePicker days = new GNTimePicker();
+        // The list
+        FilteredList<String> fullList = new FilteredList<>(FXCollections.<String>observableArrayList(
+                "Jorge",
+                "Luiza", "Paulo", "Jorge", "Andre"),
+                p -> true
+        );
 
+        comboBox.setItems(fullList);
 
-
-        days.setPrefWidth(200);
-
-        MonetaryField moneyField = new MonetaryField();
-//        moneyField.setPrefHeight(200);
-
-        root.getChildren().addAll(moneyField, days  );
+        root.getChildren().addAll(comboBox);
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
+
+//        comboBox.set
+
         primaryStage.show();
-
-//        ScenicView.show(primaryStage.getScene());
 //
-//        new DatePicker();
-//        new Spinner<>();
-
+//        final ListView[] _listView = {null}; // it is necessary...
+//
+//
+//        comboBox.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if(_listView[0] == null) {
+//                _listView[0] = (ListView) comboBox.lookup(".list-view"); // getting a listview from combo..
+//                _listView[0].setFixedCellSize(30);
+//            }
+//        });
+//
+//        comboBox.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                fullList.setPredicate(professional -> professional.toLowerCase().contains(newValue.toLowerCase()));
+//                _listView[0].resize(
+//                        comboBox.getWidth(),
+//                        (fullList.size() * 30) + // number of items.. sum list padding
+//                                (_listView[0].getPadding().getTop() + _listView[0].getPadding().getBottom()));
+//                if(fullList.size() == 0){
+//                    comboBox.hide();
+//                } else {
+//                    comboBox.show();
+//                }
+//            }
+//        });
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }

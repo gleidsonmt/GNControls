@@ -77,7 +77,7 @@ public class GNTimePickerSkin extends ComboBoxPopupControl {
             var7.printStackTrace();
         }
 
-        this.timePicker.timeProperty().bind(timeContent.valueProperty());
+        this.timePicker.timeProperty().bindBidirectional(timeContent.valueProperty());
 
         getPopup().getScene().addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override

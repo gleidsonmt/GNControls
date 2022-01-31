@@ -42,7 +42,7 @@ public class CalendarInShell {
 
 //        Locale.setDefault(Locale.US);
 
-        LocalDate localDate = LocalDate.of(2019, 3, 1);
+        LocalDate localDate = LocalDate.of(2022, 1, 29);
 
         System.out.println("--------------------------------");
         System.out.println("|          Calendar            |");

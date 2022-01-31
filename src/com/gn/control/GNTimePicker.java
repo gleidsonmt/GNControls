@@ -103,10 +103,23 @@ public class GNTimePicker extends ComboBoxBase<String> {
         return new GNTimePickerSkin(this);
     }
 
-    public ObjectProperty<LocalTime> timeProperty() { return time; }
-    private ObjectProperty<LocalTime> time = new SimpleObjectProperty<LocalTime>(this, "value");
 
-    public final void setTime(LocalTime time) { timeProperty().set(time); }
+    public ObjectProperty<LocalTime> timeProperty() { return time; }
+    private ObjectProperty<LocalTime> time = new ObjectPropertyBase<LocalTime>() {
+        @Override
+        public Object getBean() {
+            return this;
+        }
+
+        @Override
+        public String getName() {
+            return "time";
+        }
+    };
+
+    public final void setTime(LocalTime time) {
+        timeProperty().set(time);
+    }
     public final LocalTime getTime() { return timeProperty().get(); }
 
 //    @Override

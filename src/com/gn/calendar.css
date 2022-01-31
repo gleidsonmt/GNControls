@@ -33,3 +33,16 @@
 }
 
 
+.list-custom {
+    -fx-pref-height : 0px;
+    -fx-max-height : 0px;
+    -fx-min-height : 0px;
+    -fx-padding : 0px;
+}
+
+.list-test {
+    -fx-pref-height : 30px;
+    -fx-max-height : 30px;
+    -fx-min-height : 30px;
+    -fx-padding : 30px;
+}

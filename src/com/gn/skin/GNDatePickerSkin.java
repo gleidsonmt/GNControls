@@ -79,6 +79,7 @@ public class GNDatePickerSkin extends ComboBoxPopupControl {
 
                     String value = textField.getText();
 
+                    System.out.println("locale = " + Locale.getDefault());
                     if(Locale.getDefault().toString().equals("pt_BR")){
                         value = value.replaceAll("[^0-9]", "");  // Troque tudo que não for numero por ""
                         value = value.replaceFirst("(\\d{2})(\\d)", "$1/$2"); // \\d ocorrencia de um digito
@@ -176,6 +177,7 @@ public class GNDatePickerSkin extends ComboBoxPopupControl {
             }
         } else if ("VALUE".equals(p)) {
             updateDisplayNode();
+            System.out.println("Locale = " + Locale.getDefault());
             if (datePickerContent != null) {
                 LocalDate date = datePicker.getValue();
                 datePickerContent.displayedYearMonthProperty().set((date != null) ? YearMonth.from(date) : YearMonth.now());
