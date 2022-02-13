@@ -16,24 +16,26 @@
  */
 package io.github.gleidsonmt.gncontrols.test;
 
+import io.github.gleidsonmt.gncontrols.GNPasswordField;
 import io.github.gleidsonmt.gncontrols.GNTextArea;
 import io.github.gleidsonmt.gncontrols.GNTextField;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
 import io.github.gleidsonmt.gncontrols.model.Model;
 import io.github.gleidsonmt.gncontrols.model.Person;
 import io.github.gleidsonmt.gncontrols.options.FieldType;
+import io.github.gleidsonmt.gncontrols.options.TrayAction;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.jetbrains.annotations.NotNull;
+import org.scenicview.ScenicView;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -59,11 +61,12 @@ public class TestFields extends Application {
 
 
         ObservableList<Item> items = FXCollections.observableArrayList(
-//                createTextFieldItemFilled(),
+                createTextFieldItemFilled(),
                 createTextFieldItem(),
 //                createTextFieldItemAvatarType(),
 //                createComboBox(),
 //                createListView(),
+                createPasswordField(),
                 createTextAreaItem()
 //                createButtonItem(), createComboBox(), createTextFieldItem()
 //                item3, createButtonItem(), item1, createTextAreaItem(), item2, createTextFieldItem()
@@ -90,26 +93,44 @@ public class TestFields extends Application {
     }
 
 
-//    private Item createTextFieldItemAvatarType() {
-//        GNTextField textField = new GNTextField();
-//
-////        textField.setAdditionalText("@gmail.com");
-//
-//        textField.setPrefHeight(50);
-//        textField.setPromptText("Prompt Text Field");
-//
-//        textField.setHelperText("Lorem ipsum dolor color");
-//
-//        Item item = new Item("TextField", textField);
-//        CheckBox floatPrompt = new CheckBox("Float Prompt");
-//        CheckBox filled = new CheckBox("Filled");
-//        CheckBox leadIcon = new CheckBox("Add Icon");
-//
-//        item.getOptions().addAll(floatPrompt,
-//                filled, leadIcon);
-//
-//        return item;
-//    }
+    private Item createPasswordField() {
+        GNPasswordField textField = new GNPasswordField();
+
+//        textField.setAdditionalText("@gmail.com");
+
+        textField.setPrefHeight(50);
+        textField.setPromptText("Password Field");
+
+        textField.setHelperText("Lorem ipsum dolor color");
+
+        Item item = new Item("TextField", textField);
+        CheckBox floatPrompt = new CheckBox("Float Prompt");
+        CheckBox filled = new CheckBox("Filled");
+        CheckBox leadIcon = new CheckBox("Add Icon");
+        CheckBox action = new CheckBox("Add Action");
+
+        leadIcon.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) textField.setLeadIcon(Icons.FAVORITE);
+            else textField.setLeadIcon(null);
+        });
+        floatPrompt.selectedProperty().addListener((observable, oldValue, newValue) -> textField.setFloatPrompt(newValue));
+
+        filled.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) textField.setFieldType(FieldType.FILLED);
+            else textField.setFieldType(FieldType.OUTLINED);
+        });
+
+        action.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                textField.setTrayAction(TrayAction.VIEWER);
+            } else textField.setTrayAction(TrayAction.NONE);
+        });
+
+        item.getOptions().addAll(floatPrompt,
+                filled, leadIcon, action);
+
+        return item;
+    }
 
     private @NotNull Item createTextFieldItem() {
         GNTextField textField = new GNTextField();
@@ -127,6 +148,7 @@ public class TestFields extends Application {
         CheckBox leadIcon = new CheckBox("Add Icon");
         CheckBox maxLength = new CheckBox("Max Length");
         CheckBox visibleHelperText = new CheckBox("Helper Text");
+        CheckBox addAction = new CheckBox("Add Action");
 
         ObservableList<Model> suggestions = FXCollections.observableArrayList(
                 new Person("Windows"),
@@ -138,7 +160,7 @@ public class TestFields extends Application {
 
 //        textField.setSuggestionList(suggestions);
 
-        textField.setCellFactory(new Callback<ListView<Model>, ListCell<Model>>() {
+        textField.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Model> call(ListView<Model> param) {
                 return new ListCell<>() {
@@ -161,7 +183,7 @@ public class TestFields extends Application {
         });
 
         item.getOptions().addAll(floatPrompt,
-                maxLength, leadIcon, filled, visibleHelperText);
+                maxLength, leadIcon, filled, addAction, visibleHelperText);
 
         floatPrompt.selectedProperty().addListener((observable, oldValue, newValue) -> {
              textField.setFloatPrompt(newValue);
@@ -188,52 +210,58 @@ public class TestFields extends Application {
                 (observable, oldValue, newValue) ->
                         textField.setVisibleHelperText(newValue)
         );
-//
+
+        addAction.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                textField.setTrayAction(TrayAction.CLEAR);
+            } else textField.setTrayAction(TrayAction.NONE);
+        });
+
         return item;
     }
 
-//    private @NotNull Item createTextFieldItemFilled() {
-//        GNTextField textField = new GNTextField();
-//
-////        textField.setAdditionalText("@gmail.com");
-//        textField.setPrefHeight(50);
-//        textField.setPromptText("Prompt Text Field");
-//        textField.setHelperText("Password must contain an upper case letter, a numeric character, and a special character.");
-//
-//        textField.setFieldType(FieldType.FILLED);
-//
-//        Item item = new Item("TextField 1", textField);
-//        CheckBox floatPrompt = new CheckBox("Float Prompt");
-//        CheckBox leadIcon = new CheckBox("Add Icon");
-//        CheckBox maxLength = new CheckBox("Max Length");
-//        CheckBox visibleHelperText = new CheckBox("Helper Text");
-//
-//        item.getOptions().addAll(floatPrompt,
-//                maxLength, leadIcon, visibleHelperText);
-//
-//        floatPrompt.selectedProperty().addListener((observable, oldValue, newValue) -> {
-//            textField.setFloatPrompt(newValue);
-//        });
-//
-//        maxLength.selectedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue)
-//                textField.setMaxLength(10);
-//            else textField.setMaxLength(0);
-//        });
-//
-//
-//        leadIcon.selectedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue) textField.setLeadIcon(Icons.FAVORITE);
-//            else textField.setLeadIcon(null);
-//        });
-//
-//        visibleHelperText.selectedProperty().addListener(
-//                (observable, oldValue, newValue) ->
-//                        textField.setVisibleHelperText(newValue)
-//        );
-//
-//        return item;
-//    }
+    private @NotNull Item createTextFieldItemFilled() {
+        GNTextField textField = new GNTextField();
+
+//        textField.setAdditionalText("@gmail.com");
+        textField.setPrefHeight(50);
+        textField.setPromptText("Prompt Text Field");
+        textField.setHelperText("Password must contain an upper case letter, a numeric character, and a special character.");
+
+        textField.setFieldType(FieldType.FILLED);
+
+        Item item = new Item("TextField 1", textField);
+        CheckBox floatPrompt = new CheckBox("Float Prompt");
+        CheckBox leadIcon = new CheckBox("Add Icon");
+        CheckBox maxLength = new CheckBox("Max Length");
+        CheckBox visibleHelperText = new CheckBox("Helper Text");
+
+        item.getOptions().addAll(floatPrompt,
+                maxLength, leadIcon, visibleHelperText);
+
+        floatPrompt.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            textField.setFloatPrompt(newValue);
+        });
+
+        maxLength.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue)
+                textField.setMaxLength(10);
+            else textField.setMaxLength(0);
+        });
+
+
+        leadIcon.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) textField.setLeadIcon(Icons.FAVORITE);
+            else textField.setLeadIcon(null);
+        });
+
+        visibleHelperText.selectedProperty().addListener(
+                (observable, oldValue, newValue) ->
+                        textField.setVisibleHelperText(newValue)
+        );
+
+        return item;
+    }
 
 //    private @NotNull Item createListView() {
 //        ListView<String> listView = new ListView<>();

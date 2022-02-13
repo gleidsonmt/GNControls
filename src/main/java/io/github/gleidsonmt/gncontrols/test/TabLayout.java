@@ -24,8 +24,8 @@ import javafx.scene.control.TabPane;
  */
 public class TabLayout extends TabPane {
 
-    private TabControls tabControls = new TabControls("Skeleton");
-    private TabIcons tabIcons = new TabIcons("Icons");
+    private final TabControls tabControls = new TabControls("Skeleton");
+    private final TabIcons tabIcons = new TabIcons("Icons");
 
     public TabLayout() {
        getTabs().setAll(tabControls, tabIcons);
