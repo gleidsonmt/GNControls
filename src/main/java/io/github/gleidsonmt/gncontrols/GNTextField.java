@@ -2,14 +2,14 @@ package io.github.gleidsonmt.gncontrols;
 
 import io.github.gleidsonmt.gncontrols.converters.FieldTypeConverter;
 import io.github.gleidsonmt.gncontrols.converters.LeadIconTypeConverter;
+import io.github.gleidsonmt.gncontrols.converters.TrayActionConverter;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
 import io.github.gleidsonmt.gncontrols.model.Model;
 import io.github.gleidsonmt.gncontrols.options.FieldType;
+import io.github.gleidsonmt.gncontrols.options.TrayAction;
+import io.github.gleidsonmt.gncontrols.skin.GNTextFieldSkin;
 import javafx.beans.DefaultProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.*;
@@ -156,6 +156,25 @@ public class GNTextField extends TextField implements Component {
         }
     };
 
+    private final StyleableObjectProperty<TrayAction> trayAction
+            = new StyleableObjectProperty<>(TrayAction.NONE) {
+
+            @Override
+            public Object getBean() {
+                return this;
+            }
+
+            @Override
+            public String getName() {
+                return "trayAction";
+            }
+
+            @Override
+            public CssMetaData<? extends Styleable, TrayAction> getCssMetaData() {
+                return StyleableProperties.TRAY_ACTION;
+            }
+    };
+
     public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
         if (this.STYLEABLES == null) {
             List<CssMetaData<? extends Styleable, ?>> styleables =
@@ -177,6 +196,7 @@ public class GNTextField extends TextField implements Component {
         private static final CssMetaData<GNTextField, Boolean>      VISIBLE_HELPER_TEXT;
         private static final CssMetaData<GNTextField, Number>       MAX_LENGTH;
         private static final CssMetaData<GNTextField, Icons>        LEAD_ICON;
+        private static final CssMetaData<GNTextField, TrayAction>        TRAY_ACTION;
 
 //        private static final CssMetaData<GNTextField, Boolean> ACTION_TYPE;
 //        private static final CssMetaData<GNTextField, Boolean> VISIBLE_COUNT;
@@ -257,11 +277,26 @@ public class GNTextField extends TextField implements Component {
                 }
             };
 
+            TRAY_ACTION = new CssMetaData<>(
+                    "-gn-tray-action", TrayActionConverter.getInstance()) {
+
+                @Override
+                public boolean isSettable(GNTextField styleable) {
+                    return !styleable.trayAction.isBound();
+                }
+
+                @Override
+                public StyleableProperty<TrayAction> getStyleableProperty(GNTextField styleable) {
+                    return styleable.trayActionProperty();
+                }
+            };
+
             List<CssMetaData<? extends Styleable, ?>> styleables
                     = new ArrayList<>(Control.getClassCssMetaData());
             Collections.addAll(styleables,
                     FLOAT_PROMPT, VISIBLE_HELPER_TEXT,
-                    FIELD_TYPE, MAX_LENGTH, LEAD_ICON
+                    FIELD_TYPE, MAX_LENGTH, LEAD_ICON,
+                    TRAY_ACTION
 //                  ACTION_TYPE,
 //                  VISIBLE_COUNT, VISIBLE_MESSAGE
                     );
@@ -357,6 +392,10 @@ public class GNTextField extends TextField implements Component {
         return maxLength.get();
     }
 
+    public boolean isMaxLength() {
+        return maxLength.get().intValue() > 0;
+    }
+
     public StyleableObjectProperty<Number> maxLengthProperty() {
         return maxLength;
     }
@@ -375,5 +414,17 @@ public class GNTextField extends TextField implements Component {
 
     public void setLeadIcon(Icons leadIcon) {
         this.leadIcon.set(leadIcon);
+    }
+
+    public TrayAction getTrayAction() {
+        return trayAction.get();
+    }
+
+    public StyleableObjectProperty<TrayAction> trayActionProperty() {
+        return trayAction;
+    }
+
+    public void setTrayAction(TrayAction trayAction) {
+        this.trayAction.set(trayAction);
     }
 }
