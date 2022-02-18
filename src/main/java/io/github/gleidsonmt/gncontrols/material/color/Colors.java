@@ -44,14 +44,22 @@ public enum Colors {
     }
 
     public static Color get(String name) {
+        Color color = null;
         for (Colors c : Colors.values()) {
-            if (c.toString().equals(name.toUpperCase())) {
-                return (Color) c.getColor();
+            if (c.getName().equalsIgnoreCase(name)) {
+                color = (Color) c.getColor();
             }
         }
 
-        return null;
+        if (color == null) try {
+            throw new Exception("Error custom color not found.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return color;
     }
+
+
 
     @Contract(pure = true)
     public @NotNull String getName() {

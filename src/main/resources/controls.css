@@ -1,0 +1,101 @@
+
+.root {
+    -primary-color : #4FC1E9;
+    -secondary-color : black;
+
+    -background-color : white;
+    -foreground-color : gray;
+
+    -text-color : gray;
+
+
+    -light-gray : #F5F7FA;
+
+}
+
+
+
+
+
+
+
+
+
+.gn-text-area .prompt-text,
+.gn-text-box .prompt-text {
+    -fx-background-color : -background-color;
+    -fx-padding : 2px;
+}
+
+.gn-text-area:focused:float .prompt-text .text {
+    -fx-fill : -primary-color;
+}
+
+.gn-text-area .prompt-text .text {
+    -fx-fill : gray;
+}
+
+
+
+
+.gn-text-area {
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-border-width : 1px;
+    -fx-border-color : gray;
+    -fx-padding : 0px;
+    -fx-border-style : solid outside;
+    -fx-border-radius : 5;
+
+    -gn-max-length : 50;
+
+
+}
+
+.gn-text-area:focused:hover,
+.gn-text-area:focused {
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-border-width : 2px;
+    -fx-padding : 0px;
+    -fx-border-style : solid outside;
+    -fx-border-color : -primary-color;
+}
+
+
+.gn-text-area .scroll-pane .viewport,
+.gn-text-area .scroll-pane .viewport .content {
+    -fx-background-color : transparent;
+    -fx-effect : none;
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+
+}
+
+.gn-text-area .scroll-pane .viewport .content {
+    -fx-padding : 10px 5px 5px 10px;
+    -fx-border-radius : 5px;
+    -fx-background-radius : 5px;
+
+    -fx-border-width : 0px;
+
+    -fx-border-color : gray;
+}
+
+.gn-text-area:focused .scroll-pane .viewport  {
+    -fx-border-width : 0px;
+    -fx-border-color : gray;
+
+    -fx-border-radius : 0px;
+    -fx-background-radius : 0px;
+}
+
+
+.gn-text-area:hover {
+     -fx-border-style : solid outside;
+     -fx-border-color : gray;
+      -fx-border-width : 2px;
+ }

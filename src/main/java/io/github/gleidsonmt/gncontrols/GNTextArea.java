@@ -33,7 +33,7 @@ import java.util.List;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  14/01/2022
  */
-public class GNTextArea extends TextArea implements Component {
+public class GNTextArea extends TextArea implements GNComponent {
 
     public GNTextArea() {
         this(null);
@@ -73,11 +73,6 @@ public class GNTextArea extends TextArea implements Component {
     @Override
     protected Skin<?> createDefaultSkin() {
         return new GNTextAreaSkin(this);
-    }
-
-    @Override
-    public void setCommonStylesheet() {
-        getStylesheets().add(getCommonStylesheet());
     }
 
     private final StyleableBooleanProperty floatPrompt =

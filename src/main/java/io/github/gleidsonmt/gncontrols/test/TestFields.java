@@ -16,14 +16,13 @@
  */
 package io.github.gleidsonmt.gncontrols.test;
 
-import io.github.gleidsonmt.gncontrols.GNPasswordField;
-import io.github.gleidsonmt.gncontrols.GNTextArea;
-import io.github.gleidsonmt.gncontrols.GNTextField;
+import io.github.gleidsonmt.gncontrols.*;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
-import io.github.gleidsonmt.gncontrols.model.Model;
-import io.github.gleidsonmt.gncontrols.model.Person;
+import io.github.gleidsonmt.gncontrols.options.model.Model;
+import io.github.gleidsonmt.gncontrols.options.model.Person;
 import io.github.gleidsonmt.gncontrols.options.FieldType;
 import io.github.gleidsonmt.gncontrols.options.TrayAction;
+import io.github.gleidsonmt.gncontrols.skin.MaskedTextField;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,33 +31,23 @@ import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.jetbrains.annotations.NotNull;
-import org.scenicview.ScenicView;
+
+import java.util.Objects;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  01/01/2022
  */
-public class TestFields extends Application {
+public class TestFields extends Application implements Theme {
 
     @Override
     public void start( Stage stage)  {
 
         RootLayout root = new RootLayout();
-
-        Item item1 = new Item("Item 1", new TextField("Example"));
-        Item item2 = new Item("Item 2", new TextField("Example"));
-        Item item3 = new Item("Item 3", new TextField("Example"));
-
-        Item item4 = new Item("Item 4", new TextField("Example"));
-        Item item5 = new Item("Item 5", new TextField("Example"));
-        Item item6 = new Item("Item 6", new TextField("Example"));
-
-        item1.getOptions().add(new CheckBox("Option 01"));
-        item1.getOptions().add(new CheckBox("Option 02"));
-
 
         ObservableList<Item> items = FXCollections.observableArrayList(
                 createTextFieldItemFilled(),
@@ -67,36 +56,32 @@ public class TestFields extends Application {
 //                createComboBox(),
 //                createListView(),
                 createPasswordField(),
+                createButtonDefault(),
                 createTextAreaItem()
-//                createButtonItem(), createComboBox(), createTextFieldItem()
-//                item3, createButtonItem(), item1, createTextAreaItem(), item2, createTextFieldItem()
         );
-
-//        ObservableList<Item> items = FXCollections.observableArrayList(
-//                createTextFieldItem()
-//        );
 
         root.setItems(items);
 
         Scene scene = new Scene(root);
+        setTheme(scene);
         stage.setScene(scene);
 
-        scene.getStylesheets().addAll(
-                getClass().getResource("/style.css").toExternalForm()
-        );
+//        scene.getStylesheets().addAll(
+//                Objects.requireNonNull(
+//                        getClass().getResource("/style.css")).toExternalForm()
+//        );
 
 
         stage.show();
-
 //        CSSFX.start();
 //        ScenicView.show(stage.getScene());
     }
 
 
     private Item createPasswordField() {
-        GNPasswordField textField = new GNPasswordField();
+        GNPasswordBox textField = new GNPasswordBox();
 
-//        textField.setAdditionalText("@gmail.com");
+        textField.setAdditionalText("@gmail.com");
 
         textField.setPrefHeight(50);
         textField.setPromptText("Password Field");
@@ -129,20 +114,27 @@ public class TestFields extends Application {
         item.getOptions().addAll(floatPrompt,
                 filled, leadIcon, action);
 
+        textField.setTrayAction(TrayAction.ICON);
+        textField.setStyle("-gn-tray-action : icon;");
+        System.out.println(textField.getEditor());
+
         return item;
     }
 
     private @NotNull Item createTextFieldItem() {
-        GNTextField textField = new GNTextField();
+        GNTextBox textField = new GNTextBox();
+
 
 //        textField.setAdditionalText("@gmail.com");
         textField.setPrefHeight(50);
-        textField.setPromptText("Prompt Text Field");
+        textField.setPromptText("Prompt dfdeld");
         textField.setHelperText("Password must contain an upper case letter, a numeric character, and a special character.");
 
+//        textField.setText("The text");
+//        textField.setFloatPrompt(true);
 //        textField.setFieldType(FieldType.FILLED);
 
-        Item item = new Item("TextField 1", textField);
+        Item item = new Item("TextField Teste", textField);
         CheckBox floatPrompt = new CheckBox("Float Prompt");
         CheckBox filled = new CheckBox("Filled");
         CheckBox leadIcon = new CheckBox("Add Icon");
@@ -191,8 +183,8 @@ public class TestFields extends Application {
 
         maxLength.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue)
-                textField.setMaxLength(10);
-            else textField.setMaxLength(0);
+                textField.setCount(10);
+            else textField.setCount(0);
         });
 
         filled.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -217,15 +209,28 @@ public class TestFields extends Application {
             } else textField.setTrayAction(TrayAction.NONE);
         });
 
+        textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("newValue = " + newValue);
+        });
+
+        VBox box = new VBox();
+
         return item;
     }
 
     private @NotNull Item createTextFieldItemFilled() {
-        GNTextField textField = new GNTextField();
+        GNTextBox textField = new GNTextBox();
+
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                System.out.println("fuck");
+            }
+        });
 
 //        textField.setAdditionalText("@gmail.com");
         textField.setPrefHeight(50);
-        textField.setPromptText("Prompt Text Field");
+//        textField.setPromptText("Prompt Text Field");
         textField.setHelperText("Password must contain an upper case letter, a numeric character, and a special character.");
 
         textField.setFieldType(FieldType.FILLED);
@@ -245,8 +250,8 @@ public class TestFields extends Application {
 
         maxLength.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue)
-                textField.setMaxLength(10);
-            else textField.setMaxLength(0);
+                textField.setCount(10);
+            else textField.setCount(0);
         });
 
 
@@ -293,17 +298,11 @@ public class TestFields extends Application {
         return item;
     }
 
-//    private @NotNull Item createComboBox() {
-//        GNComboBox comboBox = new GNComboBox();
+    private @NotNull Item createButtonDefault() {
+        GNButton button = new GNButton();
 //
-//        CheckBox floatPrompt = new CheckBox("Float Prompt");
-////
-//
-//        comboBox.getItems().addAll("Item 01", "Item 02", "Item 03");
-//
-//        Item item = new Item("Combo Box", comboBox);
-//        item.getOptions().addAll(floatPrompt);
-//
-//        return item;
-//    }
+        Item item = new Item("Button", button);
+
+        return item;
+    }
 }

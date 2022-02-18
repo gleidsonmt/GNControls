@@ -1,6 +1,6 @@
 package io.github.gleidsonmt.gncontrols;
 
-import io.github.gleidsonmt.gncontrols.model.Model;
+import io.github.gleidsonmt.gncontrols.options.model.Model;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 

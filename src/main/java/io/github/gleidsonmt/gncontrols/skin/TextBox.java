@@ -1,30 +1,56 @@
-package io.github.gleidsonmt.gncontrols;
+/*
+ *
+ *  * Copyright (C) Gleidson Neves da Silveira
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+package io.github.gleidsonmt.gncontrols.skin;
 
 import io.github.gleidsonmt.gncontrols.converters.FieldTypeConverter;
 import io.github.gleidsonmt.gncontrols.converters.LeadIconTypeConverter;
 import io.github.gleidsonmt.gncontrols.converters.TrayActionConverter;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
-import io.github.gleidsonmt.gncontrols.model.Model;
+import io.github.gleidsonmt.gncontrols.options.model.Model;
 import io.github.gleidsonmt.gncontrols.options.FieldType;
 import io.github.gleidsonmt.gncontrols.options.TrayAction;
-import io.github.gleidsonmt.gncontrols.skin.GNTextFieldSkin;
-import javafx.beans.DefaultProperty;
-import javafx.beans.property.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.*;
 import javafx.css.converter.BooleanConverter;
 import javafx.css.converter.SizeConverter;
-import javafx.scene.control.*;
+import javafx.scene.control.Control;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@DefaultProperty("control")
-@SuppressWarnings("unused")
-public class GNTextField extends TextField implements Component {
+/**
+ * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
+ * Create on  14/02/2022
+ */
+public class TextBox extends Control {
 
     private final ObjectProperty<Callback<ListView<Model>, ListCell<Model>>> cellFactory =
             new SimpleObjectProperty<>(this, "cellFactory");
@@ -35,39 +61,46 @@ public class GNTextField extends TextField implements Component {
     private final ObjectProperty<ObservableList<Model>> suggestionList =
             new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
-    public GNTextField() {
-        this(null);
+    private final ObjectProperty<TextField> editor = new SimpleObjectProperty<>();
+
+
+    public TextBox() {
+
+        getStyleClass().add("gn-text-box");
+        setFocusTraversable(false);
     }
 
-    public GNTextField(String text) {
-        setText(text);
-        setPrefSize(100, 40);
-//        setLeadIcon(Icons.CONTACT);
-        getStyleClass().add("gn-text-field");
+    protected void createPasteAction(TextField textField) {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
 
+        if (clipboard.hasString()) {
+            final String text = clipboard.getString();
+            if (text != null) {
+                if (getVisibleCount()) {
+                    int major = text.length();
+                    int comparator = getCount().intValue() - textField.getLength();
+                    String sub ;
+                    if ( (major + textField.getLength()) < getCount().intValue() ) {
+                        //
+                        textField.replaceSelection(text);
+                    } else {
+                        sub = text.substring(0,
+                                comparator);
+                        textField.replaceSelection(sub);
+                    }
+                } else {
+                    textField.replaceSelection(text);
+                }
+            }
+        }
     }
-
-    @Override
-    protected Skin<?> createDefaultSkin() {
-        return new GNTextFieldSkin(this);
-    }
-
-    @Override
-    public String getUserAgentStylesheet() {
-        return getControlStylesheet();
-    }
-
-    @Override
-    public void setCommonStylesheet() {
-        getStylesheets().add(getCommonStylesheet());
-    }
-
+    
     private List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 
     private final StyleableBooleanProperty floatPrompt
             = new StyleableBooleanProperty(false) {
 
-        public CssMetaData<GNTextField, Boolean> getCssMetaData() {
+        public CssMetaData<TextBox, Boolean> getCssMetaData() {
             return StyleableProperties.FLOAT_PROMPT;
         }
 
@@ -119,23 +152,41 @@ public class GNTextField extends TextField implements Component {
                 }
             };
 
-    private final StyleableObjectProperty<Number> maxLength =
-        new StyleableObjectProperty<>(0) {
-            @Override
-            public Object getBean() {
-                return this;
-            }
+    private final StyleableObjectProperty<Boolean> visibleCount =
+            new StyleableObjectProperty<>(false) {
+                @Override
+                public Object getBean() {
+                    return this;
+                }
 
-            @Override
-            public String getName() {
-                return "maxLength";
-            }
+                @Override
+                public String getName() {
+                    return "visibleCount";
+                }
 
-            @Override
-            public CssMetaData<? extends Styleable, Number> getCssMetaData() {
-                return StyleableProperties.MAX_LENGTH;
-            }
-    };
+                @Override
+                public CssMetaData<? extends Styleable, Boolean> getCssMetaData() {
+                    return StyleableProperties.VISIBLE_COUNT;
+                }
+            };
+
+    private final StyleableObjectProperty<Number> count =
+            new StyleableObjectProperty<>(0) {
+                @Override
+                public Object getBean() {
+                    return this;
+                }
+
+                @Override
+                public String getName() {
+                    return "count";
+                }
+
+                @Override
+                public CssMetaData<? extends Styleable, Number> getCssMetaData() {
+                    return StyleableProperties.COUNT;
+                }
+            };
 
     private final StyleableObjectProperty<Icons> leadIcon
             = new StyleableObjectProperty<>(Icons.NONE) {
@@ -159,20 +210,20 @@ public class GNTextField extends TextField implements Component {
     private final StyleableObjectProperty<TrayAction> trayAction
             = new StyleableObjectProperty<>(TrayAction.NONE) {
 
-            @Override
-            public Object getBean() {
-                return this;
-            }
+        @Override
+        public Object getBean() {
+            return this;
+        }
 
-            @Override
-            public String getName() {
-                return "trayAction";
-            }
+        @Override
+        public String getName() {
+            return "trayAction";
+        }
 
-            @Override
-            public CssMetaData<? extends Styleable, TrayAction> getCssMetaData() {
-                return StyleableProperties.TRAY_ACTION;
-            }
+        @Override
+        public CssMetaData<? extends Styleable, TrayAction> getCssMetaData() {
+            return StyleableProperties.TRAY_ACTION;
+        }
     };
 
     public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
@@ -191,15 +242,16 @@ public class GNTextField extends TextField implements Component {
 
         private final static List<CssMetaData<? extends Styleable, ?>> CHILD_STYLEABLES;
 
-        private static final CssMetaData<GNTextField, Boolean>      FLOAT_PROMPT;
-        private static final CssMetaData<GNTextField, FieldType>    FIELD_TYPE;
-        private static final CssMetaData<GNTextField, Boolean>      VISIBLE_HELPER_TEXT;
-        private static final CssMetaData<GNTextField, Number>       MAX_LENGTH;
-        private static final CssMetaData<GNTextField, Icons>        LEAD_ICON;
-        private static final CssMetaData<GNTextField, TrayAction>        TRAY_ACTION;
+        private static final CssMetaData<TextBox, Boolean>      FLOAT_PROMPT;
+        private static final CssMetaData<TextBox, FieldType>    FIELD_TYPE;
+        private static final CssMetaData<TextBox, Boolean>      VISIBLE_HELPER_TEXT;
+        private static final CssMetaData<TextBox, Number>       COUNT;
+        private static final CssMetaData<TextBox, Boolean>      VISIBLE_COUNT;
+        private static final CssMetaData<TextBox, Icons>        LEAD_ICON;
+        private static final CssMetaData<TextBox, TrayAction>   TRAY_ACTION;
 
-//        private static final CssMetaData<GNTextField, Boolean> ACTION_TYPE;
-//        private static final CssMetaData<GNTextField, Boolean> VISIBLE_COUNT;
+//        private static final CssMetaData<Box, Boolean> ACTION_TYPE;
+//        private static final CssMetaData<Box, Boolean> VISIBLE_COUNT;
 
         private StyleableProperties() {}
 
@@ -210,12 +262,12 @@ public class GNTextField extends TextField implements Component {
                     BooleanConverter.getInstance(), false) {
 
                 @Override
-                public boolean isSettable(GNTextField styleable) {
+                public boolean isSettable(TextBox styleable) {
                     return !styleable.floatPrompt.isBound();
                 }
 
                 @Override
-                public StyleableProperty<Boolean> getStyleableProperty(GNTextField styleable) {
+                public StyleableProperty<Boolean> getStyleableProperty(TextBox styleable) {
                     return styleable.floatPromptProperty();
                 }
             };
@@ -225,12 +277,12 @@ public class GNTextField extends TextField implements Component {
                     FieldTypeConverter.getInstance()) {
 
                 @Override
-                public boolean isSettable(GNTextField styleable) {
+                public boolean isSettable(TextBox styleable) {
                     return !styleable.fieldType.isBound();
                 }
 
                 @Override
-                public StyleableProperty<FieldType> getStyleableProperty(GNTextField styleable) {
+                public StyleableProperty<FieldType> getStyleableProperty(TextBox styleable) {
                     return styleable.fieldTypeProperty();
                 }
             };
@@ -238,27 +290,40 @@ public class GNTextField extends TextField implements Component {
             VISIBLE_HELPER_TEXT = new CssMetaData<>(
                     "-gn-helper-visible", BooleanConverter.getInstance()) {
                 @Override
-                public boolean isSettable(GNTextField styleable) {
+                public boolean isSettable(TextBox styleable) {
                     return !styleable.visibleHelperText.isBound();
                 }
 
                 @Override
-                public StyleableProperty<Boolean> getStyleableProperty(GNTextField styleable) {
+                public StyleableProperty<Boolean> getStyleableProperty(TextBox styleable) {
                     return styleable.visibleHelperTextProperty();
                 }
             };
 
-            MAX_LENGTH = new CssMetaData<>(
-                    "-gn-max-length", SizeConverter.getInstance(), 0)
-            {
+            VISIBLE_COUNT = new CssMetaData<>(
+                    "-gn-count-visible", BooleanConverter.getInstance()) {
                 @Override
-                public boolean isSettable(GNTextField styleable) {
-                    return !styleable.maxLength.isBound();
+                public boolean isSettable(TextBox styleable) {
+                    return !styleable.visibleCount.isBound();
                 }
 
                 @Override
-                public StyleableProperty<Number> getStyleableProperty(GNTextField styleable) {
-                    return styleable.maxLengthProperty();
+                public StyleableProperty<Boolean> getStyleableProperty(TextBox styleable) {
+                    return styleable.visibleCountProperty();
+                }
+            };
+
+            COUNT = new CssMetaData<>(
+                    "-gn-count", SizeConverter.getInstance(), 0)
+            {
+                @Override
+                public boolean isSettable(TextBox styleable) {
+                    return !styleable.count.isBound();
+                }
+
+                @Override
+                public StyleableProperty<Number> getStyleableProperty(TextBox styleable) {
+                    return styleable.countProperty();
                 }
             };
 
@@ -267,12 +332,12 @@ public class GNTextField extends TextField implements Component {
                     LeadIconTypeConverter.getInstance()) {
 
                 @Override
-                public boolean isSettable(GNTextField styleable) {
+                public boolean isSettable(TextBox styleable) {
                     return !styleable.leadIcon.isBound();
                 }
 
                 @Override
-                public StyleableProperty<Icons> getStyleableProperty(GNTextField styleable) {
+                public StyleableProperty<Icons> getStyleableProperty(TextBox styleable) {
                     return styleable.leadIconProperty();
                 }
             };
@@ -281,12 +346,12 @@ public class GNTextField extends TextField implements Component {
                     "-gn-tray-action", TrayActionConverter.getInstance()) {
 
                 @Override
-                public boolean isSettable(GNTextField styleable) {
+                public boolean isSettable(TextBox styleable) {
                     return !styleable.trayAction.isBound();
                 }
 
                 @Override
-                public StyleableProperty<TrayAction> getStyleableProperty(GNTextField styleable) {
+                public StyleableProperty<TrayAction> getStyleableProperty(TextBox styleable) {
                     return styleable.trayActionProperty();
                 }
             };
@@ -295,11 +360,9 @@ public class GNTextField extends TextField implements Component {
                     = new ArrayList<>(Control.getClassCssMetaData());
             Collections.addAll(styleables,
                     FLOAT_PROMPT, VISIBLE_HELPER_TEXT,
-                    FIELD_TYPE, MAX_LENGTH, LEAD_ICON,
-                    TRAY_ACTION
-//                  ACTION_TYPE,
-//                  VISIBLE_COUNT, VISIBLE_MESSAGE
-                    );
+                    FIELD_TYPE, COUNT, LEAD_ICON,
+                    TRAY_ACTION, VISIBLE_COUNT
+            );
             CHILD_STYLEABLES = Collections.unmodifiableList(styleables);
         }
     }
@@ -388,22 +451,6 @@ public class GNTextField extends TextField implements Component {
         this.visibleHelperText.set(visibleHelperText);
     }
 
-    public Number getMaxLength() {
-        return maxLength.get();
-    }
-
-    public boolean isMaxLength() {
-        return maxLength.get().intValue() > 0;
-    }
-
-    public StyleableObjectProperty<Number> maxLengthProperty() {
-        return maxLength;
-    }
-
-    public void setMaxLength(Number maxLength) {
-        this.maxLength.set(maxLength);
-    }
-
     public Icons getLeadIcon() {
         return leadIcon.get();
     }
@@ -426,5 +473,65 @@ public class GNTextField extends TextField implements Component {
 
     public void setTrayAction(TrayAction trayAction) {
         this.trayAction.set(trayAction);
+    }
+
+    public TextField getEditor() {
+        return editor.get();
+    }
+
+    public ObjectProperty<TextField> editorProperty() {
+        return editor;
+    }
+
+    public void setEditor(TextField editor) {
+        this.editor.set(editor);
+    }
+
+    public StringProperty textProperty() {
+        return editor.get().textProperty();
+    }
+
+    public String getText() {
+        return editor.get().getText();
+    }
+
+    public void setText(String text) {
+        editor.get().setText(text);
+    }
+
+    public void setPromptText(String promptText) {
+        editor.get().setPromptText(promptText);
+    }
+
+    public StringProperty promptTextProperty() {
+        return editor.get().promptTextProperty();
+    }
+
+    public String getPromptText() {
+        return editor.get().getPromptText();
+    }
+
+    public Number getCount() {
+        return count.get();
+    }
+
+    public StyleableObjectProperty<Number> countProperty() {
+        return count;
+    }
+
+    public void setCount(Number count) {
+        this.count.set(count);
+    }
+
+    public Boolean getVisibleCount() {
+        return visibleCount.get();
+    }
+
+    public StyleableObjectProperty<Boolean> visibleCountProperty() {
+        return visibleCount;
+    }
+
+    public void setVisibleCount(Boolean visibleCount) {
+        this.visibleCount.set(visibleCount);
     }
 }

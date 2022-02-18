@@ -17,7 +17,7 @@
  *
  */
 
-package io.github.gleidsonmt.gncontrols.model;
+package io.github.gleidsonmt.gncontrols.options.model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

@@ -16,12 +16,12 @@
  */
 package io.github.gleidsonmt.gncontrols.skin;
 
-import io.github.gleidsonmt.gncontrols.GNPasswordField;
+import io.github.gleidsonmt.gncontrols.GNPasswordBox;
 
-public class GNPasswordFieldSkin
-        extends GNTextFieldSkin {
+public class GNPasswordBoxSkin
+        extends GNTextBoxSkin {
 
-    public GNPasswordFieldSkin(GNPasswordField control) {
+    public GNPasswordBoxSkin(GNPasswordBox control) {
         super(control);
 
     }

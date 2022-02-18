@@ -17,23 +17,14 @@
  *
  */
 
-package io.github.gleidsonmt.gncontrols;
-
-import java.util.Objects;
+package io.github.gleidsonmt.gncontrols.options;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  04/02/2022
  */
-public interface Component {
+public enum TrayAction {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
-    }
+    NONE, ICON, CLEAR, VIEWER
 
-    default String getCommonStylesheet() {
-        return Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm();
-    }
-
-    void setCommonStylesheet();
 }

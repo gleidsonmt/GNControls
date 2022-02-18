@@ -1,0 +1,139 @@
+
+
+
+/* @GNButton */
+
+.gn-button {
+    -fx-text-fill : white;
+}
+
+/* @GNTextBox */
+
+.gn-text-box {
+    -fx-padding : 0px;
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-border-color : -medium-gray;
+    -fx-border-style : solid outside;
+    -fx-border-radius : 5;
+}
+.gn-text-box:filled:hover,
+.gn-text-box:filled:focused,
+.gn-text-box:filled {
+    -fx-border-width : 0px 0px 1px 0px;
+    -fx-border-radius : 0px;
+}
+
+.gn-text-box:filled .filled-border {
+    -fx-fill : -base;
+}
+
+.gn-text-box:hover {
+    -fx-border-width : 2px;
+    -fx-border-color :  -medium-gray-2;
+    -fx-border-insets : 0px;
+}
+
+.gn-text-box:focused {
+    -fx-padding : 0px;
+    -fx-effect : none;
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-border-width : 2px;
+    -fx-border-color :  -base;
+}
+
+.gn-text-box .editor {
+     -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-padding : 0px;
+    -fx-text-fill : -text-color;
+}
+
+.gn-text-box .add-text {
+    -fx-fill : -medium-gray-2;
+}
+
+.gn-text-box .prompt-text {
+    -fx-background-color : -background-color;
+    -fx-padding : 2px;
+}
+
+.gn-text-box:focused:float .prompt-text .text {
+    -fx-fill : -base;
+}
+
+.gn-text-box .prompt-text .text {
+    -fx-fill : gray;
+}
+
+.gn-text-box > .lead-button,
+.gn-text-box > .trail-button {
+    -fx-background-color : transparent;
+}
+
+.gn-text-box .lead-button .icon,
+.gn-text-box .trail-button .icon {
+    -fx-fill : gray;
+}
+
+.gn-text-box:focused .trail-button .icon,
+.gn-text-box:focused .lead-button .icon {
+    -fx-fill : -base;
+}
+
+
+
+
+
+
+
+
+
+
+
+.list-view {
+    -fx-fixed-cell-size : 50;
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+}
+
+.list-view .virtual-flow .clipped-container .sheet .list-cell
+{
+    -fx-background-color : -background-color;
+}
+
+.list-view .virtual-flow .clipped-container .sheet .list-cell:selected,
+.list-view .virtual-flow .clipped-container .sheet .list-cell:selected .text
+{
+     -fx-background-color : -base;
+     -fx-fill : white;
+}
+
+.list-view .virtual-flow .clipped-container .sheet .list-cell:filled:hover,
+.list-view .virtual-flow .clipped-container .sheet .list-cell:filled:hover .text
+{
+     -fx-background-color : -light-gray;
+     -fx-fill : gray;
+}
+
+.list-view .virtual-flow .clipped-container .sheet .list-cell .text
+{
+    -fx-fill : black;
+}
+
+.popup {
+    -fx-padding : 0px;
+    -fx-background-color : white;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,.2) , 18, 0 , 0 , 10 );
+    -fx-border-color : derive(gray, 85%);
+    -fx-border-radius : 5px;
+    -fx-background-radius : 5px;
+    -fx-border-style : solid inside;
+    -fx-border-width : 1px;
+}
+

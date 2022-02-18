@@ -17,9 +17,8 @@
 package io.github.gleidsonmt.gncontrols.skin;
 
 import io.github.gleidsonmt.gncontrols.GNListView;
-import io.github.gleidsonmt.gncontrols.GNPasswordField;
-import io.github.gleidsonmt.gncontrols.GNTextField;
-import io.github.gleidsonmt.gncontrols.model.Model;
+import io.github.gleidsonmt.gncontrols.GNPasswordBox;
+import io.github.gleidsonmt.gncontrols.options.model.Model;
 import io.github.gleidsonmt.gncontrols.options.FieldType;
 import io.github.gleidsonmt.gncontrols.material.icon.IconContainer;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
@@ -31,16 +30,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.css.PseudoClass;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.TextFieldSkin;
-import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -52,8 +48,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class GNTextFieldSkin
-        extends SkinBase<GNTextField> {
+public class GNTextBoxSkin
+        extends SkinBase<TextBox> {
 
     private final Timeline          animation       = new Timeline();
     private final Button            buttonLeadIcon  = new Button();
@@ -78,7 +74,7 @@ public class GNTextFieldSkin
 
     private FilteredList<Model> filteredList;
     private ListView<Model>     listView;
-    private GNTextField         control;
+    private TextBox control;
 
 
     private final Text  addText     = new Text();
@@ -89,9 +85,6 @@ public class GNTextFieldSkin
     private final ChangeListener<Boolean> clearFocus = this::setClearFocus;
     private final ChangeListener<String>  addButtonOnText = this::setAddButtonOnText;
 
-    private static final PseudoClass FOCUSED_PSEUDO_CLASS =
-            PseudoClass.getPseudoClass("focused");
-
     private static final PseudoClass HOVER_PSEUDO_CLASS =
             PseudoClass.getPseudoClass("hover");
 
@@ -101,31 +94,22 @@ public class GNTextFieldSkin
     private static final PseudoClass FILLED_PSEUDO_CLASS =
             PseudoClass.getPseudoClass("filled");
 
-    public GNTextFieldSkin(GNTextField control) {
+    public GNTextBoxSkin(TextBox control) {
         super(control);
 
         this.control = control;
 
-        if (control instanceof GNPasswordField) {
-            editor = new PasswordField() {
+        this.editor = control.getEditor();
 
-                @Override
-                public void paste() {
-                    createPasteAction(this);
-                }
-            };
-            editor.setSkin(new CustomPasswordSkin(editor));
-        } else {
-            editor = new TextField() {
-                @Override
-                public void paste() {
-                    createPasteAction(this);
-                }
-            };
+        if (control instanceof GNPasswordBox) {
+            editor.setSkin(new UnMaskPasswordSkin(editor));
         }
 
         addText.textProperty().bind(control.additionalTextProperty());
         helperText.textProperty().bind(control.helperTextProperty());
+        helperText.getStyleClass().add("helper-text");
+
+        promptText.textProperty().bind(control.promptTextProperty());
 
         buttonLeadIcon.setGraphic(new IconContainer(control.getLeadIcon()));
         buttonLeadIcon.setAlignment(Pos.CENTER);
@@ -154,35 +138,15 @@ public class GNTextFieldSkin
 
         getChildren().add(editor);
 
-//        editor.textFormatterProperty().bindBidirectional(control.textFormatterProperty());
-        editor.textProperty().bindBidirectional(control.textProperty());
-        editor.alignmentProperty().bindBidirectional(control.alignmentProperty());
-        editor.editableProperty().bindBidirectional(control.editableProperty());
         editor.getStyleClass().add("editor");
 
-        promptText.textProperty().bindBidirectional(control.promptTextProperty());
         promptText.getStyleClass().add("prompt-text");
         promptText.setMouseTransparent(true);
         promptText.toBack();
 
-        control.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            editor.requestFocus();
-            pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, true);
-        });
-
-        editor.focusedProperty().addListener((observable, oldValue, newValue) ->
-                pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, newValue));
-
-        control.addEventFilter(MouseEvent.MOUSE_ENTERED, event ->
-                pseudoClassStateChanged(HOVER_PSEUDO_CLASS, true));
-
-        control.addEventFilter(MouseEvent.MOUSE_EXITED, event ->
-                pseudoClassStateChanged(HOVER_PSEUDO_CLASS, false));
-
         getChildren().add(addText);
         getChildren().add(promptText);
         getChildren().add(filledBorder);
-
 
         if (control.getLeadIcon() != null) {
             updateLeadIcon(control.getLeadIcon());
@@ -194,6 +158,7 @@ public class GNTextFieldSkin
 
         helperText.setWrapText(true);
         addText.getStyleClass().add("add-text");
+
         editor.focusedProperty().addListener(focusedListener);
 
         editor.lengthProperty().addListener((observable, oldValue, newValue) -> {
@@ -206,14 +171,14 @@ public class GNTextFieldSkin
         });
 
         if (control.isFloatPrompt()) {
-            if (control.getText() != null) {
-                if (!control.getText().isEmpty()) {
+            if (editor.getText() != null) {
+                if (!editor.getText().isEmpty()) {
                     Platform.runLater(this::upPrompt);
                 }
             }
         } else {
-            if (control.getText() != null) {
-                if (!control.getText().isEmpty()) {
+            if (editor.getText() != null) {
+                if (!editor.getText().isEmpty()) {
                     getChildren().removeAll(promptText);
                 }
             }
@@ -222,10 +187,15 @@ public class GNTextFieldSkin
         configType();
         configSuggestionList();
 
+        registerChangeListener(control.floatPromptProperty(), c -> {
+            if (((boolean) c.getValue()))  editor.setStyle("-fx-prompt-text-fill : transparent;");
+            else  editor.setStyle(null);
+        });
+
         control.fieldTypeProperty().addListener((observable, oldValue, newValue) ->
                 pseudoClassStateChanged(FILLED_PSEUDO_CLASS, newValue.equals(FieldType.FILLED)));
 
-        if (control.getMaxLength().intValue() > 0) {
+        if (control.getCount().intValue() > 0) {
             if (!getChildren().contains(countText)) {
                 getChildren().add(countText);
             }
@@ -233,7 +203,7 @@ public class GNTextFieldSkin
             updateMaxLength();
         }
 
-        registerChangeListener(control.maxLengthProperty(), c -> {
+        registerChangeListener(control.countProperty(), c -> {
             if ( ((int) c.getValue()) < 1) {
                 getChildren().remove(countText);
                 control.removeEventFilter(KeyEvent.KEY_TYPED, maxEvent);
@@ -243,7 +213,12 @@ public class GNTextFieldSkin
                 }
                 control.addEventFilter(KeyEvent.KEY_TYPED, maxEvent);
             }
+            control.setVisibleCount(control.getVisibleCount());
             updateMaxLength((int) c.getValue());
+        });
+
+        registerChangeListener(control.visibleCountProperty(), c -> {
+            control.setVisibleCount(control.getVisibleCount());
         });
 
         registerChangeListener(control.leadIconProperty(), c -> {
@@ -277,7 +252,6 @@ public class GNTextFieldSkin
 
 
     private void selectAction(@NotNull TrayAction action) throws Exception {
-        System.out.println(action);
         switch (action) {
             case NONE -> getChildren().removeAll(buttonTrailIcon);
             case CLEAR -> {
@@ -285,10 +259,14 @@ public class GNTextFieldSkin
                 buttonTrailIcon.setGraphic(new IconContainer(Icons.CLEAR));
             }
             case VIEWER -> {
-                if (control instanceof GNPasswordField) {
+                if (control instanceof GNPasswordBox) {
                     configViewerAction();
                     buttonTrailIcon.setGraphic(new IconContainer(Icons.VIEWER));
                 } else throw new Exception("This action is not applicable for this control.");
+            }
+            case ICON -> {
+                Icons.get("viewer");
+//                buttonTrailIcon.setGraphic(new IconContainer(Icons.get));
             }
         }
     }
@@ -335,18 +313,16 @@ public class GNTextFieldSkin
     private final EventHandler<KeyEvent> maxEvent = new EventHandler<>() {
         @Override
         public void handle(KeyEvent event) {
-
-            if (control.getLength() >= control.getMaxLength().intValue() && !keep) {
-                editor.positionCaret(control.getLength());
+            if (editor.getLength() >= control.getCount().intValue() && !keep) {
+                editor.positionCaret(editor.getLength());
                 event.consume();
             }
-
         }
     };
 
 
     private void updateMaxLength() {
-        updateMaxLength(editor.getLength(), control.getMaxLength().intValue());
+        updateMaxLength(editor.getLength(), control.getCount().intValue());
     }
 
     private void updateMaxLength(int max) {
@@ -479,13 +455,13 @@ public class GNTextFieldSkin
         } else { // no focus
 
             if (control.isFloatPrompt()) {
-                if (control.getText() != null) {
-                    if (control.getText().isEmpty()) {
+                if (editor.getText() != null) {
+                    if (editor.getText().isEmpty()) {
                         downPrompt();
                     }
                 } else downPrompt();
             } else {
-                    if (control.getText() == null || control.getText().isEmpty()) {
+                    if (editor.getText() == null || editor.getText().isEmpty()) {
                         if (!getChildren().contains(promptText))
                             getChildren().add(promptText);
                     }
@@ -765,7 +741,7 @@ public class GNTextFieldSkin
     }
 
     private void setAddButtonOnText(ObservableValue<? extends String> observable, String oldValue, String  newValue) {
-        if (control instanceof GNPasswordField) {
+        if (control instanceof GNPasswordBox) {
             if (newValue.length() > 0 && control.getTrayAction().equals(TrayAction.VIEWER)) {
                 if (!getChildren().contains(buttonTrailIcon))
                     getChildren().add(buttonTrailIcon);
@@ -778,34 +754,9 @@ public class GNTextFieldSkin
     }
 
 
-    // Needs attention
-    private void createPasteAction(TextField textField) {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
+    private class UnMaskPasswordSkin extends TextFieldSkin {
 
-        if (clipboard.hasString()) {
-            final String text = clipboard.getString();
-            if (text != null) {
-                if (control.isMaxLength()) {
-                    int major = text.length();
-                    int comparator = control.getMaxLength().intValue() - textField.getLength();
-                    String sub ;
-                    if ( (major + textField.getLength()) < control.getMaxLength().intValue() ) {
-    //
-                        textField.replaceSelection(text);
-                    } else {
-                        sub = text.substring(0,
-                                comparator);
-                        textField.replaceSelection(sub);
-                    }
-                } else {
-                    textField.replaceSelection(text);
-                }
-            }
-        }
-    }
-    private class CustomPasswordSkin extends TextFieldSkin {
-
-        public CustomPasswordSkin(TextField control) {
+        public UnMaskPasswordSkin(TextField control) {
             super(control);
         }
 
@@ -823,4 +774,7 @@ public class GNTextFieldSkin
             }
         }
     }
+
+
+
 }
