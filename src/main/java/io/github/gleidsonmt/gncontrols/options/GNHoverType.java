@@ -14,12 +14,13 @@
  *    You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package io.github.gleidsonmt.gncontrols.options;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  07/12/2018
+ * Create on  18/02/2022
  */
-public enum AvatarType {
-    CIRCLE, RECT
+public enum GNHoverType {
+    SWIPE, SWIPE_DIAGONAL, SMOOSH, CORNERS, CENTRALIZE, ALTERNATE, HOVER_BORDER
 }
