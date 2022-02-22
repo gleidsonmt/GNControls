@@ -17,7 +17,7 @@
 
 package io.github.gleidsonmt.gncontrols.converters;
 
-import io.github.gleidsonmt.gncontrols.options.GNButtonType;
+import io.github.gleidsonmt.gncontrols.options.GNHoverType;
 import io.github.gleidsonmt.gncontrols.options.TrayAction;
 import javafx.css.ParsedValue;
 import javafx.css.StyleConverter;
@@ -29,35 +29,35 @@ import java.util.logging.Logger;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  04/02/2022
  */
-public class GNButtonTypeConverter extends StyleConverter<String, GNButtonType> {
+public class GNHoverTypeConverter extends StyleConverter<String, GNHoverType> {
 
-    private GNButtonTypeConverter() {
+    private GNHoverTypeConverter() {
 
     }
 
-    public static StyleConverter<String, GNButtonType> getInstance() {
+    public static StyleConverter<String, GNHoverType> getInstance() {
         return Holder.INSTANCE;
     }
 
-    public GNButtonType convert(ParsedValue<String, GNButtonType> value, Font notUsedFont) {
+    public GNHoverType convert(ParsedValue<String, GNHoverType> value, Font notUsedFont) {
         String string = value.getValue();
 
         try {
-            return GNButtonType.valueOf(string.toUpperCase());
+            return GNHoverType.valueOf(string.toUpperCase());
         } catch (NullPointerException | IllegalArgumentException var5) {
             Logger.getLogger(LeadIconTypeConverter.class.getName()).info(String.format("Icon '%s' not found", string));
-            return GNButtonType.RECT;
+            return GNHoverType.SWIPE;
         }
     }
 
 
     @Override
     public String toString() {
-        return "GNButtonTypeConverter";
+        return "TrayActionConverter";
     }
 
     public static class Holder {
-        static final GNButtonTypeConverter INSTANCE = new GNButtonTypeConverter();
+        static final GNHoverTypeConverter INSTANCE = new GNHoverTypeConverter();
 
         private Holder() {
             throw new IllegalAccessError("Holder class");
