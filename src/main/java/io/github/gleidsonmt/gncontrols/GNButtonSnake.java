@@ -17,16 +17,29 @@
 
 package io.github.gleidsonmt.gncontrols;
 
-import java.util.Objects;
+import io.github.gleidsonmt.gncontrols.options.GNButtonType;
+import io.github.gleidsonmt.gncontrols.skin.button.SnakeAnimationSkin;
+import javafx.scene.control.Skin;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  19/02/2022
  */
-public interface GNComponent {
+public class GNButtonSnake extends GNButtonBase {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    public GNButtonSnake() {
+        this(null);
+    }
+
+    public GNButtonSnake(String text) {
+        super(text);
+        getStyleClass().add("gn-button-snake");
+        setButtonType(GNButtonType.RECT);
+    }
+
+    @Override
+    protected Skin<?> createDefaultSkin() {
+        return new SnakeAnimationSkin(this);
     }
 
 }

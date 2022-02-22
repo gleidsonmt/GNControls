@@ -17,16 +17,33 @@
 
 package io.github.gleidsonmt.gncontrols;
 
-import java.util.Objects;
+import io.github.gleidsonmt.gncontrols.skin.GNRadioButtonSkin;
+import javafx.scene.Cursor;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Skin;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  19/02/2022
  */
-public interface GNComponent {
+public class GNRadioButton extends RadioButton implements GNComponent {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    public GNRadioButton() {
+        this(null);
     }
 
+    public GNRadioButton(String text) {
+        super(text);
+        setCursor(Cursor.HAND);
+    }
+
+    @Override
+    protected Skin<?> createDefaultSkin() {
+        return new GNRadioButtonSkin(this);
+    }
+
+    @Override
+    public String getUserAgentStylesheet() {
+        return getControlStylesheet();
+    }
 }

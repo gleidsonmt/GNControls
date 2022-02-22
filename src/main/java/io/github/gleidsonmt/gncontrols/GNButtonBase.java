@@ -17,51 +17,71 @@
 
 package io.github.gleidsonmt.gncontrols;
 
+import io.github.gleidsonmt.gncontrols.converters.GNButtonTypeConverter;
 import io.github.gleidsonmt.gncontrols.options.GNButtonType;
-import io.github.gleidsonmt.gncontrols.skin.button.RippleButtonSkin;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
-import javafx.css.converter.PaintConverter;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
-import javafx.scene.control.Skin;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  16/02/2022
+ * Create on  18/02/2022
  */
-public class GNButton extends GNButtonBase implements GNComponent {
+public class GNButtonBase extends Button implements GNComponent {
 
-    public GNButton() {
+    public GNButtonBase() {
         this(null);
     }
 
-    public GNButton(String text) {
-        this(text, GNButtonType.SEMI_ROUNDED);
+    public GNButtonBase(String text) {
+        this(text, GNButtonType.ROUNDED);
     }
 
-    public GNButton(String text, GNButtonType type) {
+    public GNButtonBase(String text, GNButtonType type) {
         super(text);
         if (text == null) setText("Button");
+        setAlignment(Pos.CENTER);
         getStyleClass().add("gn-button");
-        setRippleFill(Color.WHITE);
+        setPrefSize(100, 40);
+
+        setButtonType(type);
+
+        buttonTypeProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                updateType(newValue);
+            }
+        });
+        updateType(type);
 
     }
 
+    private void updateType(GNButtonType type) {
+        switch (type) {
+            case RECT -> this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), CornerRadii.EMPTY, Insets.EMPTY)));
+            case ROUNDED -> this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), new CornerRadii(100), Insets.EMPTY)));
+            case SEMI_ROUNDED -> this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), new CornerRadii(3.5), Insets.EMPTY)));
+        }
+    }
 
     @Override
-    protected Skin<?> createDefaultSkin() {
-        return new RippleButtonSkin(this);
-//        return new GNBorderAnimationSkin(this);
+    public String getUserAgentStylesheet() {
+        return getControlStylesheet();
     }
 
-    private final StyleableObjectProperty<Paint> rippleFill = new StyleableObjectProperty<>(Color.RED) {
+    private final StyleableObjectProperty<GNButtonType> buttonType = new StyleableObjectProperty<>(GNButtonType.RECT) {
         @Override
         public Object getBean() {
             return this;
@@ -69,14 +89,15 @@ public class GNButton extends GNButtonBase implements GNComponent {
 
         @Override
         public String getName() {
-            return "rippleFill";
+            return "buttonType";
         }
 
         @Override
-        public CssMetaData<? extends Styleable, Paint> getCssMetaData() {
-            return StyleableProperties.RIPPLE_FILL;
+        public CssMetaData<? extends Styleable, GNButtonType> getCssMetaData() {
+            return StyleableProperties.BUTTON_TYPE;
         }
     };
+
 
     private List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 
@@ -84,27 +105,28 @@ public class GNButton extends GNButtonBase implements GNComponent {
 
         private final static List<CssMetaData<? extends Styleable, ?>> CHILD_STYLEABLES;
 
-        private static final CssMetaData<GNButton, Paint>               RIPPLE_FILL;
+        private static final CssMetaData<GNButtonBase, GNButtonType>        BUTTON_TYPE;
 
         private StyleableProperties() {}
 
         static {
 
-            RIPPLE_FILL = new CssMetaData<>("-gn-ripple-fill", PaintConverter.getInstance(), Color.WHITE) {
+            BUTTON_TYPE = new CssMetaData<>(
+                    "-gn-button-type", GNButtonTypeConverter.getInstance(), GNButtonType.ROUNDED) {
                 @Override
-                public boolean isSettable(GNButton styleable) {
-                    return !styleable.rippleFill.isBound();
+                public boolean isSettable(GNButtonBase styleable) {
+                    return !styleable.buttonType.isBound();
                 }
 
                 @Override
-                public StyleableProperty<Paint> getStyleableProperty(GNButton styleable) {
-                    return styleable.rippleFillProperty();
+                public StyleableProperty<GNButtonType> getStyleableProperty(GNButtonBase styleable) {
+                    return styleable.buttonTypeProperty();
                 }
             };
 
             List<CssMetaData<? extends Styleable, ?>> styleables
                     = new ArrayList<>(Control.getClassCssMetaData());
-            Collections.addAll(styleables, RIPPLE_FILL);
+            Collections.addAll(styleables, BUTTON_TYPE);
             CHILD_STYLEABLES = Collections.unmodifiableList(styleables);
         }
     }
@@ -126,15 +148,18 @@ public class GNButton extends GNButtonBase implements GNComponent {
         return StyleableProperties.CHILD_STYLEABLES;
     }
 
-    public Paint getRippleFill() {
-        return rippleFill.get();
+
+    public GNButtonType getButtonType() {
+        return buttonType.get();
     }
 
-    public StyleableObjectProperty<Paint> rippleFillProperty() {
-        return rippleFill;
+    public StyleableObjectProperty<GNButtonType> buttonTypeProperty() {
+        return buttonType;
     }
 
-    public void setRippleFill(Paint rippleFill) {
-        this.rippleFill.set(rippleFill);
+    public void setButtonType(GNButtonType buttonType) {
+        this.buttonType.set(buttonType);
     }
+
+
 }
