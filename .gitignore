@@ -1,5 +1,10 @@
 .idea/**
+.gradle/**
 /out/**
+/build/**
 GNCalendar.iml
 scenicView.properties
 GNControls.iml
+gradlew
+gradlew.bat
+/gradle/**

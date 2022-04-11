@@ -36,6 +36,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,12 +65,24 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
             }
         });
 
-        fillTransitionProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                setTextFill(newValue);
-                updateType(getButtonType());
-            }
-        });
+//        backgroundTransitionProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                updateType(getButtonType());
+//            }
+//        });
+//
+//        textTransitionProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                setTextFill(newValue);
+//                updateType(getButtonType());
+//            }
+//        });
+//
+//        borderTransitionProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                updateType(getButtonType());
+//            }
+//        });
 
         hoverTypeProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("newValue = " + newValue);
@@ -87,27 +100,26 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
         updateType(getButtonType());
     }
 
-    public void updateType(GNButtonType type) {
-        switch (type) {
-            case RECT -> {
-                this.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-                this.setBorder(new Border(new BorderStroke(getFillTransition(), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
-            }
-            case ROUNDED -> {
-                this.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(100), Insets.EMPTY)));
-                this.setBorder(new Border(new BorderStroke(getFillTransition(), BorderStrokeStyle.SOLID, new CornerRadii(100), BorderWidths.DEFAULT)));
-            }
-            case SEMI_ROUNDED -> {
-                this.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(3.5), Insets.EMPTY)));
-                this.setBorder(
-                        new Border(
-                                new BorderStroke(
-                                        getFillTransition(),
-                                        new BorderStrokeStyle(StrokeType.CENTERED, StrokeLineJoin.ROUND, StrokeLineCap.SQUARE, 1, 0, null),
-                                        new CornerRadii(3.5), BorderWidths.DEFAULT)));
-            }
-        }
+    public void updateType(@NotNull GNButtonType type) {
+//        switch (type) {
+//            case RECT -> {
+//                this.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+//                this.setBorder(new Border(new BorderStroke(getBackgroundTransition(), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+//            }
+//            case ROUNDED -> {
+//                this.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(100), Insets.EMPTY)));
+//                this.setBorder(new Border(new BorderStroke(getBackgroundTransition(), BorderStrokeStyle.SOLID, new CornerRadii(100), BorderWidths.DEFAULT)));
+//            }
+//            case SEMI_ROUNDED -> {
+//                this.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(3.5), Insets.EMPTY)));
+//                this.setBorder(
+//                        new Border(
+//                                new BorderStroke(
+//                                        getBackgroundTransition(),
+//                                        new BorderStrokeStyle(StrokeType.CENTERED, StrokeLineJoin.ROUND, StrokeLineCap.SQUARE, 1, 0, null),
+//                                        new CornerRadii(3.5), BorderWidths.DEFAULT)));
+//            }
+//        }
     }
 
     @Override
@@ -120,7 +132,7 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
         return getControlStylesheet();
     }
 
-    private final StyleableObjectProperty<Paint> fillTransition = new StyleableObjectProperty<>(Color.WHITE) {
+    private final StyleableObjectProperty<Paint> backgroundTransition = new StyleableObjectProperty<>(Color.WHITE) {
         @Override
         public Object getBean() {
             return this;
@@ -128,12 +140,29 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
 
         @Override
         public String getName() {
-            return "fillTransition";
+            return "backgroundTransition";
         }
 
         @Override
         public CssMetaData<? extends Styleable, Paint> getCssMetaData() {
-            return StyleableProperties.FILL_TRANSITION;
+            return StyleableProperties.BACKGROUND_TRANSITION;
+        }
+    };
+
+    private final StyleableObjectProperty<Paint> textTransition = new StyleableObjectProperty<>(Color.WHITE) {
+        @Override
+        public Object getBean() {
+            return this;
+        }
+
+        @Override
+        public String getName() {
+            return "textTransition";
+        }
+
+        @Override
+        public CssMetaData<? extends Styleable, Paint> getCssMetaData() {
+            return StyleableProperties.TEXT_TRANSITION;
         }
     };
 
@@ -161,25 +190,41 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
 
         private final static List<CssMetaData<? extends Styleable, ?>> CHILD_STYLEABLES;
 
-        private static final CssMetaData<GNButtonHover, Paint>          FILL_TRANSITION;
+        private static final CssMetaData<GNButtonHover, Paint>          BACKGROUND_TRANSITION;
+        private static final CssMetaData<GNButtonHover, Paint>          TEXT_TRANSITION;
         private static final CssMetaData<GNButtonHover, GNHoverType>    HOVER_TYPE;
 
         private StyleableProperties() {}
 
         static {
 
-            FILL_TRANSITION = new CssMetaData<>(
-                    "-gn-fill-transition", PaintConverter.getInstance()) {
+            BACKGROUND_TRANSITION = new CssMetaData<>(
+                    "-gn-background-transition", PaintConverter.getInstance()) {
                 @Override
                 public boolean isSettable(GNButtonHover styleable) {
-                    return !styleable.fillTransition.isBound();
+                    return !styleable.backgroundTransition.isBound();
                 }
 
                 @Override
                 public StyleableProperty<Paint> getStyleableProperty(GNButtonHover styleable) {
-                    return styleable.fillTransitionProperty();
+                    return styleable.backgroundTransitionProperty();
                 }
             };
+
+            TEXT_TRANSITION = new CssMetaData<>(
+                    "-gn-text-transition", PaintConverter.getInstance()) {
+                @Override
+                public boolean isSettable(GNButtonHover styleable) {
+                    return !styleable.textTransition.isBound();
+                }
+
+                @Override
+                public StyleableProperty<Paint> getStyleableProperty(GNButtonHover styleable) {
+                    return styleable.textTransitionProperty();
+                }
+            };
+
+
 
             HOVER_TYPE = new CssMetaData<>(
                     "-gn-hover-type", GNHoverTypeConverter.getInstance()) {
@@ -196,7 +241,8 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
 
             List<CssMetaData<? extends Styleable, ?>> styleables
                     = new ArrayList<>(Control.getClassCssMetaData());
-            Collections.addAll(styleables, FILL_TRANSITION, HOVER_TYPE);
+            Collections.addAll(styleables, BACKGROUND_TRANSITION,
+                    TEXT_TRANSITION, HOVER_TYPE);
             CHILD_STYLEABLES = Collections.unmodifiableList(styleables);
         }
     }
@@ -218,18 +264,6 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
         return StyleableProperties.CHILD_STYLEABLES;
     }
 
-    public Paint getFillTransition() {
-        return fillTransition.get();
-    }
-
-    public StyleableObjectProperty<Paint> fillTransitionProperty() {
-        return fillTransition;
-    }
-
-    public void setFillTransition(Paint fillTransition) {
-        this.fillTransition.set(fillTransition);
-    }
-
     public GNHoverType getHoverType() {
         return hoverType.get();
     }
@@ -241,4 +275,30 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
     public void setHoverType(GNHoverType hoverType) {
         this.hoverType.set(hoverType);
     }
+
+    public Paint getBackgroundTransition() {
+        return backgroundTransition.get();
+    }
+
+    public StyleableObjectProperty<Paint> backgroundTransitionProperty() {
+        return backgroundTransition;
+    }
+
+    public void setBackgroundTransition(Paint backgroundTransition) {
+        this.backgroundTransition.set(backgroundTransition);
+    }
+
+    public Paint getTextTransition() {
+        return textTransition.get();
+    }
+
+    public StyleableObjectProperty<Paint> textTransitionProperty() {
+        return textTransition;
+    }
+
+    public void setTextTransition(Paint textTransition) {
+        this.textTransition.set(textTransition);
+    }
+
+
 }

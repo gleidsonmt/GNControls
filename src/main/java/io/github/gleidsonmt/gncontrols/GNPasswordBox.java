@@ -23,9 +23,10 @@ import javafx.scene.control.*;
 
 @DefaultProperty("control")
 @SuppressWarnings("unused")
-public final class GNPasswordBox extends GNTextBox {
+public class GNPasswordBox extends GNTextBox {
 
     public GNPasswordBox() {
+        getStyleClass().add("gn-password-box");
         PasswordField passwordField = new PasswordField() {
             @Override
             public void paste() {

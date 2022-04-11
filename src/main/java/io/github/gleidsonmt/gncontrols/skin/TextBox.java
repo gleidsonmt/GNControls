@@ -1,20 +1,18 @@
 /*
+ *    Copyright (C) Gleidson Neves da Silveira
  *
- *  * Copyright (C) Gleidson Neves da Silveira
- *  *
- *  * This program is free software: you can redistribute it and/or modify
- *  * it under the terms of the GNU General Public License as published by
- *  * the Free Software Foundation, either version 3 of the License, or
- *  * (at your option) any later version.
- *  *
- *  * This program is distributed in the hope that it will be useful,
- *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  * GNU General Public License for more details.
- *  *
- *  * You should have received a copy of the GNU General Public License
- *  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *    This program is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package io.github.gleidsonmt.gncontrols.skin;
@@ -26,10 +24,9 @@ import io.github.gleidsonmt.gncontrols.material.icon.Icons;
 import io.github.gleidsonmt.gncontrols.options.model.Model;
 import io.github.gleidsonmt.gncontrols.options.FieldType;
 import io.github.gleidsonmt.gncontrols.options.TrayAction;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.*;
@@ -63,11 +60,33 @@ public class TextBox extends Control {
 
     private final ObjectProperty<TextField> editor = new SimpleObjectProperty<>();
 
+    private final BooleanProperty valid = new SimpleBooleanProperty(true);
+
+    private static final PseudoClass ERROR_PSEUDO_CLASS =
+            PseudoClass.getPseudoClass("error");
+
+    private static final PseudoClass CHECKED_PSEUDO_CLASS =
+            PseudoClass.getPseudoClass("checked");
+
 
     public TextBox() {
 
-        getStyleClass().add("gn-text-box");
+        getStyleClass().add("text-box");
         setFocusTraversable(false);
+
+
+        validProperty().addListener((observable, oldValue, newValue) -> {
+           pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !newValue);
+        });
+
+
+
+    }
+
+    public void reset() {
+        valid.set(true);
+        pseudoClassStateChanged(ERROR_PSEUDO_CLASS, false);
+        pseudoClassStateChanged(CHECKED_PSEUDO_CLASS, false);
     }
 
     protected void createPasteAction(TextField textField) {
@@ -207,6 +226,25 @@ public class TextBox extends Control {
         }
     };
 
+    private final StyleableObjectProperty<Icons> trayIcon
+            = new StyleableObjectProperty<>(Icons.NONE) {
+
+        @Override
+        public Object getBean() {
+            return this;
+        }
+
+        @Override
+        public String getName() {
+            return "trayIcon";
+        }
+
+        @Override
+        public CssMetaData<? extends Styleable, Icons> getCssMetaData() {
+            return StyleableProperties.TRAY_ICON;
+        }
+    };
+
     private final StyleableObjectProperty<TrayAction> trayAction
             = new StyleableObjectProperty<>(TrayAction.NONE) {
 
@@ -248,6 +286,7 @@ public class TextBox extends Control {
         private static final CssMetaData<TextBox, Number>       COUNT;
         private static final CssMetaData<TextBox, Boolean>      VISIBLE_COUNT;
         private static final CssMetaData<TextBox, Icons>        LEAD_ICON;
+        private static final CssMetaData<TextBox, Icons>        TRAY_ICON;
         private static final CssMetaData<TextBox, TrayAction>   TRAY_ACTION;
 
 //        private static final CssMetaData<Box, Boolean> ACTION_TYPE;
@@ -288,7 +327,7 @@ public class TextBox extends Control {
             };
 
             VISIBLE_HELPER_TEXT = new CssMetaData<>(
-                    "-gn-helper-visible", BooleanConverter.getInstance()) {
+                    "-gn-visible-helper", BooleanConverter.getInstance()) {
                 @Override
                 public boolean isSettable(TextBox styleable) {
                     return !styleable.visibleHelperText.isBound();
@@ -301,7 +340,7 @@ public class TextBox extends Control {
             };
 
             VISIBLE_COUNT = new CssMetaData<>(
-                    "-gn-count-visible", BooleanConverter.getInstance()) {
+                    "-gn-visible-count", BooleanConverter.getInstance()) {
                 @Override
                 public boolean isSettable(TextBox styleable) {
                     return !styleable.visibleCount.isBound();
@@ -342,6 +381,21 @@ public class TextBox extends Control {
                 }
             };
 
+            TRAY_ICON = new CssMetaData<>(
+                    "-gn-tray-icon",
+                    LeadIconTypeConverter.getInstance()) {
+
+                @Override
+                public boolean isSettable(TextBox styleable) {
+                    return !styleable.trayIcon.isBound();
+                }
+
+                @Override
+                public StyleableProperty<Icons> getStyleableProperty(TextBox styleable) {
+                    return styleable.trayIconProperty();
+                }
+            };
+
             TRAY_ACTION = new CssMetaData<>(
                     "-gn-tray-action", TrayActionConverter.getInstance()) {
 
@@ -361,7 +415,7 @@ public class TextBox extends Control {
             Collections.addAll(styleables,
                     FLOAT_PROMPT, VISIBLE_HELPER_TEXT,
                     FIELD_TYPE, COUNT, LEAD_ICON,
-                    TRAY_ACTION, VISIBLE_COUNT
+                    TRAY_ACTION, VISIBLE_COUNT, TRAY_ICON
             );
             CHILD_STYLEABLES = Collections.unmodifiableList(styleables);
         }
@@ -533,5 +587,29 @@ public class TextBox extends Control {
 
     public void setVisibleCount(Boolean visibleCount) {
         this.visibleCount.set(visibleCount);
+    }
+
+    public boolean isValid() {
+        return valid.get();
+    }
+
+    public BooleanProperty validProperty() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid.set(valid);
+    }
+
+    public StyleableObjectProperty<Icons> trayIconProperty() {
+        return trayIcon;
+    }
+
+    public Icons getTrayIcon() {
+        return trayIcon.get();
+    }
+
+    public void setTrayIcon(Icons trayIcon) {
+        this.trayIcon.set(trayIcon);
     }
 }

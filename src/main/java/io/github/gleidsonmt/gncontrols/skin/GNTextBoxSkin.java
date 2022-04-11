@@ -1,18 +1,18 @@
 /*
- * Copyright (C) Gleidson Neves da Silveira
+ *    Copyright (C) Gleidson Neves da Silveira
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *    This program is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *    You should have received a copy of the GNU General Public License
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package io.github.gleidsonmt.gncontrols.skin;
 
@@ -37,6 +37,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -76,7 +77,6 @@ public class GNTextBoxSkin
     private ListView<Model>     listView;
     private TextBox control;
 
-
     private final Text  addText     = new Text();
     private final Label helperText  = new Label();
     private final Label promptText  = new Label();
@@ -85,14 +85,12 @@ public class GNTextBoxSkin
     private final ChangeListener<Boolean> clearFocus = this::setClearFocus;
     private final ChangeListener<String>  addButtonOnText = this::setAddButtonOnText;
 
-    private static final PseudoClass HOVER_PSEUDO_CLASS =
-            PseudoClass.getPseudoClass("hover");
-
     private static final PseudoClass FLOAT_PSEUDO_CLASS =
             PseudoClass.getPseudoClass("float");
 
     private static final PseudoClass FILLED_PSEUDO_CLASS =
             PseudoClass.getPseudoClass("filled");
+
 
     public GNTextBoxSkin(TextBox control) {
         super(control);
@@ -109,6 +107,7 @@ public class GNTextBoxSkin
         helperText.textProperty().bind(control.helperTextProperty());
         helperText.getStyleClass().add("helper-text");
 
+
         promptText.textProperty().bind(control.promptTextProperty());
 
         buttonLeadIcon.setGraphic(new IconContainer(control.getLeadIcon()));
@@ -124,7 +123,7 @@ public class GNTextBoxSkin
 
         filledBorder.setStrokeWidth(2);
 
-        filledBorder.setHeight(1D);
+        filledBorder.setHeight(2D);
         filledBorder.setStrokeType(StrokeType.OUTSIDE);
         filledBorder.setStrokeLineCap(StrokeLineCap.ROUND);
         filledBorder.setStrokeLineJoin(StrokeLineJoin.ROUND);
@@ -147,6 +146,7 @@ public class GNTextBoxSkin
         getChildren().add(addText);
         getChildren().add(promptText);
         getChildren().add(filledBorder);
+
 
         if (control.getLeadIcon() != null) {
             updateLeadIcon(control.getLeadIcon());
@@ -184,6 +184,13 @@ public class GNTextBoxSkin
             }
         }
 
+        control.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                editor.toFront();
+                editor.requestFocus();
+            }
+        });
+
         configType();
         configSuggestionList();
 
@@ -218,13 +225,22 @@ public class GNTextBoxSkin
         });
 
         registerChangeListener(control.visibleCountProperty(), c -> {
-            control.setVisibleCount(control.getVisibleCount());
+            System.out.println("c = " + c.getValue());
+            control.setVisibleCount((Boolean) c.getValue());
+            countText.setVisible(((Boolean) c.getValue()));
         });
 
         registerChangeListener(control.leadIconProperty(), c -> {
             if (c.getValue() != null) {
                 updateLeadIcon(control.getLeadIcon());
             } else getChildren().remove(buttonLeadIcon);
+//            floating(control.isFloatPrompt());
+        });
+
+        registerChangeListener(control.trayIconProperty(), c -> {
+            if (c.getValue() != null) {
+                updateTrayIcon(control.getTrayIcon());
+            }
 //            floating(control.isFloatPrompt());
         });
 
@@ -253,7 +269,10 @@ public class GNTextBoxSkin
 
     private void selectAction(@NotNull TrayAction action) throws Exception {
         switch (action) {
-            case NONE -> getChildren().removeAll(buttonTrailIcon);
+            case NONE -> {
+//                getChildren().removeAll(buttonTrailIcon);
+                buttonTrailIcon.setMouseTransparent(true);
+            }
             case CLEAR -> {
                 configClearAction();
                 buttonTrailIcon.setGraphic(new IconContainer(Icons.CLEAR));
@@ -265,8 +284,13 @@ public class GNTextBoxSkin
                 } else throw new Exception("This action is not applicable for this control.");
             }
             case ICON -> {
-                Icons.get("viewer");
-//                buttonTrailIcon.setGraphic(new IconContainer(Icons.get));
+//                Icons.get("viewer");
+                if (!getChildren().contains(buttonTrailIcon))
+                    getChildren().add(buttonTrailIcon);
+
+                buttonTrailIcon.setMouseTransparent(true);
+                buttonTrailIcon.setGraphic(new IconContainer(control.getTrayIcon()));
+
             }
         }
     }
@@ -289,6 +313,7 @@ public class GNTextBoxSkin
         });
 
         editor.textProperty().addListener(addButtonOnText);
+        editor.focusedProperty().addListener(this::setClearFocus);
     }
 
     private void configClearAction() {
@@ -335,15 +360,20 @@ public class GNTextBoxSkin
 
     private void updateLeadIcon(Icons icon) {
         if (control.getLeadIcon() != Icons.NONE) {
-            if (!getChildren().contains(buttonLeadIcon)) {
-                getChildren().add(buttonLeadIcon);
-
-                buttonLeadIcon.setGraphic(new IconContainer(icon));
-            }
+            if (!getChildren().contains(buttonLeadIcon)) getChildren().add(buttonLeadIcon);
+            buttonLeadIcon.setGraphic(new IconContainer(icon));
         }
         else getChildren().remove(buttonLeadIcon);
-
     }
+
+    private void updateTrayIcon(Icons icon) {
+        if (control.getTrayIcon() != Icons.NONE) {
+            if (!getChildren().contains(buttonTrailIcon)) getChildren().add(buttonTrailIcon);
+            buttonTrailIcon.setGraphic(new IconContainer(icon));
+        }
+//        else getChildren().remove(buttonTrailIcon);
+    }
+
 
     private void configType() {
         pseudoClassStateChanged(FILLED_PSEUDO_CLASS, control.getFieldType().equals(FieldType.FILLED));
@@ -371,7 +401,7 @@ public class GNTextBoxSkin
 
     @Override
     protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return editor.prefWidth(height);
+        return editor.prefWidth(height) ;
     }
 
     @Override
@@ -391,7 +421,7 @@ public class GNTextBoxSkin
 
     @Override
     protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return editor.prefHeight(width);
+        return editor.prefHeight(width) ;
     }
 
     @Override
@@ -404,7 +434,6 @@ public class GNTextBoxSkin
                 x + paddingSize * 2 : x + (iconWidth + spacing);
 
         double widthWithIcon = 0;
-
 
         if ( getChildren().contains(buttonLeadIcon) && getChildren().contains(buttonTrailIcon))
             widthWithIcon = w - (iconWidth * 2) - (suffixWidth + spacing);
@@ -422,8 +451,15 @@ public class GNTextBoxSkin
         layoutInArea(buttonLeadIcon, x, y, w, h, 0, HPos.LEFT, VPos.CENTER);
         layoutInArea(buttonTrailIcon, x, y, w, h, 0, HPos.RIGHT, VPos.CENTER);
 
-        layoutInArea(promptText, xWithIcons - 4 , y, w, h, 0, HPos.LEFT, VPos.CENTER);
+        if (up) {
+            layoutInArea(promptText, xWithIcons - 4 , y, w, h, 0, HPos.LEFT, VPos.TOP);
+        } else {
+            layoutInArea(promptText, xWithIcons - 4 , y, w, h, 0, HPos.LEFT, VPos.CENTER);
+        }
+
+
 //        layoutInArea(countText, x, y + editor.getHeight() + paddingSize , w, h, 0, HPos.RIGHT, VPos.BOTTOM);
+
         layoutInArea(countText, x,  countText.getHeight() + paddingSize , w, h, 0, HPos.RIGHT, VPos.BOTTOM);
 
         double countWith = !getChildren().contains(countText) ? 0 : countText.getWidth();
@@ -434,6 +470,15 @@ public class GNTextBoxSkin
         layoutInArea(filledBorder, x, y, w, h,0, HPos.CENTER, VPos.BOTTOM);
 
     }
+
+//    ChangeListener<Boolean> appearButtonTray = (observable, oldValue, newValue) -> {
+//        if (newValue) {
+//            if (!getChildren().contains(buttonTrailIcon)) {
+//                getChildren().add(buttonTrailIcon);
+//                buttonTrailIcon.setMouseTransparent(false);
+//            }
+//        } else getChildren().remove(buttonTrailIcon)
+//    };
 
     ChangeListener<Boolean> focusedListener = (observable, oldValue, newValue) -> {
 
@@ -482,8 +527,14 @@ public class GNTextBoxSkin
 
         if (up) return;
 
-        double  translateY = !control.getFieldType().equals(FieldType.FILLED) ?
+        double  tY = !control.getFieldType().equals(FieldType.FILLED) ?
                 - ( getSkinnable().getHeight() / 2 ) - spacing : -(promptText.getHeight() - spacing);
+
+//        System.out.println( promptText.getHeight() /2);
+
+        double translateY = -( promptText.getHeight()/ 2+1);
+
+        System.out.println(snappedTopInset());
 
         double translateX = control.getFieldType().equals(FieldType.FILLED) ?
                 - spacing : - (iconWidth - paddingSize);
@@ -530,6 +581,7 @@ public class GNTextBoxSkin
                     yIni, yEnd, xsInit, xsEnd, ysInit, ysEnd,
                     xInitLead, xEndLead);
         }
+//        clipPrompt.setX();
 
         pseudoClassStateChanged(FLOAT_PSEUDO_CLASS, true);
         animation.play();
@@ -742,9 +794,13 @@ public class GNTextBoxSkin
 
     private void setAddButtonOnText(ObservableValue<? extends String> observable, String oldValue, String  newValue) {
         if (control instanceof GNPasswordBox) {
+            System.out.println("newValue.length() = " + newValue.length());
             if (newValue.length() > 0 && control.getTrayAction().equals(TrayAction.VIEWER)) {
                 if (!getChildren().contains(buttonTrailIcon))
                     getChildren().add(buttonTrailIcon);
+                buttonTrailIcon.setMouseTransparent(false);
+            } else {
+                getChildren().removeAll(buttonTrailIcon);
             }
         }
         else if (newValue.length() > 0) {

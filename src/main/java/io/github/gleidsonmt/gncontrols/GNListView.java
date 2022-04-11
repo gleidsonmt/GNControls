@@ -23,7 +23,7 @@ import javafx.scene.control.ListView;
 
 import java.util.Objects;
 
-public class GNListView<T extends Model> extends ListView<T> {
+public class GNListView<T> extends ListView<T> {
 
 
     public GNListView() {

@@ -1,3 +1,29 @@
-plugin {
+
+plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
+
+group 'io.github.gleidsonmt.gncontrols'
+version '1.1.1'
+
+application {
+    mainModule = 'io.github.gleidsonmt.gncontrols'
+    mainClass = 'io.github.gleidsonmt.gncontrols.test.TestFields'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '17.0.1'
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
+}
+
+dependencies {
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation files('vendor/scenicView.jar')
+}
+

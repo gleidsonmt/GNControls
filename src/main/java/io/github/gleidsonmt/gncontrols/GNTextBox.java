@@ -31,7 +31,7 @@ public class GNTextBox extends TextBox implements GNComponent {
 
     public GNTextBox(String text) {
 //        setLeadIcon(Icons.CONTACT);
-        getStyleClass().add("gn-text-field");
+        getStyleClass().add("gn-text-box");
         setEditor(new TextField(){
             @Override
             public void paste() {

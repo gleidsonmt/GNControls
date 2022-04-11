@@ -16,6 +16,7 @@
  */
 package io.github.gleidsonmt.gncontrols.material.icon;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 
 /**
@@ -43,6 +44,13 @@ public class IconContainer extends SVGPath {
     public IconContainer(Icons icon) {
         setContent(icon);
         getStyleClass().add("icon");
+        name = icon.name();
+    }
+
+    public IconContainer(Icons icon, Color color) {
+        setContent(icon);
+        getStyleClass().add("icon");
+        setFill(color);
         name = icon.name();
     }
 

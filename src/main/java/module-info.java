@@ -16,8 +16,12 @@ module io.github.gleidsonmt.gncontrols {
 
     exports io.github.gleidsonmt.gncontrols.test;
     exports io.github.gleidsonmt.gncontrols.options;
+    exports io.github.gleidsonmt.gncontrols.material.icon;
     exports io.github.gleidsonmt.gncontrols.options.model;
 
     opens io.github.gleidsonmt.gncontrols.skin to javafx.controls, javafx.fxml;
+    opens io.github.gleidsonmt.gncontrols.options to javafx.controls, javafx.fxml;
+    opens io.github.gleidsonmt.gncontrols.skin.button to javafx.controls, javafx.fxml;
+    exports io.github.gleidsonmt.gncontrols.skin;
 
 }

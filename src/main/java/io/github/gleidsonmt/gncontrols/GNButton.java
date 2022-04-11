@@ -36,7 +36,7 @@ import java.util.*;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  16/02/2022
  */
-public class GNButton extends GNButtonBase implements GNComponent {
+public class GNButton extends GNButtonBase  {
 
     public GNButton() {
         this(null);

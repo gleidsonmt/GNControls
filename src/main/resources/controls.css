@@ -1,16 +1,235 @@
 
-.root {
-    -primary-color : #4FC1E9;
-    -secondary-color : black;
+/* @GNButton */
 
-    -background-color : white;
-    -foreground-color : gray;
+.gn-button-hover:pressed
+{
+    -fx-scale-x : 0.9;
+    -fx-scale-y : 0.9;
 
-    -text-color : gray;
+}
+
+.gn-button-hover {
+    -gn-background-transition : derive(gray, -50%);
+}
+
+/* @GNTextBox */
+
+.gn-text-box {
+    -fx-padding : 0px;
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-border-color : derive(gray, 50%);
+    -fx-border-style : solid outside;
+    -fx-border-radius : 5;
+}
+
+.gn-text-box:error:focused,
+.gn-text-box:error {
+    -gn-helper-visible : true;
+}
+
+.gn-text-box:filled:hover,
+.gn-text-box:filled:focused,
+.gn-text-box:filled {
+    -fx-border-width : 0px 0px 1px 0px;
+    -fx-border-radius : 0px;
+}
+
+.gn-text-box:filled .filled-border {
+    -fx-fill : black;
+}
+
+.gn-text-box:hover {
+    -fx-border-width : 2px;
+    -fx-border-color : gray;
+    -fx-border-insets : 0px;
+}
+
+.gn-text-box:focused {
+    -fx-padding : 0px;
+    -fx-effect : none;
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-border-width : 2px;
+}
+
+.gn-text-box .editor {
+     -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+    -fx-background-color : transparent;
+    -fx-padding : 0px;
+    -fx-text-fill : gray;
+}
+
+.gn-text-box .add-text {
+    -fx-fill : gray;
+}
+
+.gn-text-box .prompt-text {
+    -fx-background-color : white;
+    -fx-padding : 2px;
+}
+
+.gn-text-box:focused:float .prompt-text .text {
+    -fx-fill : black;
+}
+
+.gn-text-box .prompt-text .text {
+    -fx-fill : gray;
+}
+
+.gn-text-box > .lead-button,
+.gn-text-box > .trail-button {
+    -fx-background-color : transparent;
+}
+
+.gn-text-box .lead-button .icon,
+.gn-text-box .trail-button .icon {
+    -fx-fill : gray;
+}
+
+.gn-text-box:focused .trail-button .icon,
+.gn-text-box:focused .lead-button .icon {
+    -fx-fill : gray;
+}
+
+/* @GNRadioButton */
+
+.radio-button {
+   -fx-faint-focus-color : transparent;
+   -fx-focus-color : transparent;
+}
 
 
-    -light-gray : #F5F7FA;
+.radio-button > .radio  {
+   -fx-background-color: transparent;
+   -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
+   -fx-background-insets: 0;
 
+   -fx-border-radius: 1.0em;
+   -fx-border-color: gray;
+   -fx-border-width: 2px;
+
+   -fx-padding: 4px; /* 4 -- padding from outside edge to the inner black dot */
+}
+
+.radio-button > .radio > .dot {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
+    -fx-padding: 6px; /* 3 -- radius of the inner black dot when selected */
+}
+
+.radio-button:selected > .radio,
+.radio-button:pressed > .radio
+{
+  -fx-border-color: gray;
+  -fx-border-width: 6px;
+}
+
+.radio-button:hover > .radio {
+    /* -fx-border-color: -gray; */
+      -fx-border-width: 6px;
+}
+
+.radio-button:armed  > .radio
+{
+   -fx-effect : none;
+
+  -fx-border-color: gray;
+}
+
+.radio-button:selected > .radio > .dot,
+.radio-button:pressed > .radio > .dot
+{
+  -fx-padding: 2px;
+  -fx-background-color : transparent;
+}
+
+.radio-button:hover > .radio > .dot {
+  -fx-padding: 2px;
+}
+
+/* .radio-button:pressed > .radio, */
+.radio-button:pressed > .radio {
+    -fx-border-color: gray;
+}
+
+.radio-button:disabled
+{
+    -fx-opacity: 0.5;
+}
+
+.radio-button:disabled > .radio
+{
+    -fx-background-color: #e6e6e6;
+    -fx-border-color: #d9d9d9;
+}
+
+/* @CheckBox */
+
+.check-box:selected:determinate .box .mark,
+.check-box:indeterminate .box .mark
+{
+    -fx-background-color : white;
+}
+
+.check-box {
+    -fx-label-padding: 0.0em 0.0em 0.0em 0.416667em; /* 0 0 0 5 */
+}
+
+.check-box,
+.radio-button
+{
+  -fx-text-fill : gray;
+  -fx-background-color : transparent;
+
+}
+
+
+.check-box:hover .box,
+.check-box .box {
+    -fx-background-color : transparent;
+      -fx-border-style : solid inside;
+
+}
+
+.check-box:determinate .box {
+    -fx-border-color : gray;
+    -fx-border-width : 2px;
+}
+
+.check-box:indeterminate .box, .check-box:hover:determinate .box,
+.check-box:selected:determinate .box
+{
+  -fx-border-width : 2px;
+  -fx-border-color : gray;
+}
+
+.check-box:determinate .box
+{
+  -fx-border-color : derive(gray, -10%);
+}
+
+
+.check-box:indeterminate .box,
+.check-box:determinate .box
+{
+ -fx-background-insets : 0px;
+    -fx-border-radius : 0px;
+}
+
+.check-box:determinate:selected .box {
+  -fx-background-color : gray;
+
+}
+
+.check-box:selected:determinate .box .mark
+{
+  -fx-fill : gray;
+  -fx-shape : "M9.005,17.766l13.759,14.739h1.716L49.02,0l10.298,8.488L25.997,50.453h-3.629L0,26.897L9.005,17.766z";
 }
 
 
@@ -19,24 +238,18 @@
 
 
 
-
-
-.gn-text-area .prompt-text,
-.gn-text-box .prompt-text {
-    -fx-background-color : -background-color;
+.gn-text-area .prompt-text {
+    -fx-background-color : white;
     -fx-padding : 2px;
 }
 
 .gn-text-area:focused:float .prompt-text .text {
-    -fx-fill : -primary-color;
+    -fx-fill : black;
 }
 
 .gn-text-area .prompt-text .text {
     -fx-fill : gray;
 }
-
-
-
 
 .gn-text-area {
     -fx-focus-color : transparent;
@@ -61,7 +274,7 @@
     -fx-border-width : 2px;
     -fx-padding : 0px;
     -fx-border-style : solid outside;
-    -fx-border-color : -primary-color;
+    -fx-border-color : gray;
 }
 
 

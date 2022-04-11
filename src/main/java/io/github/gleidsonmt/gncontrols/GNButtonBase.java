@@ -19,6 +19,8 @@ package io.github.gleidsonmt.gncontrols;
 
 import io.github.gleidsonmt.gncontrols.converters.GNButtonTypeConverter;
 import io.github.gleidsonmt.gncontrols.options.GNButtonType;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.css.StyleableObjectProperty;
@@ -27,9 +29,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -64,15 +64,22 @@ public class GNButtonBase extends Button implements GNComponent {
                 updateType(newValue);
             }
         });
+
         updateType(type);
 
     }
 
     private void updateType(GNButtonType type) {
         switch (type) {
-            case RECT -> this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), CornerRadii.EMPTY, Insets.EMPTY)));
-            case ROUNDED -> this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), new CornerRadii(100), Insets.EMPTY)));
-            case SEMI_ROUNDED -> this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), new CornerRadii(3.5), Insets.EMPTY)));
+            case RECT -> {
+                this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            case ROUNDED -> {
+                this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), new CornerRadii(100), Insets.EMPTY)));
+            }
+            case SEMI_ROUNDED -> {
+                this.setBackground(new Background(new BackgroundFill(Color.gray(0.8), new CornerRadii(3.5), Insets.EMPTY)));
+            }
         }
     }
 
