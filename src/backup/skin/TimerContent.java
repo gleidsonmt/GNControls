@@ -58,7 +58,6 @@ public class TimerContent extends VBox {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(newValue != null){
-                    System.out.println(newValue);
 //                    hourSpinner.getEditor().setText(String.valueOf(newValue.getHour()));
 //                    minutesSpinner.getEditor().setText(String.valueOf(newValue.getMinute()));
 //                    secondSpinner.getEditor().setText(String.valueOf(newValue.getSecond()));

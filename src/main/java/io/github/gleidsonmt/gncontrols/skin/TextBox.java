@@ -74,12 +74,9 @@ public class TextBox extends Control {
         getStyleClass().add("text-box");
         setFocusTraversable(false);
 
-
         validProperty().addListener((observable, oldValue, newValue) -> {
            pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !newValue);
         });
-
-
 
     }
 

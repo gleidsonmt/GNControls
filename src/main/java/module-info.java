@@ -7,6 +7,7 @@ module io.github.gleidsonmt.gncontrols {
     requires java.logging;
 
     requires scenicView;
+    requires controlsfx;
 
     opens io.github.gleidsonmt.gncontrols to javafx.controls, javafx.fxml;
     opens io.github.gleidsonmt.gncontrols.material.icon to javafx.fxml;

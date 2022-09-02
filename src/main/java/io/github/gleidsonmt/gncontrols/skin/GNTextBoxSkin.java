@@ -16,6 +16,7 @@
  */
 package io.github.gleidsonmt.gncontrols.skin;
 
+import io.github.gleidsonmt.gncontrols.GNDatePicker;
 import io.github.gleidsonmt.gncontrols.GNListView;
 import io.github.gleidsonmt.gncontrols.GNPasswordBox;
 import io.github.gleidsonmt.gncontrols.options.model.Model;
@@ -45,6 +46,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.util.Duration;
+import org.controlsfx.control.PopOver;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -91,6 +93,9 @@ public class GNTextBoxSkin
     private static final PseudoClass FILLED_PSEUDO_CLASS =
             PseudoClass.getPseudoClass("filled");
 
+    public Button getButtonTrailIcon() {
+        return buttonTrailIcon;
+    }
 
     public GNTextBoxSkin(TextBox control) {
         super(control);
@@ -135,7 +140,8 @@ public class GNTextBoxSkin
         configIcons(buttonLeadIcon);
         configIcons(buttonTrailIcon);
 
-        getChildren().add(editor);
+        if (!getChildren().contains(editor))
+            getChildren().add(editor);
 
         editor.getStyleClass().add("editor");
 
@@ -225,7 +231,6 @@ public class GNTextBoxSkin
         });
 
         registerChangeListener(control.visibleCountProperty(), c -> {
-            System.out.println("c = " + c.getValue());
             control.setVisibleCount((Boolean) c.getValue());
             countText.setVisible(((Boolean) c.getValue()));
         });
@@ -270,11 +275,12 @@ public class GNTextBoxSkin
     private void selectAction(@NotNull TrayAction action) throws Exception {
         switch (action) {
             case NONE -> {
-//                getChildren().removeAll(buttonTrailIcon);
+                getChildren().removeAll(buttonTrailIcon);
                 buttonTrailIcon.setMouseTransparent(true);
             }
             case CLEAR -> {
                 configClearAction();
+                buttonTrailIcon.setMouseTransparent(false);
                 buttonTrailIcon.setGraphic(new IconContainer(Icons.CLEAR));
             }
             case VIEWER -> {
@@ -288,12 +294,16 @@ public class GNTextBoxSkin
                 if (!getChildren().contains(buttonTrailIcon))
                     getChildren().add(buttonTrailIcon);
 
-                buttonTrailIcon.setMouseTransparent(true);
+//                buttonTrailIcon.setMouseTransparent(true);
                 buttonTrailIcon.setGraphic(new IconContainer(control.getTrayIcon()));
+
+            }
+            case DATE_PICKER -> {
 
             }
         }
     }
+
 
     private void configViewerAction() {
         resetTrayActions();
@@ -325,10 +335,14 @@ public class GNTextBoxSkin
 
         editor.focusedProperty().addListener(clearFocus);
         editor.textProperty().addListener(addButtonOnText);
+
+//        buttonTrailIcon.toFront();
+
     }
 
 
-    private void resetTrayActions() {
+
+    public void resetTrayActions() {
         buttonTrailIcon.setOnAction(null);
         editor.focusedProperty().removeListener(clearFocus);
         editor.textProperty().removeListener(addButtonOnText);
@@ -481,6 +495,8 @@ public class GNTextBoxSkin
 //    };
 
     ChangeListener<Boolean> focusedListener = (observable, oldValue, newValue) -> {
+
+//        System.out.println("newValue = " + newValue);
 
         if (newValue) { // focused
             if (control.isFloatPrompt()) {
@@ -794,7 +810,6 @@ public class GNTextBoxSkin
 
     private void setAddButtonOnText(ObservableValue<? extends String> observable, String oldValue, String  newValue) {
         if (control instanceof GNPasswordBox) {
-            System.out.println("newValue.length() = " + newValue.length());
             if (newValue.length() > 0 && control.getTrayAction().equals(TrayAction.VIEWER)) {
                 if (!getChildren().contains(buttonTrailIcon))
                     getChildren().add(buttonTrailIcon);

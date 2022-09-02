@@ -17,29 +17,38 @@
 
 package io.github.gleidsonmt.gncontrols;
 
+import io.github.gleidsonmt.gncontrols.options.FieldType;
 import io.github.gleidsonmt.gncontrols.skin.GNTextBoxSkin;
 import io.github.gleidsonmt.gncontrols.skin.TextBox;
 import javafx.beans.DefaultProperty;
 import javafx.scene.control.*;
 
+/**
+ * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
+ * Create on  24/07/2022
+ */
 @DefaultProperty("control")
 public class GNTextBox extends TextBox implements GNComponent {
 
     public GNTextBox() {
-        this(null);
+        this(FieldType.OUTLINED, null);
     }
 
-    public GNTextBox(String text) {
+    public GNTextBox(FieldType fieldType, String text) {
+
 //        setLeadIcon(Icons.CONTACT);
         getStyleClass().add("gn-text-box");
-        setEditor(new TextField(){
+        setEditor(new FakeFocusTextField(){
             @Override
             public void paste() {
                 createPasteAction(this);
             }
         });
 
+        setEditor(new TextField());
+
         getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> setFocused(newValue));
+        super.setFieldType(fieldType);
 
     }
 

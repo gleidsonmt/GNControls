@@ -116,7 +116,6 @@ public class GNMonetaryField extends TextField {
 //
                         setText("0" + decimal + "0" + val );
                     } else {
-                        System.out.println("passed");
                         setText("0" + decimal + "00");
                     }
                 }

@@ -23,6 +23,7 @@ package io.github.gleidsonmt.gncontrols.options;
  */
 public enum TrayAction {
 
-    NONE, ICON, CLEAR, VIEWER
+    NONE, ICON, CLEAR, VIEWER,
+    DATE_PICKER
 
 }

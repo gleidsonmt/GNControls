@@ -17,6 +17,7 @@
 package io.github.gleidsonmt.gncontrols;
 
 import io.github.gleidsonmt.gncontrols.skin.GNTextAreaSkin;
+import javafx.beans.DefaultProperty;
 import javafx.css.*;
 import javafx.css.converter.BooleanConverter;
 import javafx.css.converter.SizeConverter;
@@ -33,6 +34,7 @@ import java.util.List;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  14/01/2022
  */
+@DefaultProperty("control")
 public class GNTextArea extends TextArea implements GNComponent {
 
     public GNTextArea() {

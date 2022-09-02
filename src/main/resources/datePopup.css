@@ -1,0 +1,136 @@
+
+.popup {
+    -fx-background-color : transparent;
+}
+
+.date-picker-popup {
+    -fx-padding : 10px;
+}
+
+.month-year-pane {
+    -fx-background-color : transparent;
+}
+
+.month-year-pane .spinner .button:focused, {
+.month-year-pane .spinner .button:pressed {
+    -fx-border-color : white;
+    -fx-border-width : 1px;
+}
+
+.month-year-pane .spinner, .month-year-pane .spinner .button {
+    -fx-background-color : transparent;
+    -fx-padding : 10px;
+}
+
+.month-year-pane .spinner .button:hover {
+    -fx-border-color : white;
+    -fx-padding : 9px;
+}
+
+.month-year-pane .spinner .button:pressed {
+    -fx-border-color : white;
+    -fx-background-color : #00BCD4;
+    -fx-padding : 9px;
+}
+
+.month-year-pane .spinner .left-button,
+.month-year-pane .spinner .right-button
+ {
+    -fx-cursor : hand;
+}
+
+.month-year-pane .spinner .left-arrow,
+.month-year-pane .spinner .right-arrow
+ {
+    -fx-fill : white;
+}
+
+.calendar-grid, .calendar-grid .day-cell {
+   -fx-background-color : transparent;
+}
+
+.calendar-grid .day-cell:hover {
+   -fx-background-color : white;
+   -fx-text-fill : #656D78;
+}
+
+
+
+.today-content {
+    -fx-background-color : white;
+}
+
+.today-content .today {
+   -fx-background-color : transparent;
+   -fx-text-fill : #00BCD4;
+   -fx-min-height : 40px;
+   -fx-pref-width : 250px;
+   -fx-cursor : hand;
+}
+
+.date-picker-popup {
+      -fx-background-color: linear-gradient(to bottom, #00c6ff, #0072ff);
+}
+
+.month-year-pane .month-label,
+.month-year-pane .year-label
+{
+    -fx-text-fill : white;
+}
+
+.calendar-grid .day-name-cell,
+.calendar-grid .day-cell
+{
+    -fx-text-fill : white;
+}
+
+
+.calendar-grid .years
+{
+ -fx-text-fill : white;
+}
+
+.calendar-grid .years:hover
+{
+    -fx-background-color : white;
+     -fx-text-fill : #656D78;
+}
+
+.calendar-grid .day-cell {
+    -fx-border-color : transparent;
+}
+
+
+.calendar-grid .next-month {
+    -fx-opacity : 0.3;
+}
+
+.calendar-grid .previous-month {
+    -fx-opacity : 0.3;
+}
+
+.calendar-grid .day-name-cell {
+    -fx-font-weight : bold;
+}
+
+.view-actions {
+    -fx-background-color : white;
+    -fx-pref-height : 40px;
+}
+
+
+.view-actions .button {
+    -fx-background-color : white;
+    -fx-pref-height : 40px;
+    -fx-text-fill : #656D78;
+    -fx-cursor : hand;
+}
+
+.view-actions .button:hover {
+    -fx-text-fill : #00BCD4;
+}
+
+.view-actions .info {
+    -fx-text-fill : #656D78;
+}
+

@@ -18,12 +18,13 @@ repositories {
 }
 
 javafx {
-    version = '17.0.1'
+    version = '18.0.1'
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
 }
 
 dependencies {
-    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'org.jetbrains:annotations:23.0.0'
     implementation files('vendor/scenicView.jar')
+    implementation files('vendor/controlsfx-8.40.17.jar')
 }
 

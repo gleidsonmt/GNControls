@@ -117,7 +117,6 @@ public class GNTextAreaSkin extends TextAreaSkin {
         });
 
         control.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            System.out.println(event.getCode());
         });
 
 

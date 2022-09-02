@@ -26,12 +26,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import org.jetbrains.annotations.NotNull;
+import org.scenicview.ScenicView;
 
 import java.util.Objects;
 
@@ -57,7 +56,7 @@ public class TestFields extends Application  {
                 createButtonSnake(),
                 createPasswordField(),
                 new Item("Monetary", new GNMonetaryField()),
-
+                createDatePickerItem(),
                 createTextAreaItem()
         );
 
@@ -71,10 +70,10 @@ public class TestFields extends Application  {
                         getClass().getResource("/style.css")).toExternalForm()
         );
 
-
         stage.show();
 //        CSSFX.start();
 //        ScenicView.show(stage.getScene());
+
     }
 
 
@@ -123,22 +122,11 @@ public class TestFields extends Application  {
     private @NotNull Item createTextFieldItem() {
         GNTextBox textField = new GNTextBox();
 
-
         textField.validProperty().bind(textField.textProperty().lessThan("2"));
 
-        textField.validProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                System.out.println("newValue = " + newValue);
-            }
-        });
 
-//        textField.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//                System.out.println("fuck");
-//            }
-//        });
+
+
 
 //        textField.setAdditionalText("@gmail.com");
         textField.setPrefHeight(50);
@@ -167,27 +155,6 @@ public class TestFields extends Application  {
 
 //        textField.setSuggestionList(suggestions);
 
-        textField.setCellFactory(new Callback<>() {
-            @Override
-            public ListCell<Model> call(ListView<Model> param) {
-                return new ListCell<>() {
-                    @Override
-                    protected void updateItem(Model item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null) {
-                            setText(item.getName());
-                            setItem(item);
-                            setGraphic(null);
-                            setCursor(Cursor.HAND);
-                        } else {
-                            setText(null);
-                            setItem(null);
-                            setGraphic(null);
-                        }
-                    }
-                };
-            }
-        });
 
         item.getOptions().addAll(floatPrompt,
                 maxLength, leadIcon, filled, addAction, visibleHelperText);
@@ -224,6 +191,30 @@ public class TestFields extends Application  {
             } else textField.setTrayAction(TrayAction.NONE);
         });
 
+
+        return item;
+    }
+
+    private Item createDatePickerItem() {
+        GNDatePicker textArea = new GNDatePicker();
+
+        textArea.setPromptText("Date Picker");
+//        textArea.setFloatPrompt(true);
+        textArea.setPrefHeight(50);
+
+        textArea.setTrayAction(TrayAction.DATE_PICKER);
+
+        GNCheckBox floatPrompt = new GNCheckBox("Float Prompt");
+        GNCheckBox maxLength = new GNCheckBox("Max Lenght");
+//
+        Item item = new Item("Text Area", textArea);
+        item.getOptions().addAll(floatPrompt, maxLength);
+
+//        floatPrompt.selectedProperty().addListener(
+//                (observable, oldValue, newValue) -> textArea.setFloatPrompt(newValue));
+//
+//        maxLength.selectedProperty().addListener((observable, oldValue, newValue) ->
+//                textArea.setMaxLength(10));
 
         return item;
     }
@@ -290,7 +281,7 @@ public class TestFields extends Application  {
     }
 
     private @NotNull Item createHoverButton() {
-        GNButtonHover button = new GNButtonHover();
+        GNButtonHover button = new GNButtonHover("Hover Button");
 //
         GNRadioButton semi_rounded = new GNRadioButton("Semi Round");
         GNRadioButton rect = new GNRadioButton("Rect");
