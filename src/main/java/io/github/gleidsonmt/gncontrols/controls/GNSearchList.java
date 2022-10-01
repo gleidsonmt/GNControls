@@ -17,14 +17,13 @@
 
 package io.github.gleidsonmt.gncontrols.controls;
 
+import io.github.gleidsonmt.gncontrols.controls.skin.GNSearchListSkin;
 import io.github.gleidsonmt.gncontrols.controls.skin.GNTextBoxBase;
 import io.github.gleidsonmt.gncontrols.controls.text_box.FloatEditor;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Skin;
 
 import java.util.Objects;
@@ -33,11 +32,11 @@ import java.util.Objects;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  27/09/2022
  */
-public class GNSearchBox<T> extends GNTextBoxBase {
+public class GNSearchList<T> extends GNTextBoxBase {
 
     private final ObjectProperty<T> value = new SimpleObjectProperty<>(this, "value");
 
-    public GNSearchBox() {
+    public GNSearchList() {
         setPrefSize(200, 50);
 
         setPromptText("Custom Prompt Text");
@@ -54,7 +53,7 @@ public class GNSearchBox<T> extends GNTextBoxBase {
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new GNSearchBoxSkin<T>(this);
+        return new GNSearchListSkin<T>(this);
     }
 
     private final ObjectProperty<ObservableList<T>> items = new SimpleObjectProperty<>(this, "items", FXCollections.observableArrayList());
