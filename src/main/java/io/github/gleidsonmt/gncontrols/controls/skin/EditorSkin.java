@@ -20,6 +20,7 @@ package io.github.gleidsonmt.gncontrols.controls.skin;
 import io.github.gleidsonmt.gncontrols.controls.text_box.Editor;
 import javafx.scene.Parent;
 import javafx.scene.control.skin.TextFieldSkin;
+import javafx.scene.text.Font;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -52,20 +53,15 @@ public class EditorSkin extends TextFieldSkin {
     protected String maskText(String txt) {
 
         if (getSkinnable() instanceof Editor editor) {
-
             if (editor.isMaskText()) {
 
                 final char BULLET = '\u25cf';
-
                 int n = txt.length();
 
                 return String.valueOf(BULLET).repeat(n);
-
             } else {
-
                 return editor.textProperty().getValueSafe();
             }
-
         } else return txt;
 
     }

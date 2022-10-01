@@ -17,11 +17,9 @@
 
 package io.github.gleidsonmt.gncontrols.test.controllers;
 
-import io.github.gleidsonmt.gncontrols.controls.GNSearchBox;
-import io.github.gleidsonmt.gncontrols.material.icon.IconContainer;
-import io.github.gleidsonmt.gncontrols.material.icon.Icons;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import io.github.gleidsonmt.gncontrols.controls.GNSearchList;
+import io.github.gleidsonmt.gncontrols.controls.text_box.Editor;
+import io.github.gleidsonmt.gncontrols.controls.text_box.FloatEditor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,10 +28,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
-import java.io.FileReader;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -42,7 +38,7 @@ import java.util.function.Predicate;
 public class SimpleController implements Initializable {
 
     @FXML
-    private GNSearchBox<SearchItem> searchBox;
+    private GNSearchList<SearchItem> searchBox;
 
     @FXML
     private ComboBox<Label> comboBox;
@@ -54,6 +50,8 @@ public class SimpleController implements Initializable {
         SearchItem item1 = new SearchItem("Java");
         SearchItem item2 = new SearchItem("Kotlin");
         SearchItem item3 = new SearchItem("JavaScript");
+
+        searchBox.setEditor(new Editor("My Custom text"));
 
         ObservableList<SearchItem> labels = FXCollections.observableArrayList(
                 item1, item2, item3
@@ -74,7 +72,6 @@ public class SimpleController implements Initializable {
     private void getValue() {
         System.out.println("searchBox.getValue() = " + searchBox.getValue());
     }
-
 
 }
 

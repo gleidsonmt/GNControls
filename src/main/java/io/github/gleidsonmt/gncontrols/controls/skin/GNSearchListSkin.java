@@ -32,6 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.PopupWindow;
 import org.controlsfx.control.PopOver;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -39,7 +40,7 @@ import java.util.Objects;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  28/09/2022
  */
-public class GNSearchListSkin<T> extends GNTextBoxBaseSkin {
+public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponenteSkin<GNSearchList<T>> {
 
     private final GNSearchList<T> control;
     private final HBox actionsContainer = new HBox();
@@ -57,16 +58,9 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin {
         createLeadIcon();
         createRightActions();
 
-        listContent.itemsProperty().bind(_control.itemsProperty());
-        _control.valueProperty().bind(listContent.getSelectionModel().selectedItemProperty());
+        bind(_control);
+        setInitialState(_control);
 
-        if (_control.getText() != null && !_control.getText().isEmpty()) {
-            updateContainerFull();
-        } else {
-            updateContainerWithArrow();
-        }
-
-        ((FloatEditor) _control.getEditor()).setDistanceX(-30);
 
         _control.getEditor().setPadding(new Insets(4, 0, 4, 0));
 
@@ -98,7 +92,6 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin {
         });
 
         listContent.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            System.out.println(event.getCode());
             if (event.isShiftDown()) event.consume();
         });
 
@@ -109,6 +102,27 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin {
             _control.getEditor().end();
             updateContainerWithArrow();
         });
+    }
+
+    @Override
+    public void bind(@NotNull GNSearchList<T> _control) {
+        listContent.itemsProperty().bind(_control.itemsProperty());
+        _control.valueProperty().bind(listContent.getSelectionModel().selectedItemProperty());
+    }
+
+    @Override
+    public void setInitialState(@NotNull GNSearchList<T> _control) {
+        // Text state
+        if (_control.getText() != null && !_control.getText().isEmpty()) {
+            updateContainerFull();
+        } else {
+            updateContainerWithArrow();
+        }
+
+        // Settings for existance lead icon
+        if (_control.getEditor() instanceof FloatEditor editor) {
+            editor.setDistanceX(-30);
+        }
     }
 
 
@@ -213,4 +227,7 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin {
 
         positionInArea(actionsContainer, x, y, w, h, -1, HPos.RIGHT, VPos.CENTER);
     }
+
+
+
 }
