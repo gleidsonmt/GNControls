@@ -20,7 +20,7 @@ package io.github.gleidsonmt.gncontrols.test;
 import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.gleidsonmt.gncontrols.Material;
 import io.github.gleidsonmt.gncontrols.Theme;
-import io.github.gleidsonmt.gncontrols.controls.GNSearchBox;
+import io.github.gleidsonmt.gncontrols.controls.GNSearchList;
 import io.github.gleidsonmt.gncontrols.material.icon.IconContainer;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
 import io.github.gleidsonmt.gncontrols.test.layout.RootContainer;
@@ -61,7 +61,7 @@ public class SizeControlView extends Application {
         VBox body = new VBox(iconButton);
         body.setAlignment(Pos.CENTER);
 
-        RootContainer container = new RootContainer(new GNSearchBox<>());
+        RootContainer container = new RootContainer(new GNSearchList<>());
 
         Scene scene = new Scene(container);
         new Material(scene, Theme.SIMPLE_INFO);
