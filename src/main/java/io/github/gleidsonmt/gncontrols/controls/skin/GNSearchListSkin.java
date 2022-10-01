@@ -15,17 +15,17 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.gleidsonmt.gncontrols.controls;
+package io.github.gleidsonmt.gncontrols.controls.skin;
 
-import io.github.gleidsonmt.gncontrols.controls.skin.GNTextBoxBaseSkin;
+import io.github.gleidsonmt.gncontrols.controls.GNIconButton;
+import io.github.gleidsonmt.gncontrols.controls.GNIconLabel;
+import io.github.gleidsonmt.gncontrols.controls.GNSearchList;
 import io.github.gleidsonmt.gncontrols.controls.text_box.FloatEditor;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
 import javafx.geometry.*;
-import javafx.scene.AccessibleAttribute;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -39,9 +39,9 @@ import java.util.Objects;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  28/09/2022
  */
-public class GNSearchBoxSkin<T> extends GNTextBoxBaseSkin {
+public class GNSearchListSkin<T> extends GNTextBoxBaseSkin {
 
-    private final GNSearchBox<T> control;
+    private final GNSearchList<T> control;
     private final HBox actionsContainer = new HBox();
     private final ListView<T> listContent = new ListView<>();
 
@@ -50,7 +50,7 @@ public class GNSearchBoxSkin<T> extends GNTextBoxBaseSkin {
 
     private final PopOver popup = new PopOver();
 
-    public GNSearchBoxSkin(GNSearchBox<T> _control) {
+    public GNSearchListSkin(GNSearchList<T> _control) {
         super(_control);
         this.control = _control;
 
