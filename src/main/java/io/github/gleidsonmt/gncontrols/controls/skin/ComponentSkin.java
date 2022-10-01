@@ -24,7 +24,7 @@ import javafx.scene.control.Control;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  01/10/2022
  */
-public interface ComponenteSkin<T extends Control> {
+public interface ComponentSkin<T extends Control> {
 
     // Bind controls properties
     void bind(T _control);

@@ -40,7 +40,7 @@ import java.util.Objects;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  28/09/2022
  */
-public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponenteSkin<GNSearchList<T>> {
+public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentSkin<GNSearchList<T>> {
 
     private final GNSearchList<T> control;
     private final HBox actionsContainer = new HBox();
