@@ -37,7 +37,6 @@ public class GNSearchList<T> extends GNTextBoxBase {
     private final ObjectProperty<T> value = new SimpleObjectProperty<>(this, "value");
 
     public GNSearchList() {
-        setPrefSize(200, 50);
 
         setPromptText("Custom Prompt Text");
         getStyleClass().add("gn-search-box");

@@ -98,7 +98,6 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin {
         });
 
         listContent.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            System.out.println(event.getCode());
             if (event.isShiftDown()) event.consume();
         });
 
