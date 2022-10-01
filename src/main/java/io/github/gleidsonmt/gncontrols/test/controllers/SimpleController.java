@@ -51,7 +51,6 @@ public class SimpleController implements Initializable {
         SearchItem item2 = new SearchItem("Kotlin");
         SearchItem item3 = new SearchItem("JavaScript");
 
-        searchBox.setEditor(new Editor("My Custom text"));
 
         ObservableList<SearchItem> labels = FXCollections.observableArrayList(
                 item1, item2, item3
