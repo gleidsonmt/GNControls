@@ -38,9 +38,7 @@ public class GNSearchList<T> extends GNTextBoxBase {
 
     public GNSearchList() {
 
-        setPromptText("Custom Prompt Text");
         getStyleClass().add("gn-search-box");
-        setEditor(new FloatEditor());
 
     }
 
