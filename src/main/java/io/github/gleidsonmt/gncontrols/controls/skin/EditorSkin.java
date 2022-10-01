@@ -45,27 +45,21 @@ public class EditorSkin extends TextFieldSkin {
             }
         });
 
-
     }
 
     @Override
     protected String maskText(String txt) {
 
         if (getSkinnable() instanceof Editor editor) {
-
             if (editor.isMaskText()) {
 
                 final char BULLET = '\u25cf';
-
                 int n = txt.length();
 
                 return String.valueOf(BULLET).repeat(n);
-
             } else {
-
                 return editor.textProperty().getValueSafe();
             }
-
         } else return txt;
 
     }
