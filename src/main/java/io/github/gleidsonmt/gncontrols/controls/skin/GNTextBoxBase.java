@@ -76,11 +76,11 @@ public class GNTextBoxBase extends Control {
     private final StringProperty text = new SimpleStringProperty();
     private final StringProperty promptText = new SimpleStringProperty();
 
-    public GNTextBoxBase() {
+    protected GNTextBoxBase() {
         this(false);
     }
 
-    public GNTextBoxBase(boolean mask) {
+    protected GNTextBoxBase(boolean mask) {
 
         maskText.set(mask);
         getStyleClass().add("gn-text-box-base");
