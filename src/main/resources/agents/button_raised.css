@@ -1,0 +1,23 @@
+
+
+.button,
+.button:hover,
+
+.button:focused,
+{
+
+    -fx-background-color : -info;
+    -fx-border-radius : 0px;
+    -fx-background-radius : 0px;
+    -fx-text-fill: white;
+
+}
+
+.button:pressed {
+    -fx-background-insets : 1px;
+}
+
+.button .text {
+    -fx-fill : white;
+}
+

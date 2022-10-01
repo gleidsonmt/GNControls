@@ -1,0 +1,26 @@
+
+
+.button,
+.button:hover,
+.button:focused,
+.gn-icon-button
+{
+
+    -fx-background-color : -info;
+    -fx-border-radius : 0px;
+    -fx-background-radius : 0px;
+    -fx-background-radius : 5px;
+
+}
+
+.gn-icon-button {
+    -fx-border-radius : 100px;
+    -fx-background-radius : 100px;
+}
+
+.gn-icon-button .icon {
+    -fx-scale-x : 0.8;
+    -fx-scale-y : 0.8;
+}
+
+

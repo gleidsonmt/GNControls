@@ -1,0 +1,34 @@
+/*
+    Created on : 11/09/2022, 08:00:15
+    Author     : Gleidson Neves da Silveira
+*/
+
+/* @TextBoxBase */
+
+.gn-text-box-base
+{
+    -fx-background-color :  -fx-background;
+    -fx-border-color : gray;
+    -fx-border-width :  2px;
+    -fx-border-radius : 2px;
+
+
+}
+
+.gn-text-box-base:focused
+{
+    -fx-background-color :  -fx-background;
+    -fx-border-color : red;
+    -fx-border-width :  2px;
+    -fx-border-radius : 2px;
+
+}
+
+.gn-text-box-base:disabled
+{
+    -fx-background-color :  -fx-background;
+    -fx-border-color : -light-gray;
+    -fx-border-width :  2px;
+    -fx-border-radius : 2px;
+
+}

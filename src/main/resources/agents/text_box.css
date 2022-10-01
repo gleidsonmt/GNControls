@@ -1,0 +1,30 @@
+/*
+    Created on : 11/09/2022, 08:00:15
+    Author     : Gleidson Neves da Silveira
+*/
+
+/* @TextBoxBase */
+
+.gn-text-box, .gn-text-box:hover, .gn-text-box:focused,
+.gn-text-box:hover:focused
+{
+    -fx-background-color :  transparent;
+    -fx-border-width : 2px;
+
+
+}
+
+.gn-text-box:filled, .gn-text-box:filled:hover, .gn-text-box:filled:focused,
+.gn-text-box:filled:hover:focused
+{
+    -fx-background-color :  transparent;
+    -fx-border-width : 0px;
+
+
+}
+
+.gn-text-box:error .gn-text-box-base,
+.gn-text-box:error .gn-text-box-base:focused {
+    -fx-border-color : -grapefruit;
+}
+

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~    Copyright (C) Gleidson Neves da Silveira
+  ~    
+  ~    This program is free software: you can redistribute it and/or modify
+  ~    it under the terms of the GNU General Public License as published by
+  ~    the Free Software Foundation, either version 3 of the License, or
+  ~    (at your option) any later version.
+  ~    
+  ~    This program is distributed in the hope that it will be useful,
+  ~    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~    GNU General Public License for more details.
+  ~    
+  ~    You should have received a copy of the GNU General Public License
+  ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<?import io.github.gleidsonmt.gncontrols.controls.*?>
+<?import io.github.gleidsonmt.gncontrols.material.icon.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gleidsonmt.gncontrols.test.controllers.SimpleController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="drawer-body">
+         <children>
+            <VBox id="drawer-header" prefHeight="210.0" prefWidth="300.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <GNAvatarStatus prefHeight="40.0" prefWidth="40.0">
+                           <image>
+                              <Image url="@../avatar_purple.png" />
+                           </image>
+                        </GNAvatarStatus>
+                        <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="135.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label style="-fx-font-weight: bold;" styleClass="h4" text="Gleidson Neves" />
+                              <Label text="gleidsonmt@gmail.com" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <GNSearchBox fx:id="searchBox" prefHeight="51.0" prefWidth="290.0" promptText="Search Box" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+            <ComboBox fx:id="comboBox" editable="true" prefWidth="150.0" />
+            <ScrollPane id="drawer-scroll" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox id="drawer-box" prefHeight="412.0" prefWidth="300.0">
+                     <children>
+                        <ToggleButton alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#getValue" prefHeight="40.0" styleClass="drawer-item" text="Profile">
+                           <graphic>
+                              <GNIconLabel icon="FACE_FILLED" styleClass="lead-icon" />
+                           </graphic>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="group" />
+                           </toggleGroup>
+                        </ToggleButton>
+                        <ToggleButton alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" styleClass="drawer-item" text="Feed" toggleGroup="$group">
+                           <graphic>
+                              <GNIconLabel icon="FEED_FILLED" styleClass="lead-icon" />
+                           </graphic>
+                        </ToggleButton>
+                        <ToggleButton alignment="CENTER_LEFT" layoutX="10.0" layoutY="58.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" styleClass="drawer-item" text="Analytics" toggleGroup="$group">
+                           <graphic>
+                              <GNIconLabel icon="ANALYTICS_FILLED" styleClass="lead-icon" />
+                           </graphic>
+                        </ToggleButton>
+                        <Separator prefWidth="200.0" />
+                        <ToggleButton alignment="CENTER_LEFT" layoutX="10.0" layoutY="106.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" styleClass="drawer-item" text="Dark Mode" toggleGroup="$group">
+                           <graphic>
+                              <GNIconLabel icon="DARK_MODE_FILLED" styleClass="lead-icon" />
+                           </graphic>
+                        </ToggleButton>
+                        <ToggleButton alignment="CENTER_LEFT" layoutX="10.0" layoutY="157.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" styleClass="drawer-item" text="Settings" toggleGroup="$group">
+                           <graphic>
+                              <GNIconLabel icon="SETTINGS_FILLED" styleClass="lead-icon" />
+                           </graphic>
+                        </ToggleButton>
+                        <ToggleButton alignment="CENTER_LEFT" layoutX="10.0" layoutY="205.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" styleClass="drawer-item" text="Support" toggleGroup="$group">
+                           <graphic>
+                              <GNIconLabel icon="SUPPORT_FILLED" styleClass="lead-icon" />
+                           </graphic>
+                        </ToggleButton>
+                        <Separator layoutX="10.0" layoutY="154.0" prefWidth="200.0" />
+                        <ToggleButton alignment="CENTER_LEFT" layoutX="10.0" layoutY="253.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" styleClass="drawer-item" text="Logout">
+                           <graphic>
+                              <GNIconLabel icon="LOGOUT" styleClass="lead-icon" />
+                           </graphic>
+                        </ToggleButton>
+                     </children>
+                  </VBox>
+               </content>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <IconContainer />
+   </children>
+   <stylesheets>
+      <URL value="@../core/drawer.css" />
+      <URL value="@../core/bootstrap.css" />
+      <URL value="@../core/colors.css" />
+      <URL value="@../core/typographic.css" />
+      <URL value="@../theme/simple_info.css" />
+      <URL value="@../core/imersive_scroll.css" />
+   </stylesheets>
+</StackPane>

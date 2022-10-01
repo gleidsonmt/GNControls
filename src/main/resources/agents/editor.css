@@ -1,0 +1,23 @@
+
+/*
+    Created on : 11/09/2022, 08:00:15
+    Author     : Gleidson Neves da Silveira
+*/
+
+
+.editor
+{
+    -fx-background-color : -fx-background;
+    -fx-border-color : -medium-gray;
+    -fx-border-radius : 5px;
+    -fx-background-radius : 5px;
+}
+
+.editor:focused {
+    -fx-effect : none;
+    -fx-border-color : -info;
+    -fx-faint-focus-color : transparent;
+
+    -fx-border-radius : 5px;
+    -fx-background-radius : 5px;
+}

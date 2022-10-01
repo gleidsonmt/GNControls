@@ -1,0 +1,14 @@
+
+
+
+.gn-hyper-link .text {
+    -fx-text-fill : -info;
+    -fx-font-weight : bold;
+}
+
+
+
+.gn-hyper-link:visited,
+.gn-hyper-link:hover:focused:visited {
+    -fx-underline : false;
+}

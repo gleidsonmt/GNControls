@@ -15,7 +15,6 @@
 /* @GNTextBox */
 
 .gn-text-box {
-    -fx-padding : 0px;
     -fx-focus-color : transparent;
     -fx-faint-focus-color : transparent;
     -fx-background-color : transparent;

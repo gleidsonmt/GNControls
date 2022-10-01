@@ -1,0 +1,11 @@
+/*
+    Created on : 25/10/2022, 08:00:15
+    Author     : Gleidson Neves da Silveira
+    Colors for productivity
+*/
+
+/* Input Fields */
+
+.field-filled {
+    -gn-input-type : filled;
+}

@@ -1,0 +1,60 @@
+
+.button {
+    -fx-background-color : transparent;
+}
+
+.gn-check-box,
+.gn-check-box:pressed,
+.gn-check-box:indeterminate,
+.gn-check-box:indeterminate:focused,
+.gn-check-box:focused:determinate,
+.gn-check-box:focused
+{
+    -fx-background-color : transparent;
+    -fx-effect : none;
+}
+
+.gn-check-box .text
+{
+    -fx-fill : -text-color;
+}
+
+
+.gn-check-box .box,
+.gn-check-box:determinate .box,
+.gn-check-box:selected .box
+{
+    -fx-background-color : transparent;
+    -fx-border-color : -box-color;
+    -fx-border-radius : 2px;
+}
+
+.gn-check-box:indeterminate .box,
+.gn-check-box:selected .box
+{
+    -fx-background-color : -fx-accent;
+    -fx-border-color : transparent;
+    -fx-border-radius : 2px;
+    -fx-background-radius : 2px;
+}
+
+.gn-check-box .box {
+    -fx-border-width : 2;
+}
+
+
+.gn-check-box:determinate .box .mark {
+     -fx-shape : "m9.55 19-6.725-6.725L5.25 9.85l4.3 4.325 9.225-9.225 2.425 2.4Z";
+}
+
+.gn-check-box:selected .box .mark {
+    -fx-border-width : 5px;
+}
+
+.gn-check-box:selected .box .mark,
+.gn-check-box:indeterminate .box .mark
+{
+    -fx-border-width : 5px;
+    -fx-background-color : white;
+}
+
