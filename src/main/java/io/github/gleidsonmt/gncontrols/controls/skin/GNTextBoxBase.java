@@ -85,7 +85,6 @@ public class GNTextBoxBase extends Control {
         maskText.set(mask);
         getStyleClass().add("gn-text-box-base");
 
-
         editorProperty().addListener((observable, oldValue, newValue) -> {
 
             if (newValue != null) {
@@ -106,14 +105,15 @@ public class GNTextBoxBase extends Control {
     @Override
     protected Skin<?> createDefaultSkin() {
 
-
-        if (animated.get()) {
-            editor.set(new FloatEditor());
-            pseudoClassStateChanged(PSEUDO_CLASS_ANIMATED, true);
-        } else {
-            editor.set(new Editor());
-            pseudoClassStateChanged(PSEUDO_CLASS_ANIMATED, false);
-        }
+//        if (animated.get()) {
+//            editor.set(new FloatEditor());
+//            pseudoClassStateChanged(PSEUDO_CLASS_ANIMATED, true);
+//        } else {
+//            editor.set(new Editor());
+//            pseudoClassStateChanged(PSEUDO_CLASS_ANIMATED, false);
+//        }
+//
+//        System.out.println("Fuck you");
 
         if (fieldType.get() == FieldType.FILLED) {
             pseudoClassStateChanged(PSEUDO_CLASS_FILLED, true);
@@ -153,7 +153,7 @@ public class GNTextBoxBase extends Control {
         return editor;
     }
 
-    public void setEditor(Editor editor) {
+    protected void setEditor(Editor editor) {
         this.editor.set(editor);
     }
 
