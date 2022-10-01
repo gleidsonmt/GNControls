@@ -17,7 +17,9 @@
 
 package io.github.gleidsonmt.gncontrols.controls.skin;
 
+import io.github.gleidsonmt.gncontrols.controls.text_box.Editor;
 import io.github.gleidsonmt.gncontrols.controls.text_box.FloatEditor;
+import javafx.css.PseudoClass;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -35,6 +37,14 @@ public class GNTextBoxBaseSkin extends SkinBase<GNTextBoxBase> {
     protected GNTextBoxBaseSkin(GNTextBoxBase _control) {
         super(_control);
         this.control = _control;
+
+        if (_control.isAnimated()) {
+            _control.setEditor(new FloatEditor());
+            pseudoClassStateChanged(PseudoClass.getPseudoClass("animated"), true);
+        } else {
+            _control.setEditor(new Editor());
+            pseudoClassStateChanged(PseudoClass.getPseudoClass("animated"), false);
+        }
 
         if (_control.getEditor() != null) {
 
@@ -54,10 +64,8 @@ public class GNTextBoxBaseSkin extends SkinBase<GNTextBoxBase> {
 
         if (control.getEditor() != null) {
             if (!getChildren().contains(control.getEditor()))
-                getChildren().add( control.getEditor());
-
+                getChildren().add(control.getEditor());
         }
-
 
         if (control.getRightNode() != null) {
             control.getRightNode().setManaged(false);
@@ -79,10 +87,7 @@ public class GNTextBoxBaseSkin extends SkinBase<GNTextBoxBase> {
                 if (!getChildren().contains(newValue))
                     getChildren().add(getChildren().size(), newValue);
             }
-
         });
-
-
 
         if (control.getLeftNode() != null) {
             control.getLeftNode().setManaged(false);
@@ -90,34 +95,11 @@ public class GNTextBoxBaseSkin extends SkinBase<GNTextBoxBase> {
 
             if (control.getEditor() instanceof FloatEditor floatEditor ) {
 
-//                floatEditor.setDistanceX(-55);
                 floatEditor.setPadding(new Insets(4, 5, 4, 0));
                 floatEditor.setDistanceX(-(25));
 
             }
-//            configDistanceX();
         }
-    }
-
-    private void configDistanceX() {
-        if (control.getEditor() instanceof FloatEditor floatEditor) {
-
-//            floatEditor.setDistanceX(0);
-
-////
-//            if (getChildren().contains(control.getLeftNode())) {
-//
-//                ((FloatEditor) control.getEditor()).setDistanceX(
-//                        -(control.getLeftNode().getBoundsInLocal().getWidth() - 8)
-//                );
-//
-//
-//            } else {
-//                ((FloatEditor) control.getEditor()).setDistanceX(-2);
-//            }
-//
-        }
-
     }
 
     @Override
@@ -149,8 +131,6 @@ public class GNTextBoxBaseSkin extends SkinBase<GNTextBoxBase> {
             edW = w;
 
         }
-
-        configDistanceX();
 
         if (getChildren().contains(control.getEditor())) {
            positionInArea(control.getEditor(), edX , y , edW, h, -1, HPos.LEFT, VPos.CENTER);

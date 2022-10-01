@@ -10,7 +10,7 @@ version '1.1.1'
 
 application {
     mainModule = 'io.github.gleidsonmt.gncontrols'
-    mainClass = 'io.github.gleidsonmt.gncontrols.test.TestFields'
+    mainClass = 'io.github.gleidsonmt.gncontrols.Start'
 }
 
 repositories {
@@ -24,6 +24,9 @@ javafx {
 
 dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
+
+    implementation 'fr.brouillard.oss:cssfx:11.5.1'
+
     implementation files('vendor/scenicView.jar')
     implementation files('vendor/controlsfx-8.40.17.jar')
 }
