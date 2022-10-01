@@ -61,7 +61,6 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         bind(_control);
         setInitialState(_control);
 
-        _control.getEditor().setPadding(new Insets(4, 0, 4, 0));
 
         listContent.setFixedCellSize(50);
         listContent.setPrefHeight(_control.getItems().size() * listContent.getFixedCellSize() + 4);
@@ -122,6 +121,10 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         if (_control.getEditor() instanceof FloatEditor editor) {
             editor.setDistanceX(-30);
         }
+
+        // About configs
+        _control.getEditor().setPadding(new Insets(4, 0, 4, 0));
+
     }
 
 
