@@ -61,7 +61,6 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements Componente
         bind(_control);
         setInitialState(_control);
 
-
         _control.getEditor().setPadding(new Insets(4, 0, 4, 0));
 
         listContent.setFixedCellSize(50);
