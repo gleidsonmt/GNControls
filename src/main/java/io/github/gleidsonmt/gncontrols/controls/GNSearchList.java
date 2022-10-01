@@ -20,6 +20,7 @@ package io.github.gleidsonmt.gncontrols.controls;
 import io.github.gleidsonmt.gncontrols.controls.skin.GNSearchListSkin;
 import io.github.gleidsonmt.gncontrols.controls.skin.GNTextBoxBase;
 import io.github.gleidsonmt.gncontrols.controls.text_box.FloatEditor;
+import javafx.beans.DefaultProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -32,6 +33,7 @@ import java.util.Objects;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  27/09/2022
  */
+@DefaultProperty("control")
 public class GNSearchList<T> extends GNTextBoxBase {
 
     private final ObjectProperty<T> value = new SimpleObjectProperty<>(this, "value");

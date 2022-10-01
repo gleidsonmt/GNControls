@@ -66,8 +66,6 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements Componente
         listContent.setFixedCellSize(50);
         listContent.setPrefHeight(_control.getItems().size() * listContent.getFixedCellSize() + 4);
 
-        listContent.prefWidthProperty().bind(_control.widthProperty());
-
         if (_control.getItems().size() > 0) {
             listContent.setMaxHeight((_control.getItems().size() * listContent.getFixedCellSize()) + 4);
         }
@@ -107,6 +105,8 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements Componente
     public void bind(@NotNull GNSearchList<T> _control) {
         listContent.itemsProperty().bind(_control.itemsProperty());
         _control.valueProperty().bind(listContent.getSelectionModel().selectedItemProperty());
+        listContent.prefWidthProperty().bind(_control.widthProperty());
+
     }
 
     @Override
