@@ -20,6 +20,7 @@ package io.github.gleidsonmt.gncontrols.controls.skin;
 import io.github.gleidsonmt.gncontrols.controls.text_box.Editor;
 import javafx.scene.Parent;
 import javafx.scene.control.skin.TextFieldSkin;
+import javafx.scene.text.Font;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -44,6 +45,7 @@ public class EditorSkin extends TextFieldSkin {
                 control.requestFocus();
             }
         });
+
 
     }
 
