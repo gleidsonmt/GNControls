@@ -40,19 +40,21 @@ import java.util.List;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  18/02/2022
  */
-public class GNButtonBase extends Button implements GNComponent {
+public class GNButtonBase extends Button {
 
     public GNButtonBase() {
         this(null);
     }
 
     public GNButtonBase(String text) {
-        this(text, GNButtonType.ROUNDED);
+        this(text, GNButtonType.SEMI_ROUNDED);
     }
 
     public GNButtonBase(String text, GNButtonType type) {
         super(text);
+
         if (text == null) setText("Button");
+
         setAlignment(Pos.CENTER);
         getStyleClass().add("gn-button");
         setPrefSize(100, 40);
@@ -83,10 +85,6 @@ public class GNButtonBase extends Button implements GNComponent {
         }
     }
 
-    @Override
-    public String getUserAgentStylesheet() {
-        return getControlStylesheet();
-    }
 
     private final StyleableObjectProperty<GNButtonType> buttonType = new StyleableObjectProperty<>(GNButtonType.RECT) {
         @Override

@@ -21,7 +21,7 @@ package io.github.gleidsonmt.gncontrols;
 
 import io.github.gleidsonmt.gncontrols.options.FieldType;
 import io.github.gleidsonmt.gncontrols.skin.GNDatePickerSkin;
-import io.github.gleidsonmt.gncontrols.skin.TextBox;
+import io.github.gleidsonmt.gncontrols.skin.TextBoxB;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -42,7 +42,7 @@ import java.util.Locale;
  * Create on  24/07/2022
  */
 @DefaultProperty("control")
-public class GNDatePicker extends TextBox implements GNComponent {
+public class GNDatePicker extends TextBoxB implements GNComponent {
 
     private LocalDate lastValidDate = null;
     private Chronology lastValidChronology = IsoChronology.INSTANCE;

@@ -14,19 +14,35 @@
  *    You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package io.github.gleidsonmt.gncontrols.show;
 
-package io.github.gleidsonmt.gncontrols;
-
-import java.util.Objects;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  01/01/2022
  */
-public interface GNComponent  {
+public class TabControls extends Tab {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    private ScrollPane scrollPane = new ScrollPane();
+    private GridControls gridControls = new GridControls();
+
+    public TabControls(String title) {
+        setText(title);
+        setContent(scrollPane);
+        scrollPane.setContent(gridControls);
+
+        gridControls.setStyle("-fx-background-color : white;");
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
     }
+
+    public GridControls getGridControls() {
+        return gridControls;
+    }
+
 
 }

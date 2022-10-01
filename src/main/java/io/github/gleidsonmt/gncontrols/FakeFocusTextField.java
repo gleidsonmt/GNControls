@@ -28,7 +28,9 @@ import javafx.scene.control.TextField;
 @DefaultProperty("control")
 public class FakeFocusTextField extends TextField {
 
-    @Override public void requestFocus() {
+    @Override
+    public void requestFocus() {
+        System.out.println("what");
         if (getParent() != null) {
             getParent().requestFocus();
         }

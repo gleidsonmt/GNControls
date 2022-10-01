@@ -21,12 +21,21 @@ import java.util.Objects;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  21/09/2022
  */
-public interface GNComponent  {
+public enum Theme {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    SIMPLE_INFO(Objects.requireNonNull(Theme.class.getResource("/theme/simple_info.css")).toExternalForm()),
+    DARK_INFO(Objects.requireNonNull(Theme.class.getResource("/theme/dark_info.css")).toExternalForm());
+
+    private String path;
+
+    Theme(String theme) {
+        this.path = theme;
     }
 
+    @Override
+    public String toString() {
+        return path;
+    }
 }

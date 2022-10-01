@@ -15,18 +15,33 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.gleidsonmt.gncontrols;
+package io.github.gleidsonmt.gncontrols.test;
+
+import io.github.gleidsonmt.gncontrols.Material;
+import io.github.gleidsonmt.gncontrols.Theme;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.Objects;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  29/09/2022
  */
-public interface GNComponent  {
+public class SimpleDrawer extends Application {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/samples/drawer_simple.fxml")));
+
+        Scene scene = new Scene(root, 250, 600);
+        new Material(scene, Theme.SIMPLE_INFO);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

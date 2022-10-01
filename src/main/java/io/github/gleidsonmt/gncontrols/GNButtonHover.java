@@ -85,7 +85,6 @@ public class GNButtonHover extends GNButtonBase implements GNComponent {
 //        });
 
         hoverTypeProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("newValue = " + newValue);
             switch (newValue) {
                 case SWIPE -> setSkin(new SwipeSkin(this));
                 case SWIPE_DIAGONAL -> setSkin(new SwipeDiagonalSkin(this));

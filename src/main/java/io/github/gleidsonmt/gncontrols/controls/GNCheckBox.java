@@ -15,18 +15,37 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.gleidsonmt.gncontrols;
+package io.github.gleidsonmt.gncontrols.controls;
+
+import io.github.gleidsonmt.gncontrols.skin.GNCheckBoxSkin;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Skin;
 
 import java.util.Objects;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  26/09/2022
  */
-public interface GNComponent  {
+public class GNCheckBox extends CheckBox {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    public GNCheckBox() {
+        this(null);
     }
 
+    public GNCheckBox(String text) {
+        if (text == null || text.isEmpty()) setText("CheckBox");
+        getStyleClass().add("gn-check-box");
+
+    }
+
+    @Override
+    protected Skin<?> createDefaultSkin() {
+        return new GNCheckBoxSkin(this);
+    }
+
+    @Override
+    public String getUserAgentStylesheet() {
+        return Objects.requireNonNull(getClass().getResource("/agents/checkbox.css")).toExternalForm();
+    }
 }

@@ -15,18 +15,31 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.gleidsonmt.gncontrols;
+package io.github.gleidsonmt.gncontrols.controls;
 
-import java.util.Objects;
+import javafx.beans.DefaultProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Control;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  29/09/2022
  */
-public interface GNComponent  {
+@DefaultProperty("children")
+public class DrawerContent extends Control {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    private ObservableList<DrawerChildren> children = FXCollections.observableArrayList();
+
+    public ObservableList<DrawerChildren> getItems() {
+        return children;
     }
+
+    public void setChildren(ObservableList<DrawerChildren> children) {
+        this.children = children;
+    }
+
 
 }

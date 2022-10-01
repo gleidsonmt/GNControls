@@ -15,18 +15,17 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.gleidsonmt.gncontrols;
+package io.github.gleidsonmt.gncontrols.controls;
 
-import java.util.Objects;
+import javafx.scene.control.ListView;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  28/09/2022
  */
-public interface GNComponent  {
+public class GNListView<T> extends ListView<T> {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    public GNListView() {
     }
 
 }

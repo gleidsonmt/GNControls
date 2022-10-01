@@ -14,19 +14,25 @@
  *    You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package io.github.gleidsonmt.gncontrols.show;
 
-package io.github.gleidsonmt.gncontrols;
-
-import java.util.Objects;
+import javafx.scene.control.TabPane;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  01/01/2022
  */
-public interface GNComponent  {
+public class TabLayout extends TabPane {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    private final TabControls tabControls = new TabControls("Skeleton");
+    private final TabIcons tabIcons = new TabIcons("Icons");
+
+    public TabLayout() {
+       getTabs().setAll(tabControls, tabIcons);
+    }
+
+    public TabControls getTabControls() {
+        return tabControls;
     }
 
 }

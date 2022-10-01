@@ -22,10 +22,10 @@ package io.github.gleidsonmt.gncontrols.skin;
 import io.github.gleidsonmt.gncontrols.GNDatePicker;
 import io.github.gleidsonmt.gncontrols.material.icon.IconContainer;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
-import io.github.gleidsonmt.gncontrols.options.TrayAction;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.util.StringConverter;
 import org.controlsfx.control.PopOver;
 
@@ -36,7 +36,7 @@ import java.time.YearMonth;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  24/07/2022
  */
-public class GNDatePickerSkin extends GNTextBoxSkin {
+public class GNDatePickerSkin extends GNTextBoxSkinB {
 
     private GNDatePicker control;
     private GNDatePickerContent datePickerContent = null;
@@ -58,7 +58,9 @@ public class GNDatePickerSkin extends GNTextBoxSkin {
             datePickerContent = new GNDatePickerContent(this.control, this) ;
             configDatePicker();
         }
-        
+
+        new ContextMenu().getItems().add(new MenuItem());
+
         registerChangeListener(control.valueProperty(), e -> {
             updateDisplayNode();
             if (datePickerContent != null) {

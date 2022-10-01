@@ -17,16 +17,17 @@
 
 package io.github.gleidsonmt.gncontrols;
 
-import java.util.Objects;
+import io.github.gleidsonmt.gncontrols.test.LoginSample;
+import io.github.gleidsonmt.gncontrols.test.SimpleDrawer;
+//import org.scenicview.ScenicView;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  16/02/2022
  */
-public interface GNComponent  {
+public class Start extends SimpleDrawer {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    public static void main(String[] args) {
+        launch(args);
     }
-
 }

@@ -17,17 +17,15 @@
 
 package io.github.gleidsonmt.gncontrols.skin;
 
-import io.github.gleidsonmt.gncontrols.GNCheckBox;
+import io.github.gleidsonmt.gncontrols.controls.GNCheckBox;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.control.CheckBox;
+import javafx.scene.Cursor;
 import javafx.scene.control.skin.CheckBoxSkin;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -49,6 +47,7 @@ public class GNCheckBoxSkin extends CheckBoxSkin {
     public GNCheckBoxSkin(GNCheckBox control) {
         super(control);
         this.control = control;
+        this.control.setCursor(Cursor.HAND);
 
         dot = (StackPane) control.lookup(".box");
 
@@ -64,8 +63,9 @@ public class GNCheckBoxSkin extends CheckBoxSkin {
         circle.setRadius(0);
         circle.setStrokeWidth(0);
 
-            circle.setFill(control.getRippleFill());
-        circle.setFill(Color.gray(0.6));
+//            circle.setFill(control.getRippleFill());
+        circle.setStyle("-fx-fill : -fx-accent");
+//        circle.setFill(Color.gray(0.6));
 
         circle.setLayoutX(dot.getWidth() / 2);
         circle.setLayoutY(dot.getHeight() / 2);

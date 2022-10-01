@@ -17,7 +17,6 @@
 
 package io.github.gleidsonmt.gncontrols.skin;
 
-import io.github.gleidsonmt.gncontrols.GNCheckBox;
 import io.github.gleidsonmt.gncontrols.GNRadioButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -26,11 +25,9 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.control.skin.CheckBoxSkin;
 import javafx.scene.control.skin.RadioButtonSkin;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 

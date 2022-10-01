@@ -15,18 +15,29 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.gleidsonmt.gncontrols;
+package io.github.gleidsonmt.gncontrols.controls;
+
+import javafx.scene.control.Hyperlink;
 
 import java.util.Objects;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  26/09/2022
  */
-public interface GNComponent  {
+public class GNHyperLink extends Hyperlink {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    public GNHyperLink() {
+        this(null);
     }
 
+    public GNHyperLink(String text) {
+        if (text == null || text.isEmpty()) setText("HyperLink");
+        getStyleClass().add("gn-hyper-link");
+    }
+
+    @Override
+    public String getUserAgentStylesheet() {
+        return Objects.requireNonNull(getClass().getResource("/agents/hyperlink.css")).toExternalForm();
+    }
 }

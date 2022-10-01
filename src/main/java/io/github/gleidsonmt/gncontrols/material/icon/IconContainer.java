@@ -18,6 +18,7 @@ package io.github.gleidsonmt.gncontrols.material.icon;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
@@ -28,23 +29,11 @@ public class IconContainer extends SVGPath {
     private String name;
 
     public IconContainer() {
-
-    }
-
-    public IconContainer(String name) {
-        for (Icons i : Icons.values()) {
-            if (i.toString().equals(name)) {
-                setContent(i);
-                getStyleClass().add("icon");
-                this.name = name;
-            }
-        }
+        this(Icons.NONE);
     }
 
     public IconContainer(Icons icon) {
-        setContent(icon);
-        getStyleClass().add("icon");
-        name = icon.name();
+        this(icon, Color.GRAY);
     }
 
     public IconContainer(Icons icon, Color color) {
@@ -54,12 +43,20 @@ public class IconContainer extends SVGPath {
         name = icon.name();
     }
 
-    public void setContent(Icons icon) {
+    public void setContent(@NotNull Icons icon) {
         setContent(icon.getContent());
         name = icon.name();
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("IconContainer{");
+        sb.append("name='").append(name).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -15,18 +15,15 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.gleidsonmt.gncontrols;
-
-import java.util.Objects;
+package io.github.gleidsonmt.gncontrols.enums;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  12/09/2022
  */
-public interface GNComponent  {
+public enum FloatAligment {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
-    }
+
+    TOP, BASELINE;
 
 }

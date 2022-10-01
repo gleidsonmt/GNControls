@@ -14,19 +14,18 @@
  *    You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package io.github.gleidsonmt.gncontrols.show;
 
-package io.github.gleidsonmt.gncontrols;
-
-import java.util.Objects;
+import javafx.geometry.Pos;
+import javafx.scene.layout.VBox;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Create on  24/01/2022
+ * Create on  01/01/2022
  */
-public interface GNComponent  {
+public class Options extends VBox {
 
-    default String getControlStylesheet() {
-         return Objects.requireNonNull(getClass().getResource("/controls.css")).toExternalForm();
+    public Options() {
+        setAlignment(Pos.CENTER_LEFT);
     }
-
 }

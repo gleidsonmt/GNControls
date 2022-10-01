@@ -17,77 +17,103 @@
 
 package io.github.gleidsonmt.gncontrols.skin.button;
 
-import io.github.gleidsonmt.gncontrols.GNButton;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.util.Duration;
-
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  18/02/2022
  */
-public class RippleButtonSkin extends GNButtonBaseSkin {
-
-    private final Circle circle = new Circle();
-    private final Timeline timeline = new Timeline();
-    private final GNButton control;
-
-    public RippleButtonSkin(GNButton control) {
-        super(control);
-        this.control = control;
-
-        registerChangeListener( control.rippleFillProperty(), c -> {
-             control.setRippleFill((Paint) c.getValue());
-        });
-
-        control.addEventHandler(MouseEvent.MOUSE_PRESSED, onPressed);
-
-    }
-
-    private final EventHandler<MouseEvent> onPressed = new EventHandler<>() {
-        @Override
-        public void handle(MouseEvent event) {
-            if (timeline.getStatus() == Animation.Status.RUNNING) {
-                return;
-            }
-
-            circle.setRadius(0);
-            circle.setStrokeWidth(0);
-
-            circle.setFill(control.getRippleFill());
-
-            circle.setLayoutX(event.getX());
-            circle.setLayoutY(event.getY());
-
-            circle.setOpacity(0.5);
-            circle.setMouseTransparent(true);
-            getChildren().add(circle);
-
-            double diameter = Math.max(control.getWidth(), control.getHeight());
-            double radius = diameter / 2;
-
-            timeline.getKeyFrames().setAll(
-                    new KeyFrame(Duration.ZERO, new KeyValue(circle.radiusProperty(), 0)),
-                    new KeyFrame(Duration.millis(250), new KeyValue(circle.radiusProperty(), radius *2 ))
-            );
-
-            timeline.play();
-
-            timeline.setOnFinished( e -> {
-                getChildren().removeAll(circle);
-            });
-        }
-    };
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        control.removeEventHandler(MouseEvent.MOUSE_PRESSED, onPressed);
-    }
+public class RippleButtonSkin {
+//        extends GNButtonBaseSkin {
+//
+//    private final Circle circle = new Circle();
+//    private final Timeline timeline = new Timeline();
+//    private final GNButtonB control;
+//
+//
+//
+//    public RippleButtonSkin(GNButtonB control) {
+//        super(control);
+//        this.control = control;
+//
+////        control.setStyle("-fx-background-radius : 100px; -fx-border-radius : 100px;");
+//
+//
+//        registerChangeListener( control.rippleFillProperty(), c -> {
+//             control.setRippleFill((Paint) c.getValue());
+//        });
+//
+//        control.addEventHandler(MouseEvent.MOUSE_PRESSED, onPressed);
+//
+//
+//
+//
+//
+////        getChildren().add(region);
+//        getChildren().add(circle);
+//
+//        System.out.println("getClip() = " + getClip());
+//        System.out.println(getClip().getArcHeight());
+//        control.setClip(getClip());
+//
+//
+//
+//    }
+//
+//
+//    private final EventHandler<MouseEvent> onPressed = new EventHandler<>() {
+//        @Override
+//        public void handle(MouseEvent event) {
+//
+//            if (timeline.getStatus() == Animation.Status.RUNNING) {
+//                return;
+//            }
+//
+//            circle.setRadius(0);
+//            circle.setStrokeWidth(0);
+//
+//            circle.setFill(control.getRippleFill());
+//
+//            circle.setLayoutX(event.getX());
+//            circle.setLayoutY(event.getY());
+//
+//            circle.setOpacity(0.5);
+//
+//            circle.setMouseTransparent(true);
+//
+//
+//
+//            StackPane root = (StackPane) control.getScene().getRoot();
+//
+//
+////            root.getChildren().add(region);
+//
+////            control.setClip(region);
+//
+//            double diameter = Math.max(control.getWidth(), control.getHeight());
+//            double radius = diameter / 2;
+//
+//
+//            timeline.getKeyFrames().setAll(
+//                    new KeyFrame(Duration.ZERO, new KeyValue(circle.radiusProperty(), 0)),
+//                    new KeyFrame(Duration.millis(250), new KeyValue(circle.radiusProperty(), radius *2 ))
+//            );
+//
+//
+//            timeline.play();
+//
+//
+//            timeline.setOnFinished( e -> {
+//            });
+//        }
+//    };
+//
+//    @Override
+//    protected void layoutChildren(double x, double y, double w, double h) {
+//        super.layoutChildren(x, y, w, h);
+//    }
+//
+//    @Override
+//    public void dispose() {
+//        super.dispose();
+//        control.removeEventHandler(MouseEvent.MOUSE_PRESSED, onPressed);
+//    }
 }
