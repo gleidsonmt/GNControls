@@ -18,6 +18,8 @@
 package io.github.gleidsonmt.gncontrols.test.controllers;
 
 import io.github.gleidsonmt.gncontrols.controls.GNSearchList;
+import io.github.gleidsonmt.gncontrols.controls.text_box.Editor;
+import io.github.gleidsonmt.gncontrols.controls.text_box.FloatEditor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -49,6 +51,8 @@ public class SimpleController implements Initializable {
         SearchItem item2 = new SearchItem("Kotlin");
         SearchItem item3 = new SearchItem("JavaScript");
 
+        searchBox.setEditor(new Editor("My Custom text"));
+
         ObservableList<SearchItem> labels = FXCollections.observableArrayList(
                 item1, item2, item3
         );
@@ -68,7 +72,6 @@ public class SimpleController implements Initializable {
     private void getValue() {
         System.out.println("searchBox.getValue() = " + searchBox.getValue());
     }
-
 
 }
 
