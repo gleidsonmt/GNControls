@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.scenicview.ScenicView;
 
 import java.util.Objects;
 
@@ -42,6 +43,7 @@ public class SimpleDrawer extends Application {
 
         stage.setScene(scene);
         stage.show();
+        ScenicView.show(scene);
     }
 
 }

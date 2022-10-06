@@ -31,7 +31,13 @@
 /* @Text */
 
 Text {
+    -fx-font-family : Roboto Regular;
     -fx-fill : -text-color;
+}
+
+.label {
+    -fx-font-family : 'Roboto Regular';
+    -fx-font-weight : italic;
 }
 
 .gn-check-box .text

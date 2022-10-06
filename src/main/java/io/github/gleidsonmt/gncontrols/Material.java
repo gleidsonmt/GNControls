@@ -20,6 +20,7 @@ package io.github.gleidsonmt.gncontrols;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.jetbrains.annotations.NotNull;
@@ -58,6 +59,7 @@ public class Material {
     private void setStylesheets(Theme theme) {
         stylesheets.setAll(
                 Objects.requireNonNull(getClass().getResource("/core/colors.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/fonts/fonts.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/typographic.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/bootstrap.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/imersive_scroll.css")).toExternalForm(),

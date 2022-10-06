@@ -112,7 +112,6 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         listContent.itemsProperty().bind(_control.itemsProperty());
         _control.valueProperty().bind(listContent.getSelectionModel().selectedItemProperty());
         listContent.prefWidthProperty().bind(_control.widthProperty());
-
     }
 
     @Override
