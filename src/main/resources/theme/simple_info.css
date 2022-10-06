@@ -36,8 +36,8 @@ Text {
 }
 
 .label {
-    -fx-font-family : 'Roboto Regular';
-    -fx-font-weight : italic;
+    -fx-font-family : 'Roboto Thin';
+    -fx-font-weight : thin;
 }
 
 .gn-check-box .text
