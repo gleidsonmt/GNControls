@@ -40,8 +40,9 @@
                         </GNAvatarStatus>
                         <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="135.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label style="-fx-font-weight: bold;" styleClass="h4" text="Gleidson Neves" />
+                              <Label text="Gleidson Neves" />
                               <Label text="gleidsonmt@gmail.com" />
+
                            </children>
                         </VBox>
                      </children>

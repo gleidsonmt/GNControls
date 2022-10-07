@@ -17,6 +17,7 @@
 
 package io.github.gleidsonmt.gncontrols.test;
 
+import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.gleidsonmt.gncontrols.Material;
 import io.github.gleidsonmt.gncontrols.Theme;
 import javafx.application.Application;
@@ -44,6 +45,9 @@ public class SimpleDrawer extends Application {
         stage.setScene(scene);
         stage.show();
         ScenicView.show(scene);
+
+        CSSFX.start(stage);
+
     }
 
 }

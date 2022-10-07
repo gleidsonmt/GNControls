@@ -30,14 +30,12 @@
 
 /* @Text */
 
-Text {
-    -fx-font-family : Roboto Regular;
-    -fx-fill : -text-color;
+Text, .text, .label {
+    -fx-font-family : 'Roboto Regular';
 }
 
-.label {
-    -fx-font-family : 'Roboto Thin';
-    -fx-font-weight : thin;
+Text {
+    -fx-fill : -text-color;
 }
 
 .gn-check-box .text
@@ -94,13 +92,22 @@ Text {
     -fx-text-fill : white;
     -fx-font-weight : bolder;
     -fx-graphic-text-gap : 10;
+    -fx-cursor : hand;
 }
 
 .button .icon {
     -fx-fill : white;
 }
 
+.button:cancel {
+    -fx-background-color : -fx-background;
+    -fx-border-color : -fx-accent;
+    -fx-border-radius : 5px;
+}
 
+.button:cancel .text {
+    -fx-fill : -fx-accent;
+}
 
 /* @TextBox */
 

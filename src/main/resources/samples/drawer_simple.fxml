@@ -40,7 +40,7 @@
                         </GNAvatarStatus>
                         <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="135.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label style="-fx-font-weight: bold;" styleClass="h4" text="Gleidson Neves" />
+                              <Label  styleClass="title" text="Gleidson Neves" />
                               <Label text="gleidsonmt@gmail.com" />
                            </children>
                         </VBox>
@@ -50,6 +50,12 @@
                      </padding>
                   </HBox>
                   <GNSearchList fx:id="searchBox" prefHeight="51.0" prefWidth="290.0" promptText="Search Box" animated="true" />
+                  <HBox alignment="CENTER" spacing="10.0" >
+                     <children>
+                        <GNButton />
+                        <GNButton cancelButton="true" text="Cancel" />
+                     </children>
+                  </HBox>
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

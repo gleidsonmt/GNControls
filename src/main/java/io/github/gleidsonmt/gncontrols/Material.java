@@ -56,11 +56,11 @@ public class Material {
         root.getStylesheets().setAll(stylesheets);
     }
 
-    private void setStylesheets(Theme theme) {
+    private void setStylesheets(@NotNull Theme theme) {
         stylesheets.setAll(
-                Objects.requireNonNull(getClass().getResource("/core/colors.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/fonts/fonts.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/typographic.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/core/colors.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/bootstrap.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/imersive_scroll.css")).toExternalForm(),
                 theme.toString()
