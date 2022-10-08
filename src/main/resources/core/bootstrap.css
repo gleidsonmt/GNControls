@@ -12,8 +12,24 @@
 
 
 
-/* @Button */
+/* @Color */
 
+.btn-warning:cancel,
 .btn-warning {
     -fx-accent : -warning;
+}
+
+.btn-info:cancel,
+.btn-info {
+    -fx-accent : -info;
+}
+
+.btn-sunflower:cancel,
+.btn-sunflower {
+    -fx-accent : -sunflower;
+}
+
+.btn-danger:cancel,
+.btn-danger {
+    -fx-accent : -danger;
 }
