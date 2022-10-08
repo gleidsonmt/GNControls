@@ -34,6 +34,11 @@
 
 }
 
+.region,
+Region,
+Pane {
+    -fx-background-color : white;
+}
 
 Text {
     -fx-fill : -text-color;
