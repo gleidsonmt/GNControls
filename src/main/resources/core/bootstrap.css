@@ -2,34 +2,33 @@
     Created on : 25/10/2022, 08:00:15
     Author     : Gleidson Neves da Silveira
     Colors for productivity
+
+    Type ctrl + F to search and type @ + properties to navigate.
+
 */
 
-/* Input Fields */
+/* @Color - Linear */
 
-.field-filled {
-    -gn-input-type : filled;
+.danger {
+    -fx-accent : -danger;
 }
 
-
-
-/* @Color */
-
-.btn-warning:cancel,
-.btn-warning {
-    -fx-accent : -warning;
+.grapefruit {
+    -fx-accent : -grapefruit;
 }
 
-.btn-info:cancel,
-.btn-info {
-    -fx-accent : -info;
-}
-
-.btn-sunflower:cancel,
-.btn-sunflower {
+.sunflower {
     -fx-accent : -sunflower;
 }
 
-.btn-danger:cancel,
-.btn-danger {
-    -fx-accent : -danger;
+.amber {
+    -fx-accent : -amber;
+}
+
+
+
+/* @Color - Linear Gradinent */
+
+.linear-l-amber-sunflower {
+    -fx-accent : linear-gradient(to left, -amber, -sunflower);
 }
