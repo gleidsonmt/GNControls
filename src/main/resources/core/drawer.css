@@ -1,8 +1,19 @@
 
+#drawer-root {
+    -fx-background-color : red;
+}
 
+
+.toggle-button {
+    -fx-background-color : transparent;
+}
+
+.drawer-menu:collapsed {
+    -fx-background-color : red;
+}
 
 #drawer-box .drawer-menu  {
-
+    -fx-background-color : transparent;
     -fx-border-color : transparent;
     -fx-graphic-text-gap : 12px;
     -fx-node-orientation : left_to_right;
@@ -10,11 +21,16 @@
 
 }
 
-#drawer-box .drawer-menu .title {
-    -fx-font-size : 10pt;
-    -fx-padding : 12px;
-    -fx-border-color : transparent;
+#drawer-box .drawer-menu .title .text {
+    -fx-fill : -text-color;
+}
 
+#drawer-box .drawer-menu .title {
+    -fx-font-size : 9pt;
+    -fx-padding : 10px;
+    -fx-border-color : transparent;
+    -fx-background-color : transparent;
+    -fx-font-family : Roboto;
 }
 
 .drawer-menu .title .arrow-button  {
@@ -45,18 +61,24 @@
     -fx-border-width : 0px 2px 0px 0px;
 }
 
+.drawer-item,
 #drawer-box .drawer-item {
     -fx-background-color : transparent;
     -fx-text-fill : -text-color;
     -fx-cursor : hand;
+    -fx-padding : 15px;
+    -fx-graphic-text-gap : 12px;
 }
 
+.drawer-item:selected,
 #drawer-box .drawer-item:selected {
     -fx-text-fill : -fx-accent;
     -fx-border-color : -fx-accent;
     -fx-border-width : 0 0 0 2.5;
     -fx-background-color : -light-gray;
 }
+
+.drawer-item:hover,
 #drawer-box .drawer-item:hover {
      -fx-text-fill : -hover-color;
 }

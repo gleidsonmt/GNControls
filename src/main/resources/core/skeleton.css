@@ -45,6 +45,10 @@ Text {
     -fx-font-family : Roboto;
 }
 
+SVGPath {
+    -fx-fill : -text-color;
+}
+
 /* @Color */
 
 .button {
