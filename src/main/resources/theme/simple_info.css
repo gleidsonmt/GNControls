@@ -103,6 +103,8 @@ Text {
     -fx-background-color : -fx-background;
     -fx-border-color : -fx-accent;
     -fx-border-radius : 5px;
+    -fx-border-width : 2px;
+
 }
 
 .button:cancel .text {

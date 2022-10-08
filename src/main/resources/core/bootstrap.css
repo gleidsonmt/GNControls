@@ -9,3 +9,11 @@
 .field-filled {
     -gn-input-type : filled;
 }
+
+
+
+/* @Button */
+
+.btn-warning {
+    -fx-accent : -warning;
+}
