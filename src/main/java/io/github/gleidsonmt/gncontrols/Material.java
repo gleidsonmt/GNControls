@@ -62,8 +62,7 @@ public class Material {
                 Objects.requireNonNull(getClass().getResource("/core/typographic.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/skeleton.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/bootstrap.css")).toExternalForm(),
-                Objects.requireNonNull(getClass().getResource("/core/imersive_scroll.css")).toExternalForm(),
-                Objects.requireNonNull(getClass().getResource("/core/drawer.css")).toExternalForm()
+                Objects.requireNonNull(getClass().getResource("/core/imersive_scroll.css")).toExternalForm()
 //                theme.toString()
 
         );
