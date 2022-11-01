@@ -40,9 +40,20 @@ Pane {
     -fx-background-color : white;
 }
 
+.center-body .viewport,
+.scroll-pane:fitToHeight {
+    -fx-background-color : -fx-background;
+    -fx-border-color : red;
+    -fx-border-width : 0px;
+}
+
 Text {
     -fx-fill : -text-color;
     -fx-font-family : Roboto;
+}
+
+SVGPath {
+    -fx-fill : -text-color;
 }
 
 /* @Color */

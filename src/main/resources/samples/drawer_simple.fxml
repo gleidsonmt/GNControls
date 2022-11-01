@@ -118,7 +118,7 @@
       <IconContainer />
    </children>
    <stylesheets>
-      <URL value="@../core/drawer.css" />
+      <URL value="@../../../../../DashboardFx/src/main/resources/drawer.css" />
       <URL value="@../core/bootstrap.css" />
       <URL value="@../core/colors.css" />
       <URL value="@../core/typographic.css" />
