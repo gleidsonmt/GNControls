@@ -187,7 +187,7 @@
       <URL value="@../core/bootstrap.css" />
       <URL value="@../core/colors.css" />
       <URL value="@../core/typographic.css" />
-      <URL value="@../theme/simple_info.css" />
+      <URL value="@../core/theme/simple_info.css" />
       <URL value="@../core/imersive_scroll.css" />
    </stylesheets>
 </StackPane>

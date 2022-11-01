@@ -25,8 +25,8 @@ import java.util.Objects;
  */
 public enum Theme {
 
-    SIMPLE_INFO(Objects.requireNonNull(Theme.class.getResource("/theme/simple_info.css")).toExternalForm()),
-    DARK_INFO(Objects.requireNonNull(Theme.class.getResource("/theme/dark_info.css")).toExternalForm());
+    SIMPLE_INFO(Objects.requireNonNull(Theme.class.getResource("/core/theme/simple_info.css")).toExternalForm()),
+    DARK_INFO(Objects.requireNonNull(Theme.class.getResource("/core/theme/dark_info.css")).toExternalForm());
 
     private String path;
 

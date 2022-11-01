@@ -164,7 +164,7 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         popup.setAnchorLocation(PopupWindow.AnchorLocation.CONTENT_TOP_LEFT);
 
         popup.getRoot().getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/theme/poplight.css")).toExternalForm()
+                Objects.requireNonNull(getClass().getResource("/core/theme/poplight.css")).toExternalForm()
         );
 
         popup.show(control.getScene().getWindow(), bounds.getMinX(), bounds.getMaxY());
