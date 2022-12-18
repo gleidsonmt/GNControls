@@ -25,7 +25,7 @@ import io.github.gleidsonmt.gncontrols.test.SimpleDrawer;
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  16/02/2022
  */
-public class Start extends SimpleDrawer {
+public class Start extends LoginSample {
 
     public static void main(String[] args) {
         launch(args);
