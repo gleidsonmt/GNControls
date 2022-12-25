@@ -30,7 +30,6 @@ public class FakeFocusTextField extends TextField {
 
     @Override
     public void requestFocus() {
-        System.out.println("what");
         if (getParent() != null) {
             getParent().requestFocus();
         }
