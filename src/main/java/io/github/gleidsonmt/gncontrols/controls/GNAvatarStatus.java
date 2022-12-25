@@ -47,7 +47,6 @@ public class GNAvatarStatus extends Control {
 
     public GNAvatarStatus(double _radius) {
        radius.set(_radius);
-
        setPrefSize(_radius, _radius);
     }
 
