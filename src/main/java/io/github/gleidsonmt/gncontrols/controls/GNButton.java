@@ -22,8 +22,6 @@ import javafx.beans.DefaultProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Skin;
 
-import java.util.Objects;
-
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
  * Create on  29/09/2022
@@ -32,7 +30,11 @@ import java.util.Objects;
 public class GNButton extends Button {
 
     public GNButton() {
-        setText("Button");
+        this(null);
+    }
+
+    public GNButton(String text) {
+        setText(text == null ? "Button" : text);
         setPrefSize(100, 40);
     }
 
@@ -41,8 +43,5 @@ public class GNButton extends Button {
         return new GNButtonSkin(this);
     }
 
-    @Override
-    public String getUserAgentStylesheet() {
-        return Objects.requireNonNull(GNButton.class.getResource("/agents/button.css")).toExternalForm();
-    }
+
 }

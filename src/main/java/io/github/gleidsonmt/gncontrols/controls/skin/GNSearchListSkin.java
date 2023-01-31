@@ -27,6 +27,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.*;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -81,14 +82,14 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
 
 
         listContent.addEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
-            T seleted = listContent.getSelectionModel().getSelectedItem();
-            _control.setText(seleted.toString().toLowerCase());
-            _control.getEditor().end();
-
+            updateDisplayText(_control);
         });
 
         listContent.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.isShiftDown()) event.consume();
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                updateDisplayText(_control);
+                hide();
+            }
         });
 
         arrowButton.setOnMouseClicked(event -> show());
@@ -100,12 +101,17 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         });
     }
 
+    private void updateDisplayText(@NotNull GNSearchList<T> _control) {
+        T seleted = listContent.getSelectionModel().getSelectedItem();
+        _control.setText(seleted.toString());
+        _control.getEditor().end();
+    }
+
     @Override
     public void bind(@NotNull GNSearchList<T> _control) {
         listContent.itemsProperty().bind(_control.itemsProperty());
         _control.valueProperty().bind(listContent.getSelectionModel().selectedItemProperty());
         listContent.prefWidthProperty().bind(_control.widthProperty());
-
     }
 
     @Override
@@ -146,15 +152,6 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         actionsContainer.getChildren().setAll(clearButton);
     }
 
-    private void clearContainer() {
-        control.setRightNode(null);
-    }
-
-    private boolean lock = false;
-
-    public boolean lock() {
-        return lock;
-    }
 
     public void hide() {
         popup.hide();
@@ -167,7 +164,7 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         popup.setAnchorLocation(PopupWindow.AnchorLocation.CONTENT_TOP_LEFT);
 
         popup.getRoot().getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/theme/poplight.css")).toExternalForm()
+                Objects.requireNonNull(getClass().getResource("/core/theme/poplight.css")).toExternalForm()
         );
 
         popup.show(control.getScene().getWindow(), bounds.getMinX(), bounds.getMaxY());

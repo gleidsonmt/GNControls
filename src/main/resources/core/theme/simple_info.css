@@ -30,6 +30,10 @@
 
 /* @Text */
 
+Text, .text, .label {
+    -fx-font-family : 'Roboto Regular';
+}
+
 Text {
     -fx-fill : -text-color;
 }
@@ -88,13 +92,24 @@ Text {
     -fx-text-fill : white;
     -fx-font-weight : bolder;
     -fx-graphic-text-gap : 10;
+    -fx-cursor : hand;
 }
 
 .button .icon {
     -fx-fill : white;
 }
 
+.button:cancel {
+    -fx-background-color : transparent;
+    -fx-border-color : -fx-accent;
+    -fx-border-radius : 5px;
+    -fx-border-width : 2px;
 
+}
+
+.button:cancel .text {
+    -fx-fill : -fx-accent;
+}
 
 /* @TextBox */
 

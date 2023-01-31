@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="300.0" stylesheets="@../core/drawer.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="300.0" stylesheets="@../../../../../DashboardFx/src/main/resources/drawer.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="671.0" prefWidth="300.0" styleClass="drawer-body">
          <children>
@@ -40,8 +40,9 @@
                         </GNAvatarStatus>
                         <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="135.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label style="-fx-font-weight: bold;" styleClass="h4" text="Gleidson Neves" />
+                              <Label text="Gleidson Neves" />
                               <Label text="gleidsonmt@gmail.com" />
+
                            </children>
                         </VBox>
                      </children>
@@ -182,11 +183,11 @@
       </VBox>
    </children>
    <stylesheets>
-      <URL value="@../core/drawer.css" />
+      <URL value="@../../../../../DashboardFx/src/main/resources/drawer.css" />
       <URL value="@../core/bootstrap.css" />
       <URL value="@../core/colors.css" />
       <URL value="@../core/typographic.css" />
-      <URL value="@../theme/simple_info.css" />
+      <URL value="@../core/theme/simple_info.css" />
       <URL value="@../core/imersive_scroll.css" />
    </stylesheets>
 </StackPane>

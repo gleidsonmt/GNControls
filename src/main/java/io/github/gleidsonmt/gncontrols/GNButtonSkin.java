@@ -49,8 +49,6 @@ public class GNButtonSkin extends ButtonSkin {
         super(_control);
         this.control = _control;
 
-
-
         this.clip.widthProperty().bind(control.widthProperty());
         this.clip.heightProperty().bind(control.heightProperty());
 

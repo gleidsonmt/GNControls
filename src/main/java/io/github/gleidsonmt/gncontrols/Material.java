@@ -36,32 +36,34 @@ public class Material {
 
 
     public Material(@NamedArg("root") @NotNull Parent root) {
-        setStylesheets(Theme.SIMPLE_INFO);
+        setStylesheets();
         root.getStylesheets().setAll(stylesheets);
     }
 
     public Material(@NamedArg("root") @NotNull Scene scene) {
-        setStylesheets(Theme.SIMPLE_INFO);
+        setStylesheets();
         scene.getStylesheets().setAll(stylesheets);
     }
 
     public Material(@NamedArg("root") @NotNull Parent root, Theme theme) {
-        setStylesheets(theme);
+        setStylesheets();
         root.getStylesheets().setAll(stylesheets);
     }
 
     public Material(@NamedArg("root") @NotNull Scene root, Theme theme) {
-        setStylesheets(theme);
+        setStylesheets();
         root.getStylesheets().setAll(stylesheets);
     }
 
-    private void setStylesheets(Theme theme) {
+    private void setStylesheets() {
         stylesheets.setAll(
+                Objects.requireNonNull(getClass().getResource("/fonts/fonts.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/colors.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/typographic.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/core/skeleton.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/core/bootstrap.css")).toExternalForm(),
-                Objects.requireNonNull(getClass().getResource("/core/imersive_scroll.css")).toExternalForm(),
-                theme.toString()
+                Objects.requireNonNull(getClass().getResource("/core/imersive_scroll.css")).toExternalForm()
+//                theme.toString()
 
         );
     }
