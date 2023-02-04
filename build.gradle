@@ -25,9 +25,9 @@ javafx {
 dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
 
-    implementation 'fr.brouillard.oss:cssfx:11.5.1'
-
-    implementation files('vendor/scenicView.jar')
+//    implementation 'fr.brouillard.oss:cssfx:11.5.1'
+//
+//    implementation files('vendor/scenicView.jar')
     implementation files('vendor/controlsfx-8.40.17.jar')
 }
 

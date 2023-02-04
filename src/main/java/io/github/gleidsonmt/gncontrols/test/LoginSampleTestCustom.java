@@ -17,7 +17,6 @@
 
 package io.github.gleidsonmt.gncontrols.test;
 
-import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.gleidsonmt.gncontrols.Material;
 import io.github.gleidsonmt.gncontrols.Theme;
 import io.github.gleidsonmt.gncontrols.controls.*;
@@ -79,7 +78,7 @@ public class LoginSampleTestCustom extends Application {
         stage.setScene(scene);
         stage.show();
 
-        CSSFX.start(scene);
+//        CSSFX.start(scene);
 //        ScenicView.show(scene);
 
     }
