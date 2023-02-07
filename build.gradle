@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'io.github.gleidsonmt.gncontrols'
-version '1.2.3'
+version '1.2.4'
 
 application {
     mainModule = 'io.github.gleidsonmt.gncontrols'
