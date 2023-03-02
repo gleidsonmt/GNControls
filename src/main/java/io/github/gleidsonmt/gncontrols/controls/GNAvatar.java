@@ -31,7 +31,7 @@ import javafx.scene.image.Image;
 
 /**
  * @author Gleidson Neves da Silveira | gleidisonmt@gmail.com
- * Version 0.0.1
+ * Version 0.0.
  * Create on  22/01/2023
  */
 public class GNAvatar extends Control {
