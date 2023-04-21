@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'io.github.gleidsonmt.gncontrols'
-version '1.2.4'
+version '1.2.5'
 
 application {
     mainModule = 'io.github.gleidsonmt.gncontrols'
@@ -25,9 +25,7 @@ javafx {
 dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
 
-//    implementation 'fr.brouillard.oss:cssfx:11.5.1'
-//
-//    implementation files('vendor/scenicView.jar')
-    implementation files('vendor/controlsfx-8.40.17.jar')
+//    implementation 'fr.brouillard.oss:cssfx:11.5.1' // only for test
+//    implementation files('vendor/scenicView.jar') // only for tests
 }
 
