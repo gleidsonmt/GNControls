@@ -32,7 +32,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.PopupWindow;
-import org.controlsfx.control.PopOver;
+//import org.controlsfx.control.PopOver;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -50,7 +50,7 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
     private final GNIconButton arrowButton = new GNIconButton(Icons.ARROW_DROP_DOWN);
     private final GNIconButton clearButton = new GNIconButton(Icons.CLEAR);
 
-    private final PopOver popup = new PopOver();
+//    private final PopOver popup = new PopOver();
 
     public GNSearchListSkin(GNSearchList<T> _control) {
         super(_control);
@@ -154,20 +154,20 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
 
 
     public void hide() {
-        popup.hide();
+//        popup.hide();
     }
 
     public void show() {
         Bounds bounds = control.localToScreen(control.getBoundsInLocal());
 
-        popup.setContentNode(listContent);
-        popup.setAnchorLocation(PopupWindow.AnchorLocation.CONTENT_TOP_LEFT);
-
-        popup.getRoot().getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/core/theme/poplight.css")).toExternalForm()
-        );
-
-        popup.show(control.getScene().getWindow(), bounds.getMinX(), bounds.getMaxY());
+//        popup.setContentNode(listContent);
+//        popup.setAnchorLocation(PopupWindow.AnchorLocation.CONTENT_TOP_LEFT);
+//
+//        popup.getRoot().getStylesheets().add(
+//                Objects.requireNonNull(getClass().getResource("/core/theme/poplight.css")).toExternalForm()
+//        );
+//
+//        popup.show(control.getScene().getWindow(), bounds.getMinX(), bounds.getMaxY());
     }
 
     private final ListChangeListener<T> listUpdateSize = new ListChangeListener<T>() {
@@ -186,9 +186,9 @@ public class GNSearchListSkin<T> extends GNTextBoxBaseSkin implements ComponentS
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             if (newValue != null && !newValue.isEmpty()) {
 
-                if (!popup.isShowing()) show();
+//                if (!popup.isShowing()) show();
 
-                if (control.getItems().size() < 1) popup.hide();
+//                if (control.getItems().size() < 1) popup.hide();
 
                 updateContainerWithClear();
             } else {

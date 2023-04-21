@@ -78,8 +78,6 @@ public class LoginSampleTestCustom extends Application {
         stage.setScene(scene);
         stage.show();
 
-//        CSSFX.start(scene);
-//        ScenicView.show(scene);
 
     }
 
