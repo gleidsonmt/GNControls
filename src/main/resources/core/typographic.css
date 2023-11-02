@@ -39,6 +39,6 @@
 }
 
 .title {
-    -fx-font-family : 'Roboto Bold';
+    -fx-font-weight : bold;
 }
 
