@@ -21,6 +21,7 @@ import io.github.gleidsonmt.gncontrols.*;
 import io.github.gleidsonmt.gncontrols.controls.*;
 import io.github.gleidsonmt.gncontrols.controls.GNIconButton;
 import io.github.gleidsonmt.gncontrols.material.icon.Icons;
+import io.github.gleidsonmt.gncontrols.options.FieldType;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -55,7 +56,7 @@ public class LoginSample extends Application {
 //        stage.setResizable(false);
 
         Scene scene = new Scene(root, 480, 600);
-        new Material(scene, Theme.SIMPLE_INFO);
+        new Material(scene, Theme.DARK_INFO);
 
         scene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/login.css")).toExternalForm()
@@ -121,6 +122,7 @@ public class LoginSample extends Application {
         GNTextBox emailField = new GNTextBox();
         emailField.setText("gleidsonm@gmail.com");
         emailField.setAnimated(true);
+        emailField.setFieldType(FieldType.FILLED);
         emailField.setPromptText("Input your email");
         emailField.setIcon(Icons.MAIL);
         emailField.setAction(true);
